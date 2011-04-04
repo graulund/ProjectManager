@@ -18,7 +18,7 @@ public class LogInAsEmployee {
 		// checker at medarbejderen ikke er logget ind
 		assertFalse(PMApp.employeeLoggedIn());
 		
-		// medarbejder logger ind
+		// medarbejder logger ind med initialer, der findes i databasen
 		boolean login = PMApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen er logget ind
@@ -33,10 +33,10 @@ public class LogInAsEmployee {
 		// checker at medarbejderen ikke er logget ind
 		assertFalse(PMApp.employeeLoggedIn());
 		
-		// medarbejder logger ind
+		// medarbejder logger ind med initialer, der ikke findes i databasen (forkerte)
 		boolean login = PMApp.employeeLogin("lol");
 		
-		// checker at medarbejderen er logget ind
+		// checker at medarbejderen ikke er logget ind
 		assertFalse(login);
 		assertFalse(PMApp.employeeLoggedIn());	
 		
