@@ -1,23 +1,21 @@
 package projectmanager;
 
-import org.junit.Before;
 import org.junit.Test;
 
-//public class CreateProject {
+//public class ChooseYourselfAsProjectLeader {
 //	
 //	/**
-//	 * Tester scenariet, hvor en medarbejder successfuldt opretter et project.
+//	 * Main scenario: Tester scenariet, hvor en medarbejder successfuldt
+//	 * tildeler sig selv som projektleder på et projekt
 //	 */
 //	@Test
-//	public void testCreateProject() {
+//	public void ChoosingYourselfAsProjectLeader() {
 //		ProjectManagerApp PMApp = new ProjectManagerApp();
 //		
 //		// medarbejder logger ind med initialer, der findes i databasen
 //		boolean login = PMApp.employeeLogin("hlb");
 //		
-//		String projectName = "Software Engineering";
-//		
 //		
 //	}
-//
+//		
 //}
