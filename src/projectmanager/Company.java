@@ -17,16 +17,23 @@ public class Company {
 		this.projects.add(project);
 		project.setSerialNumber(currentSerialNumber++);
 	}
+	
 	public void addEmployee(Employee employee) {
 		// TODO: What if it already exists in the list?
 		this.employees.add(employee);
 	}
+	
 	public List<Employee> getEmployees() {
 		return employees;
 	}
 	
+	public void setEmployees(ArrayList<Employee> employees){
+		this.employees = employees;
+		this.currentSerialNumber = this.employees.size() + 1;
+	}
+	
 	public Employee employeeByUsername(String username) {
-		for (Employee employee : this.employees) {
+		for (Employee employee: this.employees) {
 			if (username.equals(employee.getUsername())) {
 				return employee;
 			}
@@ -35,7 +42,7 @@ public class Company {
 	}
 	
 	public Project projectBySerialNumber(int serialNumber) {
-		for (Project project : this.projects) {
+		for (Project project: this.projects) {
 			if (serialNumber == project.getSerialNumber()) {
 				return project;
 			}
