@@ -18,14 +18,14 @@ public class LogInAsEmployee {
 		company.addEmployee(employee);
 		
 		// checker at medarbejderen ikke er logget ind
-		assertFalse(PMApp.employeeLoggedIn());
+		assertFalse(PMApp.isEmployeeLoggedIn());
 		
 		// medarbejder logger ind med initialer, der findes i databasen
 		boolean login = PMApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen er logget ind
 		assertTrue(login);
-		assertTrue(PMApp.employeeLoggedIn());
+		assertTrue(PMApp.isEmployeeLoggedIn());
 		assertEquals(employee, PMApp.getEmployeeLoggedIn());
 	}
 	
@@ -39,14 +39,14 @@ public class LogInAsEmployee {
 		ProjectManagerApp PMApp = new ProjectManagerApp();
 		
 		// checker at medarbejderen ikke er logget ind
-		assertFalse(PMApp.employeeLoggedIn());
+		assertFalse(PMApp.isEmployeeLoggedIn());
 		
 		// medarbejder logger ind med initialer, der ikke findes i databasen
 		boolean login = PMApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen ikke er logget ind
 		assertFalse(login);
-		assertFalse(PMApp.employeeLoggedIn());
+		assertFalse(PMApp.isEmployeeLoggedIn());
 		assertEquals(null, PMApp.getEmployeeLoggedIn());
 	}
 	
@@ -62,14 +62,14 @@ public class LogInAsEmployee {
 		company.addEmployee(employee);
 		
 		// checker at medarbejderen ikke er logget ind
-		assertFalse(PMApp.employeeLoggedIn());
+		assertFalse(PMApp.isEmployeeLoggedIn());
 		
 		// medarbejder logger ind med initialer, der ikke findes i databasen
 		boolean login = PMApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen er logget ind
 		assertTrue(login);
-		assertTrue(PMApp.employeeLoggedIn());
+		assertTrue(PMApp.isEmployeeLoggedIn());
 		assertEquals(employee, PMApp.getEmployeeLoggedIn());
 		
 		// medarbejderen logger ud
@@ -77,7 +77,7 @@ public class LogInAsEmployee {
 		
 		// checker at medarbejderen ikke er logget ind
 		assertFalse(logout);
-		assertFalse(PMApp.employeeLoggedIn());
+		assertFalse(PMApp.isEmployeeLoggedIn());
 		assertEquals(null, PMApp.getEmployeeLoggedIn());
 	}
 }

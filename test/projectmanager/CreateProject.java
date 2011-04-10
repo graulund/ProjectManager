@@ -29,7 +29,7 @@ public class CreateProject {
 		
 		// checker at medarbejderen er logget ind
 		assertTrue(login);
-		assertTrue(PMApp.employeeLoggedIn());
+		assertTrue(PMApp.isEmployeeLoggedIn());
 		
 		// medarbejderen indtaster f¿lgende informationer
 		String name = "Software Engineering";
@@ -62,7 +62,7 @@ public class CreateProject {
 		
 		// checker at medarbejderen IKKE er logget ind
 		assertFalse(login);
-		assertFalse(PMApp.employeeLoggedIn());
+		assertFalse(PMApp.isEmployeeLoggedIn());
 	}
 	
 }

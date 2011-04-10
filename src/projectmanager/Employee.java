@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Employee {
-	private String name;
+	private String name; // 4 letters
 	private List<Project> leader_of_projects = new ArrayList<Project>(); // hmm
 	private List<Activity> activities = new ArrayList<Activity>();
 	private List<RegisteredWork> reg_works = new ArrayList<RegisteredWork>();

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class ProjectManagerApp {
 	private Company company = new Company();
-	private Employee loggedInEmployee;
-	private boolean employeeLoggedIn = false;
+	private Employee loggedInEmployee; // Currently logged in employee
+	private boolean isEmployeeLoggedIn = false;
 	
 	public Company getCompany(){
 		return this.company;
@@ -15,13 +15,13 @@ public class ProjectManagerApp {
 	public boolean employeeLogin(String username) {
 		this.loggedInEmployee = this.company.employeeByUsername(username);
 		if (this.loggedInEmployee != null) {
-			this.employeeLoggedIn = true;
+			this.isEmployeeLoggedIn = true;
 		}
-		return this.employeeLoggedIn;
+		return this.isEmployeeLoggedIn;
 	}
 
-	public boolean employeeLoggedIn() {
-		return this.employeeLoggedIn;
+	public boolean isEmployeeLoggedIn() {
+		return this.isEmployeeLoggedIn;
 	}
 
 	public Employee getEmployeeLoggedIn() {
@@ -30,7 +30,7 @@ public class ProjectManagerApp {
 
 	public boolean employeeLogout() {
 		this.loggedInEmployee = null;
-		this.employeeLoggedIn = false;
-		return this.employeeLoggedIn;
+		this.isEmployeeLoggedIn = false;
+		return this.isEmployeeLoggedIn;
 	}
 }

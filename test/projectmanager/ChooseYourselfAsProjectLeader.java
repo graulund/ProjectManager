@@ -30,7 +30,7 @@ public class ChooseYourselfAsProjectLeader {
 		
 		// checker at medarbejderen er logget ind
 		assertTrue(login);
-		assertTrue(PMApp.employeeLoggedIn());
+		assertTrue(PMApp.isEmployeeLoggedIn());
 		
 		// medarbejder indtaster l¿benummer for projekt
 		int serialNumber = 1;
@@ -68,7 +68,7 @@ public class ChooseYourselfAsProjectLeader {
 		
 		// checker at medarbejderen er logget ind
 		assertTrue(login);
-		assertTrue(PMApp.employeeLoggedIn());
+		assertTrue(PMApp.isEmployeeLoggedIn());
 		
 		// medarbejder indtaster Œrstal og l¿benummer for projekt
 		int serialNumber = 002;
