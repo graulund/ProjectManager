@@ -18,16 +18,18 @@ public class CreateProject {
 	public void testCreateProject() {
 		ProjectManagerApp PMApp = new ProjectManagerApp();
 		Company company = PMApp.getCompany();
+		Employee employee = new Employee("hlb");
+		company.addEmployee(employee);
 		
 		// checker at der ikke eksisterer nogle projekter
 		assertTrue(company.getProjects().isEmpty());
 		
 		// medarbejder logger ind med initialer, der findes i databasen
-		//boolean login = PMApp.employeeLogin("hlb");
+		boolean login = PMApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen er logget ind
-		//assertTrue(login);
-		//assertTrue(PMApp.employeeLoggedIn());
+		assertTrue(login);
+		assertTrue(PMApp.employeeLoggedIn());
 		
 		// medarbejderen indtaster f¿lgende informationer
 		String name = "Software Engineering";

@@ -14,7 +14,9 @@ public class ProjectManagerApp {
 
 	public boolean employeeLogin(String username) {
 		this.loggedInEmployee = this.employeeByUsername(username);
-		this.employeeLoggedIn = true;
+		if (this.loggedInEmployee != null) {
+			this.employeeLoggedIn = true;
+		}
 		return this.employeeLoggedIn;
 	}
 
@@ -33,5 +35,11 @@ public class ProjectManagerApp {
 
 	public Employee getEmployeeLoggedIn() {
 		return this.loggedInEmployee;
+	}
+
+	public boolean employeeLogout() {
+		this.loggedInEmployee = null;
+		this.employeeLoggedIn = false;
+		return this.employeeLoggedIn;
 	}
 }
