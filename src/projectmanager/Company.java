@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
-	private ArrayList<Project> projects = new ArrayList<Project>();
-	private ArrayList<Employee> employees = new ArrayList<Employee>();
+	private List<Project> projects = new ArrayList<Project>();
+	private List<Employee> employees = new ArrayList<Employee>();
 	private int currentSerialNumber = 1;
 	
 	

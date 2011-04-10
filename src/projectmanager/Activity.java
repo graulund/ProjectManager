@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Activity {
 	private String name;
-	private Project project; // Cannot be changed after initiation
+	private Project project; // Cannot be changed after initialization
 	private List<Employee> employees = new ArrayList<Employee>();
 	private int start;  // week no. or calendar?
 	private int end;    // -||-
