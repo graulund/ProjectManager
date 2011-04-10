@@ -27,7 +27,7 @@ public class SampleDataSetup {
 			company.addProject(new Project("project"+i, "Google"));
 		}
 		
-		// Add project leaders to all projects
+		// Add project leaders to all 5 projects
 		for (int i = 1; i <= 5; i++) {
 			company.projectBySerialNumber(i).addLeader(company.employeeByUsername("emp"+i));
 		}
@@ -36,14 +36,24 @@ public class SampleDataSetup {
 		for (int i = 1; i <= 5; i++) {
 			for (int j = 1; j <= 3; j++) {
 				// Add 3 activities to each project
-				company.projectBySerialNumber(i).addActivity(new Activity("act"+j, company.projectBySerialNumber(i)));
+				Project current_project = company.projectBySerialNumber(i);
+				current_project.addActivity(new Activity("act"+j, current_project));
+				
 				for (int k = 1; k <= 3; k++) {
-					// Add 3 random employees to each activity
 					int r = (int)(Math.random() * company.getEmployees().size());
-					company.projectBySerialNumber(i).getActivities().get(company.projectBySerialNumber(i).getActivities().size()-1).addEmployee(company.getEmployees().get(r));
+					Activity latest_activity = current_project.getActivities().get(current_project.getActivities().size()-1);
+					Employee random_employee = company.getEmployees().get(r);
+					
+					// Add 3 random employees to each activity
+					latest_activity.addEmployee(random_employee);
+					
+					// Register work
+					random_employee.addRegisteredWork(new RegisteredWork(random_employee, latest_activity, r/2+10));
 				}
 			}
 		}
+		
+		
 		
 		
 		

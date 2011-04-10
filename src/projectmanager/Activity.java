@@ -29,6 +29,10 @@ public class Activity {
 		this.employees.remove(employee);
 	}
 	
+	public void addRegisteredWork(RegisteredWork rw) {
+		this.reg_works.add(rw);
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
