@@ -1,19 +1,37 @@
 package projectmanager;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class ProjectManagerApp {
 	private Company company = new Company();
+	private Employee loggedInEmployee;
+	private boolean employeeLoggedIn = false;
 	
 	public Company getCompany(){
 		return this.company;
 	}
 
 	public boolean employeeLogin(String username) {
-		// TODO Auto-generated method stub
-		return false;
+		this.loggedInEmployee = this.employeeByUsername(username);
+		this.employeeLoggedIn = true;
+		return this.employeeLoggedIn;
+	}
+
+	private Employee employeeByUsername(String username) {
+		for (Employee employee : company.getEmployees()) {
+			if (username.equals(employee.getUsername())) {
+				return employee;
+			}
+		}
+		return null;
 	}
 
 	public boolean employeeLoggedIn() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.employeeLoggedIn;
+	}
+
+	public Employee getEmployeeLoggedIn() {
+		return this.loggedInEmployee;
 	}
 }
