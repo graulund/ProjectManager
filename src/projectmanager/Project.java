@@ -10,6 +10,7 @@ public class Project {
 	private Employee projectLeader;
 	private List<Employee> employees = new ArrayList<Employee>();
 	private List<Activity> activities = new ArrayList<Activity>();
+	// private Company company; ?
 	
 	public Project(String name, String client) {
 		this.name = name;
@@ -33,12 +34,17 @@ public class Project {
 	public int getSerialNumber() {
 		return this.serialNumber;
 	}
-	public void addLeader(Employee employeeLoggedIn) {
-		if (this.projectLeader == null) {
-			this.projectLeader = employeeLoggedIn;
-		}
+	public void addLeader(Employee employee) {
+		this.projectLeader = employee;
+		employee.setProjectLeaderOf(this);
 	}
 	public Employee getLeader() {
 		return this.projectLeader;
+	}
+	public void addActivity(Activity activity) {
+		this.activities.add(activity);
+	}
+	public List<Activity> getActivities() {
+		return activities;
 	}
 }

@@ -22,6 +22,7 @@ public class Activity {
 	
 	public void addEmployee(Employee employee) {
 		this.employees.add(employee);
+		employee.addActivity(this);
 	}
 	
 	public void removeEmployee(Employee employee) {

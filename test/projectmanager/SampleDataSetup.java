@@ -30,17 +30,26 @@ public class SampleDataSetup {
 		// Add project leaders to all projects
 		for (int i = 1; i <= 5; i++) {
 			company.projectBySerialNumber(i).addLeader(company.employeeByUsername("emp"+i));
-			company.employeeByUsername("emp"+i).setProjectLeaderOf(company.projectBySerialNumber(i));
 		}
 		
-		PMApp.
+		
+		for (int i = 1; i <= 5; i++) {
+			for (int j = 1; j <= 3; j++) {
+				// Add 3 activities to each project
+				company.projectBySerialNumber(i).addActivity(new Activity("act"+j, company.projectBySerialNumber(i)));
+				for (int k = 1; k <= 3; k++) {
+					// Add 3 random employees to each activity
+					int r = (int)(Math.random() * company.getEmployees().size());
+					company.projectBySerialNumber(i).getActivities().get(company.projectBySerialNumber(i).getActivities().size()-1).addEmployee(company.getEmployees().get(r));
+				}
+			}
+		}
 		
 		
 		
 		
 		
-		company.employeeByUsername("emp1");
-		
+		/*
 		List<Book> books = new ArrayList<Book>();
 		books.add(new Book("Som001","Software Engineering - 9","Ian Sommerville"));
 		books.add(new Book("Sof001","XML for Dummies","Fred Software"));
@@ -63,6 +72,6 @@ public class SampleDataSetup {
 		
 		for (User usr : users) {
 			libApp.register(usr);
-		}
+		}*/
 	}
 }
