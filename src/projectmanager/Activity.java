@@ -9,6 +9,8 @@ public class Activity {
 	private String name;
 	private Project project; // Cannot be changed after initialization
 	private List<Employee> employees = new ArrayList<Employee>();
+	private List<RegisteredWork> reg_works = new ArrayList<RegisteredWork>();
+	
 	private int start;  // week no. or calendar?
 	private int end;    // -||-
 	private int estimatedWorkHours;

@@ -1,10 +1,15 @@
 package projectmanager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Project {
 	private String name;
 	private String client;
 	private int serialNumber;
 	private Employee projectLeader;
+	private List<Employee> employees = new ArrayList<Employee>();
+	private List<Activity> activities = new ArrayList<Activity>();
 	
 	public Project(String name, String client) {
 		this.name = name;
