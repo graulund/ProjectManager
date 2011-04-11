@@ -1,7 +1,11 @@
-package projectmanager;
+package projectmanager.app;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import projectmanager.app.Company;
+import projectmanager.app.Employee;
+import projectmanager.app.ProjectManagerApp;
 
 
 public class LogInAsEmployee {

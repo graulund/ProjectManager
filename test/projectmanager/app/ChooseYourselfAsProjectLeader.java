@@ -1,10 +1,15 @@
-package projectmanager;
+package projectmanager.app;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import projectmanager.app.Company;
+import projectmanager.app.Employee;
+import projectmanager.app.Project;
+import projectmanager.app.ProjectManagerApp;
 
 public class ChooseYourselfAsProjectLeader {
 	

@@ -1,4 +1,4 @@
-package projectmanager;
+package projectmanager.app;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

@@ -1,4 +1,4 @@
-package projectmanager;
+package projectmanager.app;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,11 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import projectmanager.app.Company;
+import projectmanager.app.Employee;
+import projectmanager.app.Project;
+import projectmanager.app.ProjectManagerApp;
 
 public class CreateProject {
 	

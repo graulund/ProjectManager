@@ -1,4 +1,4 @@
-package projectmanager;
+package projectmanager.app;
 
 import static org.junit.Assert.*;
 

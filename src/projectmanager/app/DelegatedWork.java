@@ -1,4 +1,4 @@
-package projectmanager;
+package projectmanager.app;
 
 public class DelegatedWork {
 	private int hours;

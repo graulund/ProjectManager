@@ -1,9 +1,16 @@
-package projectmanager;
+package projectmanager.app;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+
+import projectmanager.app.Activity;
+import projectmanager.app.Company;
+import projectmanager.app.Employee;
+import projectmanager.app.Project;
+import projectmanager.app.ProjectManagerApp;
+import projectmanager.app.RegisteredWork;
 
 /**
  * A class the defines a common setUp
