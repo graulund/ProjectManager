@@ -2,13 +2,13 @@ package projectmanager.app;
 
 import java.util.ArrayList;
 
-public class DelegatedWorkWeek {
+public class WorkWeek {
 	private Employee employee;
 	private int weekNumber;
 	private int year;
 	private ArrayList<DelegatedWork> delegatedWork   = new ArrayList<DelegatedWork>();
 	private ArrayList<RegisteredWork> registeredWork = new ArrayList<RegisteredWork>();
-	public DelegatedWorkWeek(Employee employee, int weekNumber, int year) {
+	public WorkWeek(Employee employee, int weekNumber, int year) {
 		this.employee   = employee;
 		this.weekNumber = weekNumber;
 		this.year       = year;
