@@ -2,10 +2,10 @@ package projectmanager.app;
 
 public class DelegatedWork {
 	private int hours;
-	private Project project;
-	public DelegatedWork(int hours, Project project){
+	private Activity activity;
+	public DelegatedWork(int hours, Activity activity){
 		this.hours   = hours;
-		this.project = project;
+		this.activity = activity;
 	}
 	public int getHours() {
 		return hours;
@@ -13,10 +13,10 @@ public class DelegatedWork {
 	public void setHours(int hours) {
 		this.hours = hours;
 	}
-	public Project getProject() {
-		return project;
+	public Activity getActivity() {
+		return activity;
 	}
-	public void setProject(Project project) {
-		this.project = project;
+	public void setActivity(Activity activity) {
+		this.activity = activity;
 	}
 }
