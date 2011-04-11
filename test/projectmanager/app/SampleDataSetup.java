@@ -43,19 +43,19 @@ public class SampleDataSetup {
 		for (int i = 1; i <= 5; i++) {
 			for (int j = 1; j <= 3; j++) {
 				// Add 3 activities to each project
-				Project current_project = company.projectBySerialNumber(i);
-				current_project.addActivity(new Activity("act"+j, current_project));
+				Project currentProject = company.projectBySerialNumber(i);
+				currentProject.addActivity(new Activity("act"+j, currentProject));
 				
 				for (int k = 1; k <= 3; k++) {
 					int r = (int)(Math.random() * company.getEmployees().size());
-					Activity latest_activity = current_project.getActivities().get(current_project.getActivities().size()-1);
-					Employee random_employee = company.getEmployees().get(r);
+					Activity latestActivity = currentProject.getActivities().get(currentProject.getActivities().size()-1);
+					Employee randomEmployee = company.getEmployees().get(r);
 					
 					// Add 3 random employees to each activity
-					latest_activity.addEmployee(random_employee);
+					latestActivity.addEmployee(randomEmployee);
 					
 					// Register work
-					random_employee.addRegisteredWork(new RegisteredWork(random_employee, latest_activity, r/2+10));
+					randomEmployee.addRegisteredWork(new RegisteredWork(randomEmployee, latestActivity, r/2+10));
 				}
 			}
 		}
