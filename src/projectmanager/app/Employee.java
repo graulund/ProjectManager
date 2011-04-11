@@ -28,6 +28,10 @@ public class Employee {
 		return leader_of_projects;
 	}
 	
+	public List<Activity> getActivities() {
+		return this.activities;
+	}
+	
 	public void addActivity(Activity activity) {
 		this.activities.add(activity);
 	}

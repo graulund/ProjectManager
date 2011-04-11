@@ -19,10 +19,10 @@ import projectmanager.app.RegisteredWork;
 public class SampleDataSetup {
 	
 	ProjectManagerApp PMApp = new ProjectManagerApp();
+	Company company = PMApp.getCompany();
 	
 	@Before
 	public void setUp() throws Exception {
-		Company company = PMApp.getCompany();
 		
 		// 10 employees
 		for (int i = 1; i <= 10; i++) {
