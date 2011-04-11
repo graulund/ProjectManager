@@ -46,7 +46,7 @@ public class WorkWeek {
 		this.delegatedWork.add(work);
 	}
 	public void addRegisteredWork(RegisteredWork work){
-		// TODO: What if it's already in the list?
+		
 		this.registeredWork.add(work);
 	}
 	

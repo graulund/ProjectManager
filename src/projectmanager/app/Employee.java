@@ -39,8 +39,8 @@ public class Employee {
 		this.activities.remove(activity);
 	}
 	
-	public void addRegisteredWork(RegisteredWork reg_work) {
-		this.reg_works.add(reg_work);
+	public void addRegisteredWork(RegisteredWork regwork) {
+		this.reg_works.add(regwork);
 	}
 	public void removeRegisteredWork(RegisteredWork reg_work) {
 		this.reg_works.remove(reg_work);

@@ -18,29 +18,41 @@ public class TimeRegistration extends SampleDataSetup {
 		boolean login = PMApp.employeeLogin("emp1");
 		
 		// random projects to employee
+		Employee employee = company.employeeByUsername("emp1");
 		Project project = new Project("lolproject", "Google");
-		company.addProject(project);
 		Activity activity = new Activity("lolcat", project);
+		company.addProject(project);
 		project.addActivity(activity);
-		company.employeeByUsername("emp1").addActivity(activity);
+		employee.addActivity(activity);
 		
 		// medarbejder v¾lger en aktivitet, som han er tilmeldt
 		List<Activity> activities = company.employeeByUsername("emp1").getActivities();
-		activities.get(0);
+		Activity chosenActivity = activities.get(0);
 		
-		// medarbejder indtaster tid 
+		// medarbejder indtaster f¿lgende tid 
 		String date = "24.12.2011";
 		String startTime = "10:00";
 		String endTime = "17:00";
 		
-		String[] dateSplit = date.split(".");
+		// tiden registreres
+		//RegisteredWork regWork = new RegisteredWork(chosenActivity, date, startTime, endTime);
+		//employee.addRegisteredWork(regWork);
+		
+		// tester at arbejdet er registreret korrekt
+		// MANGLER!!!
+		
+		
+		
+		// Programmet bruger f¿lgende kode til at omdanne input (SKAL IKKE V®RE I TESTEN!!)
+		
+		/*String[] dateSplit = date.split(".");
 		String[] startTimeSplit = startTime.split(":");
 		String[] endTimeSplit = endTime.split(":");
 		
-		Calendar startCalendar = new GregorianCalendar();
+		GregorianCalendar startCalendar = new GregorianCalendar();
 		startCalendar.set(Integer.parseInt(dateSplit[2]), Integer.parseInt(dateSplit[1]), Integer.parseInt(dateSplit[0]), 
 				Integer.parseInt(startTimeSplit[0]), Integer.parseInt(startTimeSplit[1])); 
-		Calendar endCalendar = new GregorianCalendar();
+		GregorianCalendar endCalendar = new GregorianCalendar();
 		endCalendar.set(Integer.parseInt(dateSplit[2]), Integer.parseInt(dateSplit[1]), Integer.parseInt(dateSplit[0]), 
 				Integer.parseInt(endTimeSplit[0]), Integer.parseInt(endTimeSplit[1]));
 		
@@ -51,12 +63,15 @@ public class TimeRegistration extends SampleDataSetup {
         // Calculate difference in milliseconds
         long diff = milis2 - milis1;
         
-        // Calculate difference in hours
-        long diffHours = (diff / (60 * 60 * 1000));
-
-		RegisteredWork regwork = new RegisteredWork(company.employeeByUsername("emp1"), activity, (int)diffHours*2);
+        // Calculate difference in Halfhours
+        long diffHalfHours = (diff / (60 * 60 * 1000))/2;
+        
+        WorkWeek workweek = new WorkWeek(company.employeeByUsername("emp1"), startCalendar.get(Calendar.WEEK_OF_YEAR), startCalendar.get(Calendar.YEAR));
+        
+		RegisteredWork regwork = new RegisteredWork(company.employeeByUsername("emp1"), activity, (int)diffHours, startCalendar);
+		company.employeeByUsername("emp1").addWorkWeek(workweek);
+		company.employeeByUsername("emp1").getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR)).addRegisteredWork(regwork);*/	
 		
-		company.employeeByUsername("emp1").addRegisteredWork(regwork);		
 	}
 
 }
