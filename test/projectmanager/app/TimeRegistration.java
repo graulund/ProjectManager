@@ -48,7 +48,9 @@ public class TimeRegistration extends SampleDataSetup {
 		
 		// tester at arbejdet er registreret korrekt
 		assertEquals(7, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getHalfHoursWorked());
-		
+		assertEquals(01, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.DATE));
+		assertEquals(01, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.MONTH));
+		assertEquals(2011, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.YEAR));
 		
 		
 		
