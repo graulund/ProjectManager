@@ -11,7 +11,7 @@ import org.junit.Test;
 public class TimeRegistration {
 	
 	/**
-	 * Main scenario
+	 * Main scenario: tester, hvor en medarbejder succesfuldt registrerer sin tid
 	 */
 	@Test
 	public void registerTime() {
@@ -56,5 +56,49 @@ public class TimeRegistration {
 		assertEquals(1, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.MONTH));
 		assertEquals(2011, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.YEAR));		
 	}
+	
+	/**
+	 * Alternativ scenarie 1: tester, hvor en medarbejder registrerer
+	 * 2 forskellige tider inden for samme uge
+	 */
+	@Test
+	public void testTwoRegisteredWorkInOneWeek() {
+		
+	}
+	
+	/**
+	 * Alternativ scenarie 2: tester, hvor en medarbejder giver forkert format af tid
+	 */
+	@Test
+	public void testWrongTimeInput() {
+		
+	}
+	
+	/**
+	 * Alternativ scenarie 3: tester, hvor en medarbejder giver forkert format af dato
+	 */
+	@Test
+	public void testWrongDateInput() {
+		
+	}
+	
+	/**
+	 * Alternativ scenarie 4: tester, hvor en medarbejder ikke indtaster nogen data
+	 * (date-default = dagen, hvor det indtastes)
+	 */
+	@Test
+	public void testNoDateInput() {
+		
+	}
+	
+	/**
+	 * Alternativ scenarie 5: tester, hvor en medarbejder indtaster ugyldig dato/tid
+	 * (fx. udenfor aktivitetens tid)
+	 */
+	@Test
+	public void testInvalidDateTime() {
+		
+	}
+	
 
 }
