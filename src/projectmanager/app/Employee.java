@@ -42,9 +42,14 @@ public class Employee {
 	}
 	
 	public void addRegisteredWork(RegisteredWork regwork) {
-		this.workWeeks.add(
-				new WorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), 
-						   	 regwork.getDate().get(Calendar.YEAR)));
+		// TODO: What if the workweek already exists?
+		WorkWeek workWeek = new WorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), 
+			   	 regwork.getDate().get(Calendar.YEAR));
+		this.workWeeks.add(workWeek);
+		System.out.println("RegWork: DAY: "+regwork.getDate().get(Calendar.DATE)+"; MONTH: "+regwork.getDate().get(Calendar.MONTH));
+		System.out.println("Workweek: WEEK: "+regwork.getDate().get(Calendar.WEEK_OF_YEAR)+"; YEAR: "+regwork.getDate().get(Calendar.YEAR));
+		workWeek.addRegisteredWork(regwork);
+		
 	}
 	public void removeRegisteredWork(RegisteredWork reg_work) {
 		this.reg_works.remove(reg_work);

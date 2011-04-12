@@ -28,7 +28,7 @@ public class RegisteredWork {
 	}
 	
 	public Calendar dateFromInput(String date) {
-		String[] dateSplit = date.split(".");
+		String[] dateSplit = date.split("\\.");
 		Calendar calendar = new GregorianCalendar();
 		calendar.set(Integer.parseInt(dateSplit[2]), 
 				  Integer.parseInt(dateSplit[1]), 
@@ -39,7 +39,7 @@ public class RegisteredWork {
 	
 	public int countHalfHoursWorked(String date, String startTime, String endTime) {
 		// splits the input to readable characters
-		String[] dateSplit = date.split(".");
+		String[] dateSplit = date.split("\\.");
 		String[] startTimeSplit = startTime.split(":");
 		String[] endTimeSplit = endTime.split(":");
 		
@@ -65,7 +65,7 @@ public class RegisteredWork {
         long diff = milis2 - milis1;
         
         // Calculate difference in Halfhours
-        long diffHalfHours = (diff / (60 * 60 * 1000))/2;
+        long diffHalfHours = (diff / (60 * 60 * 1000))*2;
         
         return (int)diffHalfHours;
 	}
