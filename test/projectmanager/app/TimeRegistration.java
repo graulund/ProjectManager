@@ -51,43 +51,10 @@ public class TimeRegistration {
 		employee.addRegisteredWork(regWork);
 		
 		// tester at arbejdet er registreret korrekt
-		//System.out.println(employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getHalfHoursWorked());
 		assertEquals(14, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getHalfHoursWorked());
-		assertEquals(01, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.DATE));
-		assertEquals(01, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.MONTH));
-		assertEquals(2011, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.YEAR));
-		
-		
-		
-		// Programmet bruger f¿lgende kode til at omdanne input (SKAL IKKE V®RE I TESTEN!!)
-		
-		/*String[] dateSplit = date.split(".");
-		String[] startTimeSplit = startTime.split(":");
-		String[] endTimeSplit = endTime.split(":");
-		
-		GregorianCalendar startCalendar = new GregorianCalendar();
-		startCalendar.set(Integer.parseInt(dateSplit[2]), Integer.parseInt(dateSplit[1]), Integer.parseInt(dateSplit[0]), 
-				Integer.parseInt(startTimeSplit[0]), Integer.parseInt(startTimeSplit[1])); 
-		GregorianCalendar endCalendar = new GregorianCalendar();
-		endCalendar.set(Integer.parseInt(dateSplit[2]), Integer.parseInt(dateSplit[1]), Integer.parseInt(dateSplit[0]), 
-				Integer.parseInt(endTimeSplit[0]), Integer.parseInt(endTimeSplit[1]));
-		
-		// Get the represented date in milliseconds
-        long milis1 = startCalendar.getTimeInMillis();
-        long milis2 = endCalendar.getTimeInMillis();
-        
-        // Calculate difference in milliseconds
-        long diff = milis2 - milis1;
-        
-        // Calculate difference in Halfhours
-        long diffHalfHours = (diff / (60 * 60 * 1000))/2;
-        
-        
-        
-		RegisteredWork regwork = new RegisteredWork(company.employeeByUsername("emp1"), activity, (int)diffHours, startCalendar);
-		company.employeeByUsername("emp1").addWorkWeek(workweek);
-		company.employeeByUsername("emp1").getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR)).addRegisteredWork(regwork);*/	
-		
+		assertEquals(1, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.DATE));
+		assertEquals(1, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.MONTH));
+		assertEquals(2011, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getDate().get(Calendar.YEAR));		
 	}
 
 }

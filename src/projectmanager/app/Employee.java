@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Employee {
 	private String name; // 4 letters
-	private List<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
+	private ArrayList<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
 	private List<Project> leader_of_projects = new ArrayList<Project>(); // hmm.. do we need a list of projects where the employee has activities?
 	private List<Activity> activities = new ArrayList<Activity>();
 	private List<RegisteredWork> reg_works = new ArrayList<RegisteredWork>();
@@ -42,15 +42,19 @@ public class Employee {
 	}
 	
 	public void addRegisteredWork(RegisteredWork regwork) {
-		// TODO: What if the workweek already exists?
-		WorkWeek workWeek = new WorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), 
-			   	 regwork.getDate().get(Calendar.YEAR));
-		this.workWeeks.add(workWeek);
-		System.out.println("RegWork: DAY: "+regwork.getDate().get(Calendar.DATE)+"; MONTH: "+regwork.getDate().get(Calendar.MONTH));
-		System.out.println("Workweek: WEEK: "+regwork.getDate().get(Calendar.WEEK_OF_YEAR)+"; YEAR: "+regwork.getDate().get(Calendar.YEAR));
-		workWeek.addRegisteredWork(regwork);
-		
+		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
+		if (workWeek == null) {
+			WorkWeek newWorkWeek = new WorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), 
+				   	 regwork.getDate().get(Calendar.YEAR));
+			this.workWeeks.add(newWorkWeek);
+			newWorkWeek.addRegisteredWork(regwork);
+			//System.out.println(this.workWeeks.get(0).getWeekNumber());
+		} else {
+			workWeek.addRegisteredWork(regwork);
+		}
+		this.reg_works.add(regwork);		
 	}
+	
 	public void removeRegisteredWork(RegisteredWork reg_work) {
 		this.reg_works.remove(reg_work);
 	}

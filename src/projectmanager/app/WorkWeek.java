@@ -1,6 +1,7 @@
 package projectmanager.app;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class WorkWeek {
@@ -47,7 +48,6 @@ public class WorkWeek {
 		this.delegatedWork.add(work);
 	}
 	public void addRegisteredWork(RegisteredWork work){
-		
 		this.registeredWork.add(work);
 	}
 	
@@ -60,7 +60,9 @@ public class WorkWeek {
 	}
 	public RegisteredWork getRegisteredWork(Activity chosenActivity, GregorianCalendar calendarDate) {
 		for (RegisteredWork regwork: this.registeredWork) {
-			if (regwork.getDate().equals(calendarDate) &&
+			if (regwork.getDate().get(Calendar.DATE) == calendarDate.get(Calendar.DATE) &&
+				regwork.getDate().get(Calendar.MONTH) == calendarDate.get(Calendar.MONTH) &&
+				regwork.getDate().get(Calendar.YEAR) == calendarDate.get(Calendar.YEAR) &&
 				regwork.getActivity() == chosenActivity) {
 				return regwork;
 			}
