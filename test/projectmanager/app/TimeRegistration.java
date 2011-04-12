@@ -1,5 +1,7 @@
 package projectmanager.app;
 
+import static org.junit.Assert.*;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -30,16 +32,23 @@ public class TimeRegistration extends SampleDataSetup {
 		Activity chosenActivity = activities.get(0);
 		
 		// medarbejder indtaster f¿lgende tid 
-		String date = "24.12.2011";
+		String date = "01.01.2011";
 		String startTime = "10:00";
 		String endTime = "17:00";
 		
+		// Omformning til calendar
+		String[] dateSplit = date.split(".");
+		
+		GregorianCalendar calendarDate = new GregorianCalendar();
+		calendarDate.set(Integer.parseInt(dateSplit[2]), Integer.parseInt(dateSplit[1]), Integer.parseInt(dateSplit[0]));
+		
 		// tiden registreres
-		//RegisteredWork regWork = new RegisteredWork(chosenActivity, date, startTime, endTime);
-		//employee.addRegisteredWork(regWork);
+		RegisteredWork regWork = new RegisteredWork(chosenActivity, date, startTime, endTime);
+		employee.addRegisteredWork(regWork);
 		
 		// tester at arbejdet er registreret korrekt
-		// MANGLER!!!
+		assertEquals(7, employee.getWorkWeek(calendarDate.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate).getHalfHoursWorked());
+		
 		
 		
 		
@@ -66,7 +75,7 @@ public class TimeRegistration extends SampleDataSetup {
         // Calculate difference in Halfhours
         long diffHalfHours = (diff / (60 * 60 * 1000))/2;
         
-        WorkWeek workweek = new WorkWeek(company.employeeByUsername("emp1"), startCalendar.get(Calendar.WEEK_OF_YEAR), startCalendar.get(Calendar.YEAR));
+        
         
 		RegisteredWork regwork = new RegisteredWork(company.employeeByUsername("emp1"), activity, (int)diffHours, startCalendar);
 		company.employeeByUsername("emp1").addWorkWeek(workweek);

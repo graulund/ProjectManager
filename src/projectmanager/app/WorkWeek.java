@@ -1,24 +1,25 @@
 package projectmanager.app;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class WorkWeek {
-	private Employee employee;
+	//private Employee employee;
 	private int weekNumber;
 	private int year;
 	private ArrayList<DelegatedWork> delegatedWork   = new ArrayList<DelegatedWork>();
 	private ArrayList<RegisteredWork> registeredWork = new ArrayList<RegisteredWork>();
-	public WorkWeek(Employee employee, int weekNumber, int year) {
-		this.employee   = employee;
+	public WorkWeek(int weekNumber, int year) {
+		//this.employee   = employee;
 		this.weekNumber = weekNumber;
 		this.year       = year;
 	}
-	public Employee getEmployee() {
+	/*public Employee getEmployee() {
 		return employee;
 	}
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
-	}
+	}*/
 	public int getWeekNumber() {
 		return weekNumber;
 	}
@@ -56,6 +57,15 @@ public class WorkWeek {
 			total += work.getHours();
 		}
 		return total;
+	}
+	public RegisteredWork getRegisteredWork(Activity chosenActivity, GregorianCalendar calendarDate) {
+		for (RegisteredWork regwork: this.registeredWork) {
+			if (regwork.getDate().equals(calendarDate) &&
+				regwork.getActivity() == chosenActivity) {
+				return regwork;
+			}
+		}
+		return null;
 	}
 	
 //	public int getRegisteredHours(){

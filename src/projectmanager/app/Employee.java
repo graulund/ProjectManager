@@ -1,10 +1,12 @@
 package projectmanager.app;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Employee {
 	private String name; // 4 letters
+	private List<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
 	private List<Project> leader_of_projects = new ArrayList<Project>(); // hmm.. do we need a list of projects where the employee has activities?
 	private List<Activity> activities = new ArrayList<Activity>();
 	private List<RegisteredWork> reg_works = new ArrayList<RegisteredWork>();
@@ -40,10 +42,26 @@ public class Employee {
 	}
 	
 	public void addRegisteredWork(RegisteredWork regwork) {
-		this.reg_works.add(regwork);
+		this.workWeeks.add(
+				new WorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), 
+						   	 regwork.getDate().get(Calendar.YEAR)));
 	}
 	public void removeRegisteredWork(RegisteredWork reg_work) {
 		this.reg_works.remove(reg_work);
+	}
+	
+	public List<WorkWeek> getWorkWeeks() {
+		return this.workWeeks;
+	}
+
+	public WorkWeek getWorkWeek(int weekNumber, int year) {
+		for (WorkWeek workweek: this.workWeeks) {
+			if (workweek.getWeekNumber() == weekNumber &&
+				workweek.getYear() == year) {
+				return workweek;
+			}
+		}
+		return null;
 	}
 	
 }
