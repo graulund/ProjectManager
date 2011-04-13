@@ -24,7 +24,6 @@ public class TimeRegistration {
 		boolean login = PMApp.employeeLogin("hlb");
 		
 		// random projects to employee
-		//Employee employee = company.employeeByUsername("hlb");
 		Project project = new Project("lolproject", "Google");
 		Activity activity = new Activity("lolcat", project);
 		company.addProject(project);
@@ -63,6 +62,60 @@ public class TimeRegistration {
 	 */
 	@Test
 	public void testTwoRegisteredWorkInOneWeek() {
+		ProjectManagerApp PMApp = new ProjectManagerApp();
+		Employee employee = new Employee("hlb");
+		Company company = PMApp.getCompany();
+		company.addEmployee(employee);
+		
+		// medarbejder logger ind med initialer, der findes i databasen
+		boolean login = PMApp.employeeLogin("hlb");
+		
+		// random projects to employee
+		Project project = new Project("lolproject", "Google");
+		Activity activity = new Activity("lolcat", project);
+		company.addProject(project);
+		project.addActivity(activity);
+		employee.addActivity(activity);
+		
+		// medarbejder v¾lger en aktivitet, som han er tilmeldt
+		List<Activity> activities = company.employeeByUsername("hlb").getActivities();
+		Activity chosenActivity = activities.get(0);
+		
+		// medarbejder indtaster f¿lgende tid 
+		String date1 = "01.01.2011";
+		String startTime1 = "10:45";
+		String endTime1 = "17:00";
+		
+		String date2 = "02.02.2011";
+		String startTime2 = "12:00";
+		String endTime2 = "16:30";
+		
+		// Omformning til calendar
+		String[] dateSplit1 = date1.split("\\.");
+		String[] dateSplit2 = date2.split("\\.");
+		
+		GregorianCalendar calendarDate1 = new GregorianCalendar();
+		calendarDate1.set(Integer.parseInt(dateSplit1[2]), Integer.parseInt(dateSplit1[1]), Integer.parseInt(dateSplit1[0]));
+		
+		GregorianCalendar calendarDate2 = new GregorianCalendar();
+		calendarDate2.set(Integer.parseInt(dateSplit2[2]), Integer.parseInt(dateSplit2[1]), Integer.parseInt(dateSplit2[0]));
+		
+		// tilf¿jer indtastede arbejde
+		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, date1, startTime1, endTime1);
+		employee.addRegisteredWork(regWork1);
+		
+		RegisteredWork regWork2 = new RegisteredWork(chosenActivity, date2, startTime2, endTime2);
+		employee.addRegisteredWork(regWork2);
+		
+		// test if half hours worked is correct
+		assertEquals(13, employee.getWorkWeek(calendarDate1.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate1).getHalfHoursWorked());
+		assertEquals(9, employee.getWorkWeek(calendarDate2.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate2).getHalfHoursWorked());
+		
+		// test if the two registered weeks are in the same workweek
+		assertEquals(employee.getWorkWeek(calendarDate1.get(Calendar.WEEK_OF_YEAR), 2011), employee.getWorkWeek(calendarDate2.get(Calendar.WEEK_OF_YEAR), 2011));
+		
+		
+		
 		
 	}
 	
