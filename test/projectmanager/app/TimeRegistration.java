@@ -6,17 +6,18 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class TimeRegistration {
+	private ProjectManagerApp PMApp;
+	private Employee employee;
+	Activity chosenActivity;
 	
-	/**
-	 * Main scenario: tester, hvor en medarbejder succesfuldt registrerer sin tid
-	 */
-	@Test
-	public void registerTime() {
-		ProjectManagerApp PMApp = new ProjectManagerApp();
-		Employee employee = new Employee("hlb");
+	@Before
+	public void setUptEmployeeAndActivity() {
+		PMApp = new ProjectManagerApp();
+		employee = new Employee("hlb");
 		Company company = PMApp.getCompany();
 		company.addEmployee(employee);
 		
@@ -32,8 +33,14 @@ public class TimeRegistration {
 		
 		// medarbejder v푡ger en aktivitet, som han er tilmeldt
 		List<Activity> activities = company.employeeByUsername("hlb").getActivities();
-		Activity chosenActivity = activities.get(0);
-		
+		chosenActivity = activities.get(0);
+	}
+	
+	/**
+	 * Main scenario: tester, hvor en medarbejder succesfuldt registrerer sin tid
+	 */
+	@Test
+	public void registerTime() {		
 		// medarbejder indtaster f퓄gende tid 
 		String date = "01.01.2011";
 		String startTime = "10:00";
@@ -61,34 +68,15 @@ public class TimeRegistration {
 	 * 2 forskellige tider inden for samme uge
 	 */
 	@Test
-	public void testTwoRegisteredWorkInOneWeek() {
-		ProjectManagerApp PMApp = new ProjectManagerApp();
-		Employee employee = new Employee("hlb");
-		Company company = PMApp.getCompany();
-		company.addEmployee(employee);
-		
-		// medarbejder logger ind med initialer, der findes i databasen
-		boolean login = PMApp.employeeLogin("hlb");
-		
-		// random projects to employee
-		Project project = new Project("lolproject", "Google");
-		Activity activity = new Activity("lolcat", project);
-		company.addProject(project);
-		project.addActivity(activity);
-		employee.addActivity(activity);
-		
-		// medarbejder v푡ger en aktivitet, som han er tilmeldt
-		List<Activity> activities = company.employeeByUsername("hlb").getActivities();
-		Activity chosenActivity = activities.get(0);
-		
+	public void testTwoRegisteredWorkInOneWeek() {		
 		// medarbejder indtaster f퓄gende tid 
 		String date1 = "01.01.2011";
-		String startTime1 = "10:45";
+		String startTime1 = "10:30";
 		String endTime1 = "17:00";
 		
-		String date2 = "02.02.2011";
+		String date2 = "02.01.2011";
 		String startTime2 = "12:00";
-		String endTime2 = "16:30";
+		String endTime2 = "16:20";
 		
 		// Omformning til calendar
 		String[] dateSplit1 = date1.split("\\.");
@@ -112,11 +100,8 @@ public class TimeRegistration {
 		assertEquals(9, employee.getWorkWeek(calendarDate2.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, calendarDate2).getHalfHoursWorked());
 		
 		// test if the two registered weeks are in the same workweek
+		assertEquals(calendarDate1.get(Calendar.WEEK_OF_YEAR), calendarDate2.get(Calendar.WEEK_OF_YEAR));
 		assertEquals(employee.getWorkWeek(calendarDate1.get(Calendar.WEEK_OF_YEAR), 2011), employee.getWorkWeek(calendarDate2.get(Calendar.WEEK_OF_YEAR), 2011));
-		
-		
-		
-		
 	}
 	
 	/**

@@ -57,17 +57,44 @@ public class RegisteredWork {
 						Integer.parseInt(endTimeSplit[0]), 
 						Integer.parseInt(endTimeSplit[1]));
 		
-		// Get the represented date in milliseconds
-        long milis1 = startCalendar.getTimeInMillis();
-        long milis2 = endCalendar.getTimeInMillis();
-        
         // Calculate difference in milliseconds
-        long diff = milis2 - milis1;
+        long diff = endCalendar.getTimeInMillis() - startCalendar.getTimeInMillis();
         
         // Calculate difference in Halfhours
         long diffHalfHours = (diff / (60 * 60 * 1000))*2;
         
-        return (int)diffHalfHours;
+        //return (int)diffHalfHours;
+        return getMostHours(diffHalfHours, Integer.parseInt(startTimeSplit[1]), Integer.parseInt(endTimeSplit[1]));
+	}
+	
+	/**
+	 * Method that corrects the half hours so that they are fair
+	 * @param diffHalfHours
+	 * @param startMinutes
+	 * @param endMinutes
+	 * @return
+	 */
+	private int getMostHours(long diffHalfHours, int startMinutes, int endMinutes) {
+		int halfHours = (int)diffHalfHours;
+		if (startMinutes > 0 && startMinutes <= 15) {
+			halfHours+=2;
+		} else if (startMinutes >= 15 && startMinutes < 45) {
+			halfHours++;;
+		}
+		if (endMinutes >= 15 && endMinutes < 45) {
+			halfHours++;
+		} else if (endMinutes >= 45) {
+			halfHours+=2;
+		}
+		return halfHours;
+	}
+
+	public int getMostHours(int minuteInput) {
+		if (minuteInput == 30) {
+			return 31;
+		} else {
+			return minuteInput;
+		}
 	}
 	
 	public Calendar getDate() {
