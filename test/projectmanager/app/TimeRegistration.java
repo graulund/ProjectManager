@@ -105,6 +105,51 @@ public class TimeRegistration {
 	}
 	
 	/**
+	 * Alternativ scenarie 1.5: tester, hvor en medarbejder registrerer en tid, 
+	 * der overlapper med en tidligere registreret tid
+	 * FOR MEGET!?
+	 */
+	/*@Test
+	public void testDublicationOfRegWork() {
+		// medarbejder indtaster følgende tid 
+		String date1 = "01.01.2011";
+		String startTime1 = "10:30";
+		String endTime1 = "17:00";
+		
+		// Omformning til calendar
+		String[] dateSplit1 = date1.split("\\.");
+		GregorianCalendar calendarDate1 = new GregorianCalendar();
+		calendarDate1.set(Integer.parseInt(dateSplit1[2]), Integer.parseInt(dateSplit1[1]), Integer.parseInt(dateSplit1[0]));
+		
+		// registrerer tid
+		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, date1, startTime1, endTime1);
+		employee.addRegisteredWork(regWork1);
+		
+		// Senere...
+		// medarbejder indtaster følgende tid (som overlappe ovenstående)
+		String date2 = "01.01.2011";
+		String startTime2 = "12:00";
+		String endTime2 = "16:00";
+		
+		// Omformning til calendar
+		String[] dateSplit2 = date2.split("\\.");
+		GregorianCalendar calendarDate2 = new GregorianCalendar();
+		calendarDate2.set(Integer.parseInt(dateSplit2[2]), Integer.parseInt(dateSplit2[1]), Integer.parseInt(dateSplit2[0]));
+		
+		// registrerer tid
+		RegisteredWork regWork2 = new RegisteredWork(chosenActivity, date2, startTime2, endTime2);
+		
+		try {
+			employee.addRegisteredWork(regWork2);
+			fail("A AlreadyRegisteredWorkException should have been thrown");
+		} catch (AlreadyRegisteredWorkException e) {
+			// Step 4
+			assertEquals("Have already registered work at that time", e.getMessage());
+		}
+		
+	}*/
+	
+	/**
 	 * Alternativ scenarie 2: tester, hvor en medarbejder giver forkert format af tid
 	 */
 	@Test
