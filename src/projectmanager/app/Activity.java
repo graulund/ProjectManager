@@ -7,17 +7,14 @@ import java.util.List;
 
 public class Activity {
 	private String name;
-	private Project project; // Cannot be changed after initialization
 	private List<Employee> employees = new ArrayList<Employee>();
 	private List<RegisteredWork> reg_works = new ArrayList<RegisteredWork>();
-	
-	private int start;  // week no. or calendar?
-	private int end;    // -||-
+	private Calendar start;
+	private Calendar end;
 	private int estimatedWorkHours;
 	
-	public Activity(String name, Project project){
+	public Activity(String name){
 		this.setName(name);
-		this.project = project;
 	}
 	
 	public void addEmployee(Employee employee) {
@@ -42,18 +39,18 @@ public class Activity {
 	}
 	
 	public void setStart(int week) {
-		this.start = week;
+		this.start.set(Calendar.WEEK_OF_YEAR, week);
 	}
 	
 	public void setEnd(int week) {
-		this.end = week;
+		this.start.set(Calendar.WEEK_OF_YEAR, week);
 	}
 	
-	public int getStart() {
+	public Calendar getStart() {
 		return start;
 	}
 	
-	public int getEnd() {
+	public Calendar getEnd() {
 		return end;
 	}
 	

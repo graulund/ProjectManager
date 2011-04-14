@@ -44,7 +44,7 @@ public class SampleDataSetup {
 			for (int j = 1; j <= 3; j++) {
 				// Add 3 activities to each project
 				Project currentProject = company.projectBySerialNumber(i);
-				currentProject.addActivity(new Activity("act"+j, currentProject));
+				currentProject.addActivity(new Activity("act"+j));
 				
 				for (int k = 1; k <= 3; k++) {
 					int r = (int)(Math.random() * company.getEmployees().size());

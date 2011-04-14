@@ -26,7 +26,7 @@ public class TimeRegistration {
 		
 		// random projects to employee
 		Project project = new Project("lolproject", "Google");
-		Activity activity = new Activity("lolcat", project);
+		Activity activity = new Activity("lolcat");
 		company.addProject(project);
 		project.addActivity(activity);
 		employee.addActivity(activity);
@@ -150,7 +150,7 @@ public class TimeRegistration {
 	}
 	
 	/**
-	 * Alternativ scenarie 1.5: tester, hvor en medarbejder registrerer en tid, 
+	 * Alternativ scenarie 2: tester, hvor en medarbejder registrerer en tid, 
 	 * der overlapper med en tidligere registreret tid
 	 * @throws RegisterWorkException 
 	 */
@@ -218,18 +218,15 @@ public class TimeRegistration {
 		} catch (RegisterWorkException e) {
 			// Step 4
 			assertEquals("You have already registered a work at the given time", e.getOperation());
-		}
-		
+		}	
 	}
 	
 	/**
-	 * Alternativ scenarie 5: tester, hvor en medarbejder indtaster ugyldig dato/tid
-	 * (fx. udenfor aktivitetens tid)
+	 * Alternativ scenarie 3: tester, hvor en medarbejder indtaster ugyldig dato/tid udenfor aktivitetens tid
 	 */
 	@Test
 	public void testInvalidDateTime() {
 		
+		
 	}
-	
-
 }
