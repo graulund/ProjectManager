@@ -41,20 +41,38 @@ public class Employee {
 		this.activities.remove(activity);
 	}
 	
-	public void addRegisteredWork(RegisteredWork regwork) {
+	public void addRegisteredWork(RegisteredWork regwork) throws RegisterWorkException {		
+		// checks if workweek in the given week is created. creates a new if not.
 		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
 		if (workWeek == null) {
 			WorkWeek newWorkWeek = new WorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), 
 				   	 regwork.getDate().get(Calendar.YEAR));
 			this.workWeeks.add(newWorkWeek);
 			newWorkWeek.addRegisteredWork(regwork);
+			this.reg_works.add(regwork);
 			//System.out.println(this.workWeeks.get(0).getWeekNumber());
 		} else {
-			workWeek.addRegisteredWork(regwork);
+			// checks if the employee already has registered work at the given time
+			if (timeAlreadyRegistered(regwork, workWeek)) {
+				throw new RegisterWorkException("You have already registered a work at the given time");
+			} else {
+				workWeek.addRegisteredWork(regwork);
+				this.reg_works.add(regwork);
+			}
 		}
-		this.reg_works.add(regwork);		
+				
 	}
 	
+	private boolean timeAlreadyRegistered(RegisteredWork regwork, WorkWeek workweek) {
+		for (RegisteredWork regworkCompare: workweek.getRegisteredWork(regwork.getStartTime())) {
+			if (regwork.getStartTime().before(regworkCompare.getEndTime()) &&
+				regwork.getEndTime().after(regworkCompare.getStartTime())) {
+				return true;
+			} 
+		}
+		return false;
+	}
+
 	public void removeRegisteredWork(RegisteredWork reg_work) {
 		this.reg_works.remove(reg_work);
 	}

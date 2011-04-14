@@ -55,7 +55,7 @@ public class SampleDataSetup {
 					latestActivity.addEmployee(randomEmployee);
 					
 					// Register work
-					randomEmployee.addRegisteredWork(new RegisteredWork(randomEmployee, latestActivity, r/2+10));
+					randomEmployee.addRegisteredWork(new RegisteredWork(latestActivity, r/2+10));
 				}
 			}
 		}

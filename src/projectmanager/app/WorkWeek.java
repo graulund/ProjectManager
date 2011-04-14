@@ -2,7 +2,9 @@ package projectmanager.app;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class WorkWeek {
 	//private Employee employee;
@@ -37,9 +39,6 @@ public class WorkWeek {
 	public void setDelegatedWork(ArrayList<DelegatedWork> delegatedWork) {
 		this.delegatedWork = delegatedWork;
 	}
-	public ArrayList<RegisteredWork> getRegisteredWork() {
-		return registeredWork;
-	}
 	public void setRegisteredWork(ArrayList<RegisteredWork> registeredWork) {
 		this.registeredWork = registeredWork;
 	}
@@ -58,6 +57,24 @@ public class WorkWeek {
 		}
 		return total;
 	}
+	public ArrayList<RegisteredWork> getRegisteredWork() {
+		return registeredWork;
+	}
+	public List<RegisteredWork> getRegisteredWork(Calendar date) {
+		List<RegisteredWork> regworks = new ArrayList<RegisteredWork>();
+		for (RegisteredWork regwork: this.registeredWork) {
+			if (regwork.getDate().get(Calendar.YEAR) == date.get(Calendar.YEAR) &&
+				regwork.getDate().get(Calendar.MONTH) == date.get(Calendar.MONTH) &&
+				regwork.getDate().get(Calendar.DATE) == date.get(Calendar.DATE)			
+				) {
+				regworks.add(regwork);
+			}
+		}
+		return Collections.unmodifiableList(regworks);
+	}
+
+	// RIGHT NOW ONLY HELPER METHOD FOR TESTING (KNOWING THAT THERE IS ONLY ONE REGISTERED WORK
+	// WITH THE GIVEN ACTIVITY AT THE GIVEN DATE). RETURN TYPE SHOULD BE LIST IF KEPT.
 	public RegisteredWork getRegisteredWork(Activity chosenActivity, GregorianCalendar calendarDate) {
 		for (RegisteredWork regwork: this.registeredWork) {
 			if (regwork.getDate().get(Calendar.DATE) == calendarDate.get(Calendar.DATE) &&

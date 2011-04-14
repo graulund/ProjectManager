@@ -4,18 +4,27 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class RegisteredWork {
-	private Employee employee; // working employee
 	private Activity activity; // work done on this activity
 	private Calendar date = new GregorianCalendar(); // default date = today!
+	private Calendar startTime;
+	private Calendar endTime;
 	private int halfHoursWorked;
 	
-	public RegisteredWork(Employee employee, Activity activity, int halfHoursWorked) {
-		this.employee = employee;
+	public RegisteredWork(Activity activity, Calendar startCalendar1, Calendar endCalendar1) {
+		this.activity = activity;
+		this.startTime = startCalendar1;
+		this.endTime = endCalendar1;
+		this.date = setDate(startCalendar1);
+		this.halfHoursWorked = countHalfHoursWorked(startCalendar1, endCalendar1);
+		this.activity.addRegisteredWork(this);
+	}
+	
+	public RegisteredWork(Activity activity, int halfHoursWorked) {
 		this.activity = activity;
 		this.halfHoursWorked = halfHoursWorked;
 		this.activity.addRegisteredWork(this);
 	}
-	
+	/*
 	public RegisteredWork(Employee employee, Activity activity, int halfHoursWorked, GregorianCalendar date) {
 		this(employee, activity, halfHoursWorked);
 		this.date = date;
@@ -25,48 +34,26 @@ public class RegisteredWork {
 		this.activity = activity;
 		this.halfHoursWorked = countHalfHoursWorked(date, startTime, endTime);
 		this.date = dateFromInput(date);
-	}
+	}*/
 	
-	public Calendar dateFromInput(String date) {
-		String[] dateSplit = date.split("\\.");
+	private Calendar setDate(Calendar date) {
 		Calendar calendar = new GregorianCalendar();
-		calendar.set(Integer.parseInt(dateSplit[2]), 
-				  Integer.parseInt(dateSplit[1]), 
-				  Integer.parseInt(dateSplit[0]));
-		
+		calendar.set(date.get(Calendar.YEAR), 
+				     date.get(Calendar.MONTH), 
+				     date.get(Calendar.DATE));
 		return calendar;
 	}
 	
-	public int countHalfHoursWorked(String date, String startTime, String endTime) {
-		// splits the input to readable characters
-		String[] dateSplit = date.split("\\.");
-		String[] startTimeSplit = startTime.split(":");
-		String[] endTimeSplit = endTime.split(":");
-		
-		// saves the inputs in calendars
-		GregorianCalendar startCalendar = new GregorianCalendar();
-		startCalendar.set(Integer.parseInt(dateSplit[2]), 
-						  Integer.parseInt(dateSplit[1]), 
-						  Integer.parseInt(dateSplit[0]), 
-						  Integer.parseInt(startTimeSplit[0]), 
-						  Integer.parseInt(startTimeSplit[1])); 
-		GregorianCalendar endCalendar = new GregorianCalendar();
-		endCalendar.set(Integer.parseInt(dateSplit[2]), 
-						Integer.parseInt(dateSplit[1]), 
-						Integer.parseInt(dateSplit[0]), 
-						Integer.parseInt(endTimeSplit[0]), 
-						Integer.parseInt(endTimeSplit[1]));
-		
-        // Calculate difference in milliseconds
-        long diff = endCalendar.getTimeInMillis() - startCalendar.getTimeInMillis();
+	private int countHalfHoursWorked(Calendar startTime, Calendar endTime) {
+		// Calculate difference in milliseconds
+        long diff = endTime.getTimeInMillis() - startTime.getTimeInMillis();
         
         // Calculate difference in Halfhours
         long diffHalfHours = (diff / (60 * 60 * 1000))*2;
         
         //return (int)diffHalfHours;
-        return getMostHours(diffHalfHours, Integer.parseInt(startTimeSplit[1]), Integer.parseInt(endTimeSplit[1]));
+        return getMostHours(diffHalfHours, startTime.get(Calendar.MINUTE), endTime.get(Calendar.MINUTE));
 	}
-	
 	/**
 	 * Method that corrects the half hours so that they are fair
 	 * @param diffHalfHours
@@ -107,5 +94,13 @@ public class RegisteredWork {
 
 	public int getHalfHoursWorked() {
 		return this.halfHoursWorked;
+	}
+
+	public Calendar getStartTime() {
+		return this.startTime;
+	}
+
+	public Calendar getEndTime() {
+		return this.endTime;
 	}
 }
