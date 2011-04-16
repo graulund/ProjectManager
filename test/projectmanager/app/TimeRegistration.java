@@ -225,8 +225,6 @@ public class TimeRegistration {
 	 * Alternativ scenarie 3: tester, hvor en medarbejder indtaster ugyldig dato/tid udenfor aktivitetens tid
 	 */
 	@Test
-	public void testInvalidDateTime() {
-		
-		
+	public void testInvalidDateTime() {		
 	}
 }
