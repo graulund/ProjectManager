@@ -92,8 +92,8 @@ public class RegisteredWork {
 		return this.activity;
 	}
 
-	public int getHoursWorked() {
-		return 2*this.halfHoursWorked;
+	public double getHoursWorked() {
+		return (double) this.halfHoursWorked/2;
 	}
 
 	public Calendar getStartTime() {

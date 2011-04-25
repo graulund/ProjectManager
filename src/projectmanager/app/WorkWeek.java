@@ -7,22 +7,18 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class WorkWeek {
-	//private Employee employee;
+	
 	private int weekNumber;
 	private int year;
-	private ArrayList<DelegatedWork> delegatedWork   = new ArrayList<DelegatedWork>();
-	private ArrayList<RegisteredWork> registeredWork = new ArrayList<RegisteredWork>();
+	private List<DelegatedWork> delegatedWork   = new ArrayList<DelegatedWork>();
+	private List<RegisteredWork> registeredWork = new ArrayList<RegisteredWork>();
+	
 	public WorkWeek(int weekNumber, int year) {
 		//this.employee   = employee;
 		this.weekNumber = weekNumber;
 		this.year       = year;
 	}
-	/*public Employee getEmployee() {
-		return employee;
-	}
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}*/
+
 	public int getWeekNumber() {
 		return weekNumber;
 	}
@@ -33,7 +29,7 @@ public class WorkWeek {
 		this.weekNumber = weekNumber;
 		this.year       = year;
 	}
-	public ArrayList<DelegatedWork> getDelegatedWork() {
+	public List<DelegatedWork> getDelegatedWork() {
 		return delegatedWork;
 	}
 	public void setDelegatedWork(ArrayList<DelegatedWork> delegatedWork) {
@@ -57,7 +53,7 @@ public class WorkWeek {
 		}
 		return total;
 	}
-	public ArrayList<RegisteredWork> getRegisteredWork() {
+	public List<RegisteredWork> getRegisteredWork() {
 		return registeredWork;
 	}
 	public List<RegisteredWork> getRegisteredWork(Calendar date) {

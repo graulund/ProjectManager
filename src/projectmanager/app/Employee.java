@@ -7,7 +7,8 @@ import java.util.List;
 public class Employee {
 	private String name; // 4 letters
 	private ArrayList<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
-	private List<Project> leader_of_projects = new ArrayList<Project>(); // hmm.. do we need a list of projects where the employee has activities?
+	private Company employedAtCompany;
+	private List<Project> leader_of_projects = new ArrayList<Project>();
 	private List<Activity> activities = new ArrayList<Activity>();
 	private List<RegisteredWork> reg_works = new ArrayList<RegisteredWork>();
 
@@ -21,6 +22,9 @@ public class Employee {
 	}
 	public void setUsername(String name) {
 		this.name = name;
+	}
+	public void setEmployedAtCompany(Company company) {
+		this.employedAtCompany = company;
 	}
 	
 	public void setProjectLeaderOf(Project project) {
