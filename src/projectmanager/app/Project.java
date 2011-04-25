@@ -47,4 +47,14 @@ public class Project {
 	public List<Activity> getActivities() {
 		return activities;
 	}
+	
+	public String getReport() {
+		double registeredHours = 0;
+		int delegatedHours = 0;
+		for (Activity activity: this.activities) {
+			registeredHours += activity.getRegisteredHours();
+			delegatedHours += activity.getDelegatedHours();
+		}
+		return "Project: "+name+". Client: "+client+". Project leader: "+projectLeader.getUsername()+". Work status: "+registeredHours+"/"+delegatedHours+".";
+	}
 }

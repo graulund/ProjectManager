@@ -1,8 +1,10 @@
 package projectmanager.app;
 
 public class DelegatedWork {
+	
 	private int hours;
 	private Activity activity;
+	
 	public DelegatedWork(int hours, Activity activity){
 		this.hours   = hours;
 		this.activity = activity;

@@ -49,8 +49,4 @@ public class Company {
 		}
 		return null;
 	}
-	
-	public void printReport() {
-		// TODO: do me!
-	}
 }

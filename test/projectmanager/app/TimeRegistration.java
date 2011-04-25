@@ -71,7 +71,7 @@ public class TimeRegistration {
 		employee.addRegisteredWork(regWork);
 		
 		// tester at arbejdet er registreret korrekt
-		assertEquals(14, employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar).getHalfHoursWorked());
+		assertEquals(14, employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar).getHoursWorked());
 		assertEquals(1, employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar).getDate().get(Calendar.DATE));
 		assertEquals(1, employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar).getDate().get(Calendar.MONTH));
 		assertEquals(2011, employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar).getDate().get(Calendar.YEAR));		
@@ -141,8 +141,8 @@ public class TimeRegistration {
 		employee.addRegisteredWork(regWork2);
 		
 		// test if half hours worked is correct
-		assertEquals(13, employee.getWorkWeek(startCalendar1.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar1).getHalfHoursWorked());
-		assertEquals(9, employee.getWorkWeek(startCalendar2.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar2).getHalfHoursWorked());
+		assertEquals(13, employee.getWorkWeek(startCalendar1.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar1).getHoursWorked());
+		assertEquals(9, employee.getWorkWeek(startCalendar2.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar2).getHoursWorked());
 		
 		// test if the two registered weeks are in the same workweek
 		assertEquals(startCalendar1.get(Calendar.WEEK_OF_YEAR), startCalendar2.get(Calendar.WEEK_OF_YEAR));

@@ -8,10 +8,10 @@ import java.util.List;
 public class Activity {
 	private String name;
 	private List<Employee> employees = new ArrayList<Employee>();
+	private List<DelegatedWork> del_works = new ArrayList<DelegatedWork>();
 	private List<RegisteredWork> reg_works = new ArrayList<RegisteredWork>();
 	private Calendar start;
 	private Calendar end;
-	private int estimatedWorkHours;
 	
 	public Activity(String name){
 		this.setName(name);
@@ -54,12 +54,20 @@ public class Activity {
 		return end;
 	}
 	
-	public void setWorkHours(int hours) {
-		estimatedWorkHours = hours;
+	public int getDelegatedHours() {
+		int total = 0;
+		for (DelegatedWork del_work: this.del_works) {
+			total += del_work.getHours();
+		}
+		return total;
 	}
 	
-	public int getWorkHours() {
-		return estimatedWorkHours;
+	public double getRegisteredHours() {
+		double total = 0;
+		for (RegisteredWork reg_work: this.reg_works) {
+			total += reg_work.getHoursWorked();
+		}
+		return total;
 	}
 	
 }
