@@ -46,15 +46,22 @@ public class Employee {
 	}
 	
 	public void addRegisteredWork(RegisteredWork regwork) throws RegisterWorkException {		
-		// checks if workweek in the given week is created. creates a new if not.
 		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
-		if (workWeek == null) {
+	
+		// Checks if the time of the registered work is outside of the time-interval of the activity
+		if (timeOutsideActivity(regwork, regwork.getActivity())) {
+			throw new RegisterWorkException("You have registered time outside the timer-interval of the given activity");
+			
+		// Checks if workweek for the registered work already exists
+		} else if (workWeek == null) {
 			WorkWeek newWorkWeek = new WorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), 
-				   	 regwork.getDate().get(Calendar.YEAR));
+												regwork.getDate().get(Calendar.YEAR)
+				   	 							);
 			this.workWeeks.add(newWorkWeek);
 			newWorkWeek.addRegisteredWork(regwork);
 			this.reg_works.add(regwork);
-			//System.out.println(this.workWeeks.get(0).getWeekNumber());
+		
+		// The workweek does exist, and registered work is added
 		} else {
 			// checks if the employee already has registered work at the given time
 			if (timeAlreadyRegistered(regwork, workWeek)) {
@@ -67,6 +74,19 @@ public class Employee {
 				
 	}
 	
+	private boolean timeOutsideActivity(RegisteredWork regwork, Activity activity) {
+		if (activity.getStart() != null && activity.getEnd() != null) {
+			if (regwork.getDate().before(activity.getStart()) ||
+					regwork.getDate().after(activity.getEnd())) {
+					return true;
+				}
+				return false;
+		} else {
+			return false;
+		}
+		
+	}
+
 	private boolean timeAlreadyRegistered(RegisteredWork regwork, WorkWeek workweek) {
 		for (RegisteredWork regworkCompare: workweek.getRegisteredWork(regwork.getStartTime())) {
 			if (regwork.getStartTime().before(regworkCompare.getEndTime()) &&

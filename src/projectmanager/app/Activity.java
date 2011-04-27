@@ -38,20 +38,24 @@ public class Activity {
 		return name;
 	}
 	
-	public void setStart(int week) {
+	public void setStart(int week, int year) {
+		this.start = new GregorianCalendar();
+		this.start.set(Calendar.YEAR, year);
 		this.start.set(Calendar.WEEK_OF_YEAR, week);
 	}
 	
-	public void setEnd(int week) {
-		this.start.set(Calendar.WEEK_OF_YEAR, week);
+	public void setEnd(int week, int year) {
+		this.end = new GregorianCalendar();
+		this.end.set(Calendar.YEAR, year);
+		this.end.set(Calendar.WEEK_OF_YEAR, week);
 	}
 	
 	public Calendar getStart() {
-		return start;
+		return this.start;
 	}
 	
 	public Calendar getEnd() {
-		return end;
+		return this.end;
 	}
 	
 	public int getDelegatedHours() {

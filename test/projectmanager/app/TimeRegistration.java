@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,19 +14,21 @@ public class TimeRegistration {
 	private ProjectManagerApp PMApp;
 	private Employee employee;
 	Activity chosenActivity;
+	Company company;
+	Project project;
 	
 	@Before
 	public void setUptEmployeeAndActivity() {
 		PMApp = new ProjectManagerApp();
 		employee = new Employee("hlb");
-		Company company = PMApp.getCompany();
+		company = PMApp.getCompany();
 		company.addEmployee(employee);
 		
 		// medarbejder logger ind med initialer, der findes i databasen
 		boolean login = PMApp.employeeLogin("hlb");
 		
 		// random projects to employee
-		Project project = new Project("lolproject", "Google");
+		project = new Project("lolproject", "Google");
 		Activity activity = new Activity("lolcat");
 		company.addProject(project);
 		project.addActivity(activity);
@@ -140,10 +143,6 @@ public class TimeRegistration {
 		RegisteredWork regWork2 = new RegisteredWork(chosenActivity, startCalendar2, endCalendar2);
 		employee.addRegisteredWork(regWork2);
 		
-		// test if half hours worked is correct
-		assertEquals(13, employee.getWorkWeek(startCalendar1.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar1).getHoursWorked());
-		assertEquals(9, employee.getWorkWeek(startCalendar2.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar2).getHoursWorked());
-		
 		// test if the two registered weeks are in the same workweek
 		assertEquals(startCalendar1.get(Calendar.WEEK_OF_YEAR), startCalendar2.get(Calendar.WEEK_OF_YEAR));
 		assertEquals(employee.getWorkWeek(startCalendar1.get(Calendar.WEEK_OF_YEAR), 2011), employee.getWorkWeek(startCalendar2.get(Calendar.WEEK_OF_YEAR), 2011));
@@ -169,13 +168,13 @@ public class TimeRegistration {
 		// gemmer inputtet som kalendre
 		GregorianCalendar startCalendar1 = new GregorianCalendar();
 		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
-						  Integer.parseInt(dateSplit1[1]), 
+						  Integer.parseInt(dateSplit1[1])-1, 
 						  Integer.parseInt(dateSplit1[0]), 
 						  Integer.parseInt(startTimeSplit1[0]), 
 						  Integer.parseInt(startTimeSplit1[1])); 
 		GregorianCalendar endCalendar1 = new GregorianCalendar();
 		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
-						Integer.parseInt(dateSplit1[1]), 
+						Integer.parseInt(dateSplit1[1])-1, 
 						Integer.parseInt(dateSplit1[0]), 
 						Integer.parseInt(endTimeSplit1[0]), 
 						Integer.parseInt(endTimeSplit1[1]));
@@ -187,8 +186,8 @@ public class TimeRegistration {
 		// Senere...
 		// medarbejder indtaster f퓄gende tid (som overlappe ovenst똢nde)
 		String date2 = "01.01.2011";
-		String startTime2 = "12:00";
-		String endTime2 = "15:00";
+		String startTime2 = "08:00";
+		String endTime2 = "14:30";
 		
 		// splitter inputtet
 		String[] dateSplit2 = date2.split("\\.");
@@ -198,13 +197,13 @@ public class TimeRegistration {
 		// gemmer inputtet som kalendre
 		GregorianCalendar startCalendar2 = new GregorianCalendar();
 		startCalendar2.set(Integer.parseInt(dateSplit2[2]), 
-						  Integer.parseInt(dateSplit2[1]), 
+						  Integer.parseInt(dateSplit2[1])-1, 
 						  Integer.parseInt(dateSplit2[0]), 
 						  Integer.parseInt(startTimeSplit2[0]), 
 						  Integer.parseInt(startTimeSplit2[1])); 
 		GregorianCalendar endCalendar2 = new GregorianCalendar();
 		endCalendar2.set(Integer.parseInt(dateSplit2[2]), 
-						Integer.parseInt(dateSplit2[1]), 
+						Integer.parseInt(dateSplit2[1])-1, 
 						Integer.parseInt(dateSplit2[0]), 
 						Integer.parseInt(endTimeSplit2[0]), 
 						Integer.parseInt(endTimeSplit2[1]));
@@ -222,9 +221,107 @@ public class TimeRegistration {
 	}
 	
 	/**
-	 * Alternativ scenarie 3: tester, hvor en medarbejder indtaster ugyldig dato/tid udenfor aktivitetens tid
+	 * Tester scenariet, hvor en medarbejder indtaster gyldig dato/tid, som er indenfor aktivitetens tid
+	 * @throws RegisterWorkException 
 	 */
 	@Test
-	public void testInvalidDateTime() {		
+	public void testValidDateTime() throws RegisterWorkException {
+		// tilf퓂er aktivitet
+		Activity activity2 = new Activity("hamburger");
+		activity2.setStart(1, 2011);
+		activity2.setEnd(4, 2011);
+		company.addProject(project);
+		project.addActivity(activity2);
+		employee.addActivity(activity2);
+		
+		// medarbejder v푡ger en aktivitet, som han er tilmeldt
+		List<Activity> activities = company.employeeByUsername("hlb").getActivities();
+		chosenActivity = activities.get(1);
+		assertEquals(chosenActivity, activity2);
+		
+		// medarbejder indtaster f퓄gende tid 
+		String date1 = "01.01.2011";
+		String startTime1 = "10:30";
+		String endTime1 = "17:00";
+		
+		// splitter inputtet
+		String[] dateSplit1 = date1.split("\\.");
+		String[] startTimeSplit1 = startTime1.split(":");
+		String[] endTimeSplit1 = endTime1.split(":");
+		
+		// gemmer inputtet som kalendre
+		Calendar startCalendar1 = new GregorianCalendar(Locale.ENGLISH);
+		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						  Integer.parseInt(dateSplit1[1])-1, 
+						  Integer.parseInt(dateSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[1])); 
+		GregorianCalendar endCalendar1 = new GregorianCalendar();
+		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						Integer.parseInt(dateSplit1[1])-1, 
+						Integer.parseInt(dateSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[1]));
+		
+		
+		// tiden registreres
+		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
+		employee.addRegisteredWork(regWork1);
+	}
+	
+	/**
+	 * Alternativ scenarie 3: tester, hvor en medarbejder indtaster gyldig dato/tid, men udenfor aktivitetens tid
+	 * @throws RegisterWorkException 
+	 */
+	@Test
+	public void testInvalidDateTime() throws RegisterWorkException {
+		// tilf퓂er aktivitet
+		Activity activity2 = new Activity("hamburger");
+		activity2.setStart(20, 2010);
+		activity2.setEnd(25, 2010);
+		company.addProject(project);
+		project.addActivity(activity2);
+		employee.addActivity(activity2);
+		
+		// medarbejder v푡ger en aktivitet, som han er tilmeldt
+		List<Activity> activities = company.employeeByUsername("hlb").getActivities();
+		chosenActivity = activities.get(1);
+		assertEquals(chosenActivity, activity2);
+		
+		// medarbejder indtaster f퓄gende tid 
+		String date1 = "01.01.2011";
+		String startTime1 = "10:30";
+		String endTime1 = "17:00";
+		
+		// splitter inputtet
+		String[] dateSplit1 = date1.split("\\.");
+		String[] startTimeSplit1 = startTime1.split(":");
+		String[] endTimeSplit1 = endTime1.split(":");
+		
+		// gemmer inputtet som kalendre
+		Calendar startCalendar1 = new GregorianCalendar(Locale.ENGLISH);
+		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						  Integer.parseInt(dateSplit1[1])-1, 
+						  Integer.parseInt(dateSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[1])); 
+		GregorianCalendar endCalendar1 = new GregorianCalendar();
+		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						Integer.parseInt(dateSplit1[1])-1, 
+						Integer.parseInt(dateSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[1]));
+		
+		
+		// tiden registreres
+		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
+
+		try {
+			employee.addRegisteredWork(regWork1);
+			fail("A AlreadyRegisteredWorkException should have been thrown");			
+		} catch (RegisterWorkException e) {
+			// Step 4
+			assertEquals("You have registered time outside the timer-interval of the given activity", e.getOperation());
+		}	
 	}
 }
