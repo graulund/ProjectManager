@@ -19,10 +19,10 @@ import projectmanager.app.RegisteredWork;
 public class SampleDataSetup {
 	
 	ProjectManagerApp PMApp = new ProjectManagerApp();
+	Company company = PMApp.getCompany();
 	
 	@Before
 	public void setUp() throws Exception {
-		Company company = PMApp.getCompany();
 		
 		// 10 employees
 		for (int i = 1; i <= 10; i++) {
@@ -44,7 +44,7 @@ public class SampleDataSetup {
 			for (int j = 1; j <= 3; j++) {
 				// Add 3 activities to each project
 				Project currentProject = company.projectBySerialNumber(i);
-				currentProject.addActivity(new Activity("act"+j, currentProject));
+				currentProject.addActivity(new Activity("act"+j));
 				
 				for (int k = 1; k <= 3; k++) {
 					int r = (int)(Math.random() * company.getEmployees().size());
@@ -55,7 +55,7 @@ public class SampleDataSetup {
 					latestActivity.addEmployee(randomEmployee);
 					
 					// Register work
-					randomEmployee.addRegisteredWork(new RegisteredWork(randomEmployee, latestActivity, r/2+10));
+					randomEmployee.addRegisteredWork(new RegisteredWork(latestActivity, r/2+10));
 				}
 			}
 		}

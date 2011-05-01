@@ -7,17 +7,14 @@ import java.util.List;
 
 public class Activity {
 	private String name;
-	private Project project; // Cannot be changed after initialization
 	private List<Employee> employees = new ArrayList<Employee>();
+	private List<DelegatedWork> del_works = new ArrayList<DelegatedWork>();
 	private List<RegisteredWork> reg_works = new ArrayList<RegisteredWork>();
+	private Calendar start;
+	private Calendar end;
 	
-	private int start;  // week no. or calendar?
-	private int end;    // -||-
-	private int estimatedWorkHours;
-	
-	public Activity(String name, Project project){
+	public Activity(String name){
 		this.setName(name);
-		this.project = project;
 	}
 	
 	public void addEmployee(Employee employee) {
@@ -41,28 +38,40 @@ public class Activity {
 		return name;
 	}
 	
-	public void setStart(int week) {
-		this.start = week;
+	public void setStart(int week, int year) {
+		this.start = new GregorianCalendar();
+		this.start.set(Calendar.YEAR, year);
+		this.start.set(Calendar.WEEK_OF_YEAR, week);
 	}
 	
-	public void setEnd(int week) {
-		this.end = week;
+	public void setEnd(int week, int year) {
+		this.end = new GregorianCalendar();
+		this.end.set(Calendar.YEAR, year);
+		this.end.set(Calendar.WEEK_OF_YEAR, week);
 	}
 	
-	public int getStart() {
-		return start;
+	public Calendar getStart() {
+		return this.start;
 	}
 	
-	public int getEnd() {
-		return end;
+	public Calendar getEnd() {
+		return this.end;
 	}
 	
-	public void setWorkHours(int hours) {
-		estimatedWorkHours = hours;
+	public int getDelegatedHours() {
+		int total = 0;
+		for (DelegatedWork del_work: this.del_works) {
+			total += del_work.getHours();
+		}
+		return total;
 	}
 	
-	public int getWorkHours() {
-		return estimatedWorkHours;
+	public double getRegisteredHours() {
+		double total = 0;
+		for (RegisteredWork reg_work: this.reg_works) {
+			total += reg_work.getHoursWorked();
+		}
+		return total;
 	}
 	
 }

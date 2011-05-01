@@ -1,24 +1,24 @@
 package projectmanager.app;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class WorkWeek {
-	private Employee employee;
+	
 	private int weekNumber;
 	private int year;
-	private ArrayList<DelegatedWork> delegatedWork   = new ArrayList<DelegatedWork>();
-	private ArrayList<RegisteredWork> registeredWork = new ArrayList<RegisteredWork>();
-	public WorkWeek(Employee employee, int weekNumber, int year) {
-		this.employee   = employee;
+	private List<DelegatedWork> delegatedWork   = new ArrayList<DelegatedWork>();
+	private List<RegisteredWork> registeredWork = new ArrayList<RegisteredWork>();
+	
+	public WorkWeek(int weekNumber, int year) {
+		//this.employee   = employee;
 		this.weekNumber = weekNumber;
 		this.year       = year;
 	}
-	public Employee getEmployee() {
-		return employee;
-	}
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
+
 	public int getWeekNumber() {
 		return weekNumber;
 	}
@@ -29,14 +29,11 @@ public class WorkWeek {
 		this.weekNumber = weekNumber;
 		this.year       = year;
 	}
-	public ArrayList<DelegatedWork> getDelegatedWork() {
+	public List<DelegatedWork> getDelegatedWork() {
 		return delegatedWork;
 	}
 	public void setDelegatedWork(ArrayList<DelegatedWork> delegatedWork) {
 		this.delegatedWork = delegatedWork;
-	}
-	public ArrayList<RegisteredWork> getRegisteredWork() {
-		return registeredWork;
 	}
 	public void setRegisteredWork(ArrayList<RegisteredWork> registeredWork) {
 		this.registeredWork = registeredWork;
@@ -46,7 +43,6 @@ public class WorkWeek {
 		this.delegatedWork.add(work);
 	}
 	public void addRegisteredWork(RegisteredWork work){
-		// TODO: What if it's already in the list?
 		this.registeredWork.add(work);
 	}
 	
@@ -56,6 +52,35 @@ public class WorkWeek {
 			total += work.getHours();
 		}
 		return total;
+	}
+	public List<RegisteredWork> getRegisteredWork() {
+		return registeredWork;
+	}
+	public List<RegisteredWork> getRegisteredWork(Calendar date) {
+		List<RegisteredWork> regworks = new ArrayList<RegisteredWork>();
+		for (RegisteredWork regwork: this.registeredWork) {
+			if (regwork.getDate().get(Calendar.YEAR) == date.get(Calendar.YEAR) &&
+				regwork.getDate().get(Calendar.MONTH) == date.get(Calendar.MONTH) &&
+				regwork.getDate().get(Calendar.DATE) == date.get(Calendar.DATE)			
+				) {
+				regworks.add(regwork);
+			}
+		}
+		return Collections.unmodifiableList(regworks);
+	}
+
+	// RIGHT NOW ONLY HELPER METHOD FOR TESTING (KNOWING THAT THERE IS ONLY ONE REGISTERED WORK
+	// WITH THE GIVEN ACTIVITY AT THE GIVEN DATE). RETURN TYPE SHOULD BE LIST IF KEPT.
+	public RegisteredWork getRegisteredWork(Activity chosenActivity, GregorianCalendar calendarDate) {
+		for (RegisteredWork regwork: this.registeredWork) {
+			if (regwork.getDate().get(Calendar.DATE) == calendarDate.get(Calendar.DATE) &&
+				regwork.getDate().get(Calendar.MONTH) == calendarDate.get(Calendar.MONTH) &&
+				regwork.getDate().get(Calendar.YEAR) == calendarDate.get(Calendar.YEAR) &&
+				regwork.getActivity() == chosenActivity) {
+				return regwork;
+			}
+		}
+		return null;
 	}
 	
 //	public int getRegisteredHours(){

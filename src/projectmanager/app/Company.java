@@ -21,6 +21,7 @@ public class Company {
 	public void addEmployee(Employee employee) {
 		// TODO: What if it already exists in the list?
 		this.employees.add(employee);
+		employee.setEmployedAtCompany(this);
 	}
 	
 	public List<Employee> getEmployees() {
@@ -50,7 +51,9 @@ public class Company {
 		return null;
 	}
 	
-	public void printReport() {
-		// TODO: do me!
+	public String getEmployeeAvailability() {
+		return "On coffee break."; // TODO: FIX THIS!
+		
+		// Should return a list of all employees and their (near) future availability
 	}
 }
