@@ -11,4 +11,10 @@ abstract class Screen {
 	}
 	abstract void printMenu(PrintWriter out);
 	abstract boolean processInput(String input, PrintWriter out);
+	
+	// General screen utilities
+	protected String wrong = "Wrong selection; please repeat.";
+	protected void wrongInputMessage(PrintWriter out){
+		out.println(this.wrong);
+	}
 }

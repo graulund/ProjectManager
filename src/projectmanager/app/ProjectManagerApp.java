@@ -1,7 +1,13 @@
 package projectmanager.app;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.ArrayList;
+
+import projectmanager.ui.ProjectManagerUI;
 
 public class ProjectManagerApp {
 	private Company company = new Company();
@@ -32,5 +38,13 @@ public class ProjectManagerApp {
 		this.loggedInEmployee = null;
 		this.isEmployeeLoggedIn = false;
 		return this.isEmployeeLoggedIn;
+	}
+	
+	// The app itself
+	public static void main(String[] args) throws IOException {
+		ProjectManagerUI ui = new ProjectManagerUI();
+		ui.in = new BufferedReader(new InputStreamReader(System.in));
+		PrintWriter out = new PrintWriter(System.out, true);
+		ui.basicLoop(ui.in, out);
 	}
 }
