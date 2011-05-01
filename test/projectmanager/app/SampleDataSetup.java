@@ -34,8 +34,8 @@ public class SampleDataSetup {
 			company.addProject(new Project("project"+i, "Google"));
 		}
 		
-		// Add project leaders to all 5 projects
-		for (int i = 1; i <= 5; i++) {
+		// Add project leaders to all 5 projects except the last one
+		for (int i = 1; i <= 4; i++) {
 			company.projectBySerialNumber(i).addLeader(company.employeeByUsername("emp"+i));
 		}
 		

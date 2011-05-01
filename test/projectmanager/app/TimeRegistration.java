@@ -24,9 +24,6 @@ public class TimeRegistration {
 		company = PMApp.getCompany();
 		company.addEmployee(employee);
 		
-		// medarbejder logger ind med initialer, der findes i databasen
-		boolean login = PMApp.employeeLogin("hlb");
-		
 		// random projects to employee
 		project = new Project("lolproject", "Google");
 		Activity activity = new Activity("lolcat");
@@ -44,7 +41,10 @@ public class TimeRegistration {
 	 * @throws RegisterWorkException 
 	 */
 	@Test
-	public void registerTime() throws RegisterWorkException {		
+	public void registerTime() throws RegisterWorkException {	
+		// medarbejder logger ind med initialer, der findes i databasen
+		boolean login = PMApp.employeeLogin("hlb");
+		
 		// medarbejder indtaster f퓄gende tid 
 		String date = "01.01.2011";
 		String startTime = "10:00";
@@ -71,7 +71,7 @@ public class TimeRegistration {
 		
 		// tiden registreres
 		RegisteredWork regWork = new RegisteredWork(chosenActivity, startCalendar, endCalendar);
-		employee.addRegisteredWork(regWork);
+		PMApp.registerWork(employee, regWork);
 		
 		// tester at arbejdet er registreret korrekt
 		assertEquals(14, employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar).getHoursWorked());
@@ -81,12 +81,15 @@ public class TimeRegistration {
 	}
 	
 	/**
-	 * Alternativ scenarie 1: tester, hvor en medarbejder registrerer
+	 * Tester, hvor en medarbejder registrerer
 	 * 2 forskellige tider inden for samme uge
 	 * @throws RegisterWorkException 
 	 */
 	@Test
 	public void testTwoRegisteredWorkInOneWeek() throws RegisterWorkException {		
+		// medarbejder logger ind med initialer, der findes i databasen
+		boolean login = PMApp.employeeLogin("hlb");
+		
 		// medarbejder indtaster f퓄gende tid 
 		String date1 = "01.01.2011";
 		String startTime1 = "10:30";
@@ -113,7 +116,7 @@ public class TimeRegistration {
 		
 		// tiden registreres
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
-		employee.addRegisteredWork(regWork1);
+		PMApp.registerWork(employee, regWork1);
 		
 		// Senere... indtastes dette
 		String date2 = "02.01.2011";
@@ -141,7 +144,7 @@ public class TimeRegistration {
 		
 		// tiden registreres
 		RegisteredWork regWork2 = new RegisteredWork(chosenActivity, startCalendar2, endCalendar2);
-		employee.addRegisteredWork(regWork2);
+		PMApp.registerWork(employee, regWork2);
 		
 		// test if the two registered weeks are in the same workweek
 		assertEquals(startCalendar1.get(Calendar.WEEK_OF_YEAR), startCalendar2.get(Calendar.WEEK_OF_YEAR));
@@ -149,12 +152,15 @@ public class TimeRegistration {
 	}
 	
 	/**
-	 * Alternativ scenarie 2: tester, hvor en medarbejder registrerer en tid, 
+	 * Tester, hvor en medarbejder registrerer en tid, 
 	 * der overlapper med en tidligere registreret tid
 	 * @throws RegisterWorkException 
 	 */
 	@Test
 	public void testDublicationOfRegWork() throws RegisterWorkException {
+		// medarbejder logger ind med initialer, der findes i databasen
+		boolean login = PMApp.employeeLogin("hlb");
+		
 		// medarbejder indtaster f퓄gende tid 
 		String date1 = "01.01.2011";
 		String startTime1 = "10:30";
@@ -181,7 +187,7 @@ public class TimeRegistration {
 		
 		// tiden registreres
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
-		employee.addRegisteredWork(regWork1);
+		PMApp.registerWork(employee, regWork1);
 		
 		// Senere...
 		// medarbejder indtaster f퓄gende tid (som overlappe ovenst똢nde)
@@ -212,7 +218,7 @@ public class TimeRegistration {
 		RegisteredWork regWork2 = new RegisteredWork(chosenActivity, startCalendar2, endCalendar2);
 		
 		try {
-			employee.addRegisteredWork(regWork2);
+			PMApp.registerWork(employee, regWork2);
 			fail("A AlreadyRegisteredWorkException should have been thrown");			
 		} catch (RegisterWorkException e) {
 			// Step 4
@@ -226,6 +232,9 @@ public class TimeRegistration {
 	 */
 	@Test
 	public void testValidDateTime() throws RegisterWorkException {
+		// medarbejder logger ind med initialer, der findes i databasen
+		boolean login = PMApp.employeeLogin("hlb");
+		
 		// tilf퓂er aktivitet
 		Activity activity2 = new Activity("hamburger");
 		activity2.setStart(1, 2011);
@@ -266,15 +275,18 @@ public class TimeRegistration {
 		
 		// tiden registreres
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
-		employee.addRegisteredWork(regWork1);
+		PMApp.registerWork(employee, regWork1);
 	}
 	
 	/**
-	 * Alternativ scenarie 3: tester, hvor en medarbejder indtaster gyldig dato/tid, men udenfor aktivitetens tid
+	 * Tester, hvor en medarbejder indtaster gyldig dato/tid, men udenfor aktivitetens tid
 	 * @throws RegisterWorkException 
 	 */
 	@Test
 	public void testInvalidDateTime() throws RegisterWorkException {
+		// medarbejder logger ind med initialer, der findes i databasen
+		boolean login = PMApp.employeeLogin("hlb");
+		
 		// tilf퓂er aktivitet
 		Activity activity2 = new Activity("hamburger");
 		activity2.setStart(20, 2010);
@@ -317,11 +329,91 @@ public class TimeRegistration {
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
 
 		try {
-			employee.addRegisteredWork(regWork1);
+			PMApp.registerWork(employee, regWork1);
 			fail("A AlreadyRegisteredWorkException should have been thrown");			
 		} catch (RegisterWorkException e) {
 			// Step 4
 			assertEquals("You have registered time outside the timer-interval of the given activity", e.getOperation());
 		}	
+	}
+	
+	/**
+	 * Tester scenariet, hvor en medarbejder indtaster en start-tid, der er efter sluttid
+	 */
+	@Test
+	public void testInvalidTime() {
+		// medarbejder logger ind med initialer, der findes i databasen
+		boolean login = PMApp.employeeLogin("hlb");
+		
+		// medarbejder indtaster f퓄gende tid 
+		String date1 = "01.01.2011";
+		String startTime1 = "17:30";
+		String endTime1 = "10:00";
+		
+		// splitter inputtet
+		String[] dateSplit1 = date1.split("\\.");
+		String[] startTimeSplit1 = startTime1.split(":");
+		String[] endTimeSplit1 = endTime1.split(":");
+		
+		// gemmer inputtet som kalendre
+		GregorianCalendar startCalendar1 = new GregorianCalendar();
+		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						  Integer.parseInt(dateSplit1[1])-1, 
+						  Integer.parseInt(dateSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[1])); 
+		GregorianCalendar endCalendar1 = new GregorianCalendar();
+		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						Integer.parseInt(dateSplit1[1])-1, 
+						Integer.parseInt(dateSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[1]));
+		
+		// tiden registreres
+		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
+		try {
+			PMApp.registerWork(employee, regWork1);
+			fail("A AlreadyRegisteredWorkException should have been thrown");			
+		} catch (RegisterWorkException e) {
+			// Step 4
+			assertEquals("Invalid time registration: the start time is after the end time.", e.getOperation());
+		}
+	}
+	
+	/**
+	 * Tester scenariet, hvor en medarbejder registrere tid uden at v푨e logget ind
+	 * @throws RegisterWorkException 
+	 */
+	@Test
+	public void testEmployeeNotLoggedIn() throws RegisterWorkException {
+		// medarbejder indtaster f퓄gende tid 
+		String date1 = "01.01.2011";
+		String startTime1 = "10:0";
+		String endTime1 = "17:00";
+		
+		// splitter inputtet
+		String[] dateSplit1 = date1.split("\\.");
+		String[] startTimeSplit1 = startTime1.split(":");
+		String[] endTimeSplit1 = endTime1.split(":");
+		
+		// gemmer inputtet som kalendre
+		GregorianCalendar startCalendar1 = new GregorianCalendar();
+		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						  Integer.parseInt(dateSplit1[1])-1, 
+						  Integer.parseInt(dateSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[1])); 
+		GregorianCalendar endCalendar1 = new GregorianCalendar();
+		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						Integer.parseInt(dateSplit1[1])-1, 
+						Integer.parseInt(dateSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[1]));
+		
+		// tiden registreres
+		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
+		PMApp.registerWork(employee, regWork1);
+		
+		assertEquals(0, employee.getRegisteredWork().size());
 	}
 }

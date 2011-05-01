@@ -40,6 +40,10 @@ public class ProjectManagerApp {
 		return this.isEmployeeLoggedIn;
 	}
 	
+	public void registerWork(Employee employee, RegisteredWork regWork1) throws RegisterWorkException {
+		if (employee == this.getEmployeeLoggedIn()) employee.addRegisteredWork(regWork1);
+	}
+	
 	// The app itself
 	public static void main(String[] args) throws IOException {
 		ProjectManagerUI ui = new ProjectManagerUI();
