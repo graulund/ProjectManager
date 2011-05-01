@@ -2,6 +2,7 @@ package projectmanager.app;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 public class Employee {
@@ -12,7 +13,6 @@ public class Employee {
 	private List<Activity> activities = new ArrayList<Activity>();
 	private List<RegisteredWork> reg_works = new ArrayList<RegisteredWork>();
 
-	
 	public Employee(String name){
 		this.name   = name;
 	}
@@ -47,9 +47,13 @@ public class Employee {
 	
 	public void addRegisteredWork(RegisteredWork regwork) throws RegisterWorkException {		
 		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
-	
-		// Checks if the time of the registered work is outside of the time-interval of the activity
-		if (timeOutsideActivity(regwork, regwork.getActivity())) {
+		
+		// Checks if the entered time is valid for registered work
+		if (!isValidRegwork(regwork)) {
+			throw new RegisterWorkException("Invalid time registration: the start time is after the end time.");
+		
+		// Checks if the time of the registered work is outside of the time-interval of the activity			
+		} else if (timeOutsideActivity(regwork, regwork.getActivity())) {
 			throw new RegisterWorkException("You have registered time outside the timer-interval of the given activity");
 			
 		// Checks if workweek for the registered work already exists
@@ -74,6 +78,11 @@ public class Employee {
 				
 	}
 	
+	private boolean isValidRegwork(RegisteredWork regwork) {
+		if (regwork.getStartTime().after(regwork.getEndTime())) return false;
+		else return true;
+	}
+
 	private boolean timeOutsideActivity(RegisteredWork regwork, Activity activity) {
 		if (activity.getStart() != null && activity.getEnd() != null) {
 			if (regwork.getDate().before(activity.getStart()) ||
@@ -113,6 +122,10 @@ public class Employee {
 			}
 		}
 		return null;
+	}
+
+	public List<RegisteredWork> getRegisteredWork() {
+		return Collections.unmodifiableList(this.reg_works);
 	}
 	
 }

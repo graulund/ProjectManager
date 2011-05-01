@@ -33,4 +33,8 @@ public class ProjectManagerApp {
 		this.isEmployeeLoggedIn = false;
 		return this.isEmployeeLoggedIn;
 	}
+
+	public void registerWork(Employee employee, RegisteredWork regWork1) throws RegisterWorkException {
+		if (employee == this.getEmployeeLoggedIn()) employee.addRegisteredWork(regWork1);
+	}
 }
