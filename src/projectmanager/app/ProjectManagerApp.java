@@ -51,4 +51,10 @@ public class ProjectManagerApp {
 		PrintWriter out = new PrintWriter(System.out, true);
 		ui.basicLoop(ui.in, out);
 	}
+
+	public void assignEmployeeToActivity(Employee employee, Activity activity,int hours) {
+		// mangler at tjekke, om medarbejder, der "assigner" er projektleder
+		activity.addEmployee(employee);
+		employee.addDelegatedWork(new DelegatedWork(hours, activity));
+	}
 }

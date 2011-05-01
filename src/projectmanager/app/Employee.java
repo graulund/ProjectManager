@@ -125,6 +125,8 @@ public class Employee {
 	public void addDelegatedWork(DelegatedWork delwork) {
 		for (int i = delwork.getActivity().getStart().get(Calendar.WEEK_OF_YEAR); 
 			 i <= delwork.getActivity().getEnd().get(Calendar.WEEK_OF_YEAR); i++) {
+			WorkWeek workweek = workWeekByWeeknumber(i);
+			if (workweek == null) 
 			this.workWeekByWeeknumber(i).getDelegatedWork().add(delwork);
 		}
 			
@@ -134,6 +136,15 @@ public class Employee {
 		for (WorkWeek workweek: this.workWeeks) {
 			if (i == workweek.getWeekNumber()) {
 				return workweek;
+			}
+		}
+		return null;
+	}
+
+	public Activity getActivity(Activity activityChosen) {
+		for (Activity activity: this.activities) {
+			if (activityChosen == activity) {
+				return activity;
 			}
 		}
 		return null;

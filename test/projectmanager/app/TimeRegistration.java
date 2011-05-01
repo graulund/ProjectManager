@@ -414,6 +414,6 @@ public class TimeRegistration {
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
 		PMApp.registerWork(employee, regWork1);
 		
-		assertEquals(0, employee.getRegisteredWork().size());
+		assertEquals(null, employee.getWorkWeek(regWork1.getDate().get(Calendar.WEEK_OF_YEAR), regWork1.getDate().get(Calendar.YEAR)));
 	}
 }
