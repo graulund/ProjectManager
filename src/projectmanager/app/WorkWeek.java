@@ -68,15 +68,20 @@ public class WorkWeek {
 		}
 		return Collections.unmodifiableList(regworks);
 	}
+	
+	public RegisteredWork getRegisteredWork(RegisteredWork regwork) {
+		for (RegisteredWork r: this.registeredWork) {
+			if (r == regwork) return r;
+		}
+		return null;
+	}
 
-	// RIGHT NOW ONLY HELPER METHOD FOR TESTING (KNOWING THAT THERE IS ONLY ONE REGISTERED WORK
-	// WITH THE GIVEN ACTIVITY AT THE GIVEN DATE). RETURN TYPE SHOULD BE LIST IF KEPT.
-	public RegisteredWork getRegisteredWork(Activity chosenActivity, GregorianCalendar calendarDate) {
+	public RegisteredWork getRegisteredWork(Activity activity, GregorianCalendar calendarDate) {
 		for (RegisteredWork regwork: this.registeredWork) {
 			if (regwork.getDate().get(Calendar.DATE) == calendarDate.get(Calendar.DATE) &&
 				regwork.getDate().get(Calendar.MONTH) == calendarDate.get(Calendar.MONTH) &&
 				regwork.getDate().get(Calendar.YEAR) == calendarDate.get(Calendar.YEAR) &&
-				regwork.getActivity() == chosenActivity) {
+				regwork.getActivity() == activity) {
 				return regwork;
 			}
 		}

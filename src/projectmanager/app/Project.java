@@ -57,4 +57,12 @@ public class Project {
 		}
 		return "Project: "+name+". Client: "+client+". Project leader: "+projectLeader.getUsername()+". Work status: "+Math.round(registeredHours)+"/"+delegatedHours+".";
 	}
+	public Activity activityByName(String name) {
+		for (Activity activity: this.activities) {
+			if (activity.getName().equals(name)) {
+				return activity;
+			}
+		}
+		return null;
+	}
 }

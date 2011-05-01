@@ -11,7 +11,6 @@ public class Employee {
 	private Company employedAtCompany;
 	private List<Project> leader_of_projects = new ArrayList<Project>();
 	private List<Activity> activities = new ArrayList<Activity>();
-	private List<RegisteredWork> reg_works = new ArrayList<RegisteredWork>();
 
 	public Employee(String name){
 		this.name   = name;
@@ -63,7 +62,6 @@ public class Employee {
 				   	 							);
 			this.workWeeks.add(newWorkWeek);
 			newWorkWeek.addRegisteredWork(regwork);
-			this.reg_works.add(regwork);
 		
 		// The workweek does exist, and registered work is added
 		} else {
@@ -72,7 +70,6 @@ public class Employee {
 				throw new RegisterWorkException("You have already registered a work at the given time");
 			} else {
 				workWeek.addRegisteredWork(regwork);
-				this.reg_works.add(regwork);
 			}
 		}
 				
@@ -106,8 +103,9 @@ public class Employee {
 		return false;
 	}
 
-	public void removeRegisteredWork(RegisteredWork reg_work) {
-		this.reg_works.remove(reg_work);
+	public void removeRegisteredWork(RegisteredWork regwork) {
+		WorkWeek workweek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
+		workweek.getRegisteredWork(regwork);
 	}
 	
 	public List<WorkWeek> getWorkWeeks() {
@@ -124,8 +122,21 @@ public class Employee {
 		return null;
 	}
 
-	public List<RegisteredWork> getRegisteredWork() {
-		return Collections.unmodifiableList(this.reg_works);
+	public void addDelegatedWork(DelegatedWork delwork) {
+		for (int i = delwork.getActivity().getStart().get(Calendar.WEEK_OF_YEAR); 
+			 i <= delwork.getActivity().getEnd().get(Calendar.WEEK_OF_YEAR); i++) {
+			this.workWeekByWeeknumber(i).getDelegatedWork().add(delwork);
+		}
+			
+	}
+
+	private WorkWeek workWeekByWeeknumber(int i) {
+		for (WorkWeek workweek: this.workWeeks) {
+			if (i == workweek.getWeekNumber()) {
+				return workweek;
+			}
+		}
+		return null;
 	}
 	
 }
