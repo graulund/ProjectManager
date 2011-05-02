@@ -45,6 +45,9 @@ public class Project {
 	public void addActivity(Activity activity) {
 		this.activities.add(activity);
 	}
+	public void removeActivity(Activity activity) {
+		this.activities.remove(activity);
+	}
 	public List<Activity> getActivities() {
 		return activities;
 	}
