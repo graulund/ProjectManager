@@ -130,9 +130,9 @@ public class AppStorage {
 				s.append("\n      -- Work: "); s.append(Arrays.toString(activity.workIds));
 				s.append("\n      }\n");
 			}
-			s.append("\n   }\n");
+			s.append("   }\n");
 		}
-		s.append("-- Employees: ");
+		s.append("-- Employees:\n");
 		for(StoredData.StoredEmployee employee: data.employees){
 			s.append("   { EMPLOYEE\n");
 			s.append("   -- Username: "); s.append(employee.username);
@@ -145,21 +145,21 @@ public class AppStorage {
 				s.append("\n      -- Work: "); s.append(Arrays.toString(workweek.workIds));
 				s.append("\n      }\n");
 			}
-			s.append("\n   }\n");
+			s.append("   }\n");
 		}
-		s.append("-- Works: ");
+		s.append("-- Work:\n");
 		for(StoredData.StoredWork work: data.works){
 			s.append("   { WORK\n");
 			s.append("   -- Work ID: "); s.append(work.workId);
 			if(work.halfHours > 0){
-				s.append("   -- Half hours: "); s.append(work.halfHours);
+				s.append("\n   -- Half hours: "); s.append(work.halfHours);
 			} else {
-				s.append("   -- Start time: "); s.append(work.startTime);
+				s.append("\n   -- Start time: "); s.append(work.startTime);
 				s.append("\n   -- End time: "); s.append(work.endTime);
 			}
 			s.append("\n   }\n");
 		}
-		s.append("\n}");
+		s.append("}");
 		return s.toString();
 	}
 	public char[][] getEmployeeNames(List<Employee> employees){
