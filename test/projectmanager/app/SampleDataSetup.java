@@ -61,7 +61,7 @@ public class SampleDataSetup {
 					latestActivity.addEmployee(randomEmployee);
 					
 					// Delegate work
-					randomEmployee.addDelegatedWork(new DelegatedWork(40, latestActivity));
+					//randomEmployee.addDelegatedWork(new DelegatedWork(40, latestActivity));
 					
 					// Register work
 					randomEmployee.addRegisteredWork(new RegisteredWork(latestActivity, rand/2+10));

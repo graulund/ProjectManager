@@ -32,7 +32,7 @@ public class AppStorage {
 		// Save information for:
 		
 		// --> Company
-		data.currentSerialNumber = Company.c.getCurrentSerialNumber();
+		data.currentSerialNumber = ProjectManagerApp.getCurrentSerialNumber();
 		
 		// --> Works
 		ArrayList<StoredData.StoredWork> works = new ArrayList<StoredData.StoredWork>();

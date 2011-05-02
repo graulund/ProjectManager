@@ -4,7 +4,7 @@ public class DelegatedWork extends Work {
 	private int halfHoursWorked;
 	
 	public DelegatedWork(int hours, Activity activity){
-		this.serialNumber = Company.c.newSerialNumber();
+		this.serialNumber = ProjectManagerApp.newSerialNumber();
 		this.halfHoursWorked = hours;
 		this.activity = activity;
 	}
