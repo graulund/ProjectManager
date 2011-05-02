@@ -13,6 +13,7 @@ public class Project {
 
 	
 	public Project(String name, String client) {
+		this.serialNumber = Company.c.newSerialNumber();
 		this.name = name;
 		this.client = client;
 	}
