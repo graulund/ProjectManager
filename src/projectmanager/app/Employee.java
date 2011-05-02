@@ -9,7 +9,7 @@ import java.util.List;
 public class Employee {
 	private String username; // 4 letters
 	private List<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
-//	private List<Project> leader_of_projects = new ArrayList<Project>();
+	private List<Project> leaderOfProjects = new ArrayList<Project>();
 	private String fullname;
 
 	public Employee(String username){
@@ -207,5 +207,13 @@ public class Employee {
 			}
 		}
 		return works;
+	}
+
+	public void setProjectLeaderOf(Project project) {
+		this.leaderOfProjects.add(project);		
+	}
+
+	public List<Project> getProjectLeader() {
+		return this.leaderOfProjects;
 	}
 }

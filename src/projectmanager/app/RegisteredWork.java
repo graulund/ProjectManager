@@ -111,7 +111,7 @@ public class RegisteredWork extends Work {
 		return this.activity;
 	}
 
-	public int getHoursWorked() {
+	public int getHalfHoursWorked() {
 		return this.halfHoursWorked;
 	}
 

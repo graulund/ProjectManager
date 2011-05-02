@@ -19,7 +19,6 @@ public class Activity {
 	
 	public void addEmployee(Employee employee) {
 		this.employees.add(employee);
-		employee.addActivity(this);
 	}
 	
 	public void removeEmployee(Employee employee) {
@@ -77,7 +76,7 @@ public class Activity {
 	public double getRegisteredHours() {
 		double total = 0;
 		for (RegisteredWork reg_work: this.reg_works) {
-			total += reg_work.getHoursWorked();
+			total += reg_work.getHalfHoursWorked();
 		}
 		return total;
 	}
