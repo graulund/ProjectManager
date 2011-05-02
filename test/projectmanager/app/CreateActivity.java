@@ -14,11 +14,11 @@ public class CreateActivity {
 	/**
 	 * Main scenario: Opret aktivitet i et projekt
 	 * @throws OperationNotAllowedException 
-	 * @throws ActivityAlreadyCreatedException 
+	 * @throws CreatingActivityException 
 	 */
 	@Test
-	public void CreateActivity() throws OperationNotAllowedException, ActivityAlreadyCreatedException {
-		ProjectManagerApp.re
+	public void testCreateActivity() throws OperationNotAllowedException, CreatingActivityException {
+		ProjectManagerApp.reset();
 		Company company = ProjectManagerApp.getCompany();
 		
 		String name = "Software Engineering";
@@ -53,10 +53,11 @@ public class CreateActivity {
 	/**
 	 * Tester scenariet, hvor der oprettes en aktivitet af en bruger, som
 	 * ikke er projektleder
-	 * @throws ActivityAlreadyCreatedException 
+	 * @throws CreatingActivityException 
 	 */
 	@Test
-	public void testNotProjectManager() throws ActivityAlreadyCreatedException {
+	public void testNotProjectManager() throws CreatingActivityException {
+		ProjectManagerApp.reset();
 		Company company = ProjectManagerApp.getCompany();
 		
 		String name = "Software Engineering";
@@ -93,10 +94,11 @@ public class CreateActivity {
 	 * Tester scenariet, hvor der oprettes to aktiviteter med samme navn
 	 * Ønsket resultat: der kastes en exception på det andet forsøg
 	 * @throws OperationNotAllowedException 
-	 * @throws ActivityAlreadyCreatedException 
+	 * @throws CreatingActivityException 
 	 */
 	@Test
-	public void testTwoActivitySameName() throws OperationNotAllowedException, ActivityAlreadyCreatedException {
+	public void testTwoActivitySameName() throws OperationNotAllowedException, CreatingActivityException {
+		ProjectManagerApp.reset();
 		Company company = ProjectManagerApp.getCompany();
 		
 		String name = "Software Engineering";
@@ -108,11 +110,7 @@ public class CreateActivity {
 		company.addEmployee(employee);
 		project1.addLeader(employee);
 		
-		assertFalse(ProjectManagerApp.isEmployeeLoggedIn());
-		boolean login = ProjectManagerApp.employeeLogin("hls");
-		assertTrue(login);
-		assertEquals(employee, ProjectManagerApp.getEmployeeLoggedIn());
-		
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
 		assertEquals(employee, project1.getLeader());
 		
@@ -135,8 +133,93 @@ public class CreateActivity {
 		try {
 			chosenProject.addActivity(activity2);
 			fail("A AlreadyRegisteredWorkException should have been thrown");
-		} catch (ActivityAlreadyCreatedException e) {
+		} catch (CreatingActivityException e) {
 			assertEquals("An activity with the desired name already exists.", e.getMessage());
 		}	
+	}
+	
+	/**
+	 * Tester scenariet, hvor en projektmanager tilføjer start- og slut-dato til aktiviteten
+	 * @throws CreatingActivityException 
+	 * @throws OperationNotAllowedException 
+	 */
+	@Test
+	public void testSetActivityDate() throws OperationNotAllowedException, CreatingActivityException {
+		ProjectManagerApp.reset();
+		Company company = ProjectManagerApp.getCompany();
+		
+		String name = "Software Engineering";
+		String client = "Google";
+		Project project1 = new Project(name, client);
+		company.addProject(project1);
+		
+		Employee employee = new Employee("hlb");
+		company.addEmployee(employee);
+		project1.addLeader(employee);
+		assertEquals(employee, project1.getLeader());
+		
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
+		assertTrue(project1.getActivities().isEmpty());
+		
+		int serialNumber = project1.getSerialNumber();
+		Project chosenProject = company.projectBySerialNumber(serialNumber);
+		
+		String actName = "activity1";		
+		Activity activity = new Activity(actName);
+		chosenProject.addActivity(activity);
+		
+		// projectmanageren tilføjer dato'er
+		Activity chosenActivity = chosenProject.activityByName(actName);
+		chosenActivity.setStart(10, 2011);
+		chosenActivity.setEnd(15, 2011);
+		
+		assertEquals(10, chosenActivity.getStart().get(Calendar.WEEK_OF_YEAR));
+		assertEquals(2011, chosenActivity.getStart().get(Calendar.YEAR));
+		assertEquals(10, chosenActivity.getStart().get(Calendar.WEEK_OF_YEAR));
+		assertEquals(2011, chosenActivity.getStart().get(Calendar.YEAR));
+	}
+	
+	/**
+	 * Tester scenariet, hvor en projektmanager tilføjer 
+	 * en slut-tid, der er før start-tiden
+	 * @throws CreatingActivityException 
+	 * @throws OperationNotAllowedException 
+	 */
+	@Test
+	public void testInvalidDateOnActivity() throws OperationNotAllowedException, CreatingActivityException {
+		ProjectManagerApp.reset();
+		Company company = ProjectManagerApp.getCompany();
+		
+		String name = "Software Engineering";
+		String client = "Google";
+		Project project1 = new Project(name, client);
+		company.addProject(project1);
+		
+		Employee employee = new Employee("hlb");
+		company.addEmployee(employee);
+		project1.addLeader(employee);
+		assertEquals(employee, project1.getLeader());
+		
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
+		assertTrue(project1.getActivities().isEmpty());
+		
+		int serialNumber = project1.getSerialNumber();
+		Project chosenProject = company.projectBySerialNumber(serialNumber);
+		
+		String actName = "activity1";		
+		Activity activity = new Activity(actName);
+		chosenProject.addActivity(activity);
+		
+		// projectmanageren tilføjer dato'er
+		Activity chosenActivity = chosenProject.activityByName(actName);
+		chosenActivity.setStart(15, 2011);
+		
+		try {
+			chosenActivity.setEnd(10, 2011);
+			fail("A AlreadyRegisteredWorkException should have been thrown");
+		} catch (CreatingActivityException e) {
+			assertEquals("The end-date is before the start-date.", e.getMessage());
+		}	
+		
 	}
 }

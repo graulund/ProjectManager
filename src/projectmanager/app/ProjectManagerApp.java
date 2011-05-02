@@ -120,7 +120,7 @@ public class ProjectManagerApp {
 	/**
 	 * This function is only for testing! Resets the APP!
 	 */
-	public void reset() {
+	public static void reset() {
 		ProjectManagerApp.company = new Company();
 		ProjectManagerApp.loggedInEmployee = null; // Currently logged in employee
 		ProjectManagerApp.isEmployeeLoggedIn = false;

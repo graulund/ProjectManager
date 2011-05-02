@@ -17,7 +17,7 @@ public class AssignEmployeeToActivity {
 	Project project;
 	
 	@Before
-	public void setUpProjectAndEmployee() throws OperationNotAllowedException, ActivityAlreadyCreatedException {
+	public void setUpProjectAndEmployee() throws OperationNotAllowedException, CreatingActivityException {
 		company = ProjectManagerApp.getCompany();
 		
 		employee1 = new Employee("emp1");
@@ -32,11 +32,11 @@ public class AssignEmployeeToActivity {
 	/**
 	 * Tester scenariet, hvor en medarbejder successfuldt
 	 * tildeler en medarbejder til en aktivitet
-	 * @throws ActivityAlreadyCreatedException 
+	 * @throws CreatingActivityException 
 	 * @throws OperationNotAllowedException 
 	 */
 	@Test
-	public void testAssignEmployeeToActivity() throws OperationNotAllowedException, ActivityAlreadyCreatedException {
+	public void testAssignEmployeeToActivity() throws OperationNotAllowedException, CreatingActivityException {
 		// medarbejder logger ind med initialer, der findes i databasen
 		boolean login = ProjectManagerApp.employeeLogin("emp1");
 		
