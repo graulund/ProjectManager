@@ -23,9 +23,9 @@ public class SampleDataSetup {
 	public static Company company = PMApp.getCompany();
 	public static Random r = new Random();
 	
-	//@Before
-	//public void setUp() throws Exception {
-	public static void main(String[] args) throws RegisterWorkException {
+	@Before
+	public void setUp() throws Exception {
+	//public static void main(String[] args) throws RegisterWorkException {
 
 		
 		// 10 employees with random names
