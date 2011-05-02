@@ -67,5 +67,4 @@ public class CreateProject {
 		assertFalse(login);
 		assertFalse(ProjectManagerApp.isEmployeeLoggedIn());
 	}
-	
 }

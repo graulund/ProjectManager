@@ -9,8 +9,7 @@ import java.util.List;
 public class Employee {
 	private String username; // 4 letters
 	private List<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
-	private List<Project> leader_of_projects = new ArrayList<Project>();
-	private List<Activity> activities = new ArrayList<Activity>(); // ??
+//	private List<Project> leader_of_projects = new ArrayList<Project>();
 	private String fullname;
 
 	public Employee(String username){
@@ -38,23 +37,23 @@ public class Employee {
 		this.username = name;
 	}
 	
-	public void setProjectLeaderOf(Project project) {
-		this.leader_of_projects.add(project);
-	}
-	public List<Project> getProjectLeader() {
-		return leader_of_projects;
-	}
-	
-	public List<Activity> getActivities() {
-		return this.activities;
-	}
-	
-	public void addActivity(Activity activity) {
-		this.activities.add(activity);
-	}
-	public void removeActivity(Activity activity) {
-		this.activities.remove(activity);
-	}
+//	public void setProjectLeaderOf(Project project) {
+//		this.leader_of_projects.add(project);
+//	}
+//	public List<Project> getProjectLeader() {
+//		return leader_of_projects;
+//	}
+//	
+//	public List<Activity> getActivities() {
+//		return this.activities;
+//	}
+//	
+//	public void addActivity(Activity activity) {
+//		this.activities.add(activity);
+//	}
+//	public void removeActivity(Activity activity) {
+//		this.activities.remove(activity);
+//	}
 	
 	public void addRegisteredWork(RegisteredWork regwork) throws RegisterWorkException {		
 		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
@@ -188,14 +187,14 @@ public class Employee {
 		this.addDelegatedWork(week, week, year, year, activity, hours);
 	}
 
-	public Activity getActivity(Activity activityChosen) {
-		for (Activity activity: this.activities) {
-			if (activityChosen == activity) {
-				return activity;
-			}
-		}
-		return null;
-	}
+//	public Activity getActivity(Activity activityChosen) {
+//		for (Activity activity: this.activities) {
+//			if (activityChosen == activity) {
+//				return activity;
+//			}
+//		}
+//		return null;
+//	}
 	
 	public List<Work> getWork(){
 		List<Work> works = new ArrayList<Work>();

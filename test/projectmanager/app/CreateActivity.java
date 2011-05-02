@@ -175,51 +175,7 @@ public class CreateActivity {
 		
 		assertEquals(10, chosenActivity.getStart().get(Calendar.WEEK_OF_YEAR));
 		assertEquals(2011, chosenActivity.getStart().get(Calendar.YEAR));
-		assertEquals(10, chosenActivity.getStart().get(Calendar.WEEK_OF_YEAR));
+		assertEquals(15, chosenActivity.getStart().get(Calendar.WEEK_OF_YEAR));
 		assertEquals(2011, chosenActivity.getStart().get(Calendar.YEAR));
-	}
-	
-	/**
-	 * Tester scenariet, hvor en projektmanager tilf¿jer 
-	 * en slut-tid, der er f¿r start-tiden
-	 * @throws CreatingActivityException 
-	 * @throws OperationNotAllowedException 
-	 */
-	@Test
-	public void testInvalidDateOnActivity() throws OperationNotAllowedException, CreatingActivityException {
-		ProjectManagerApp.reset();
-		Company company = ProjectManagerApp.getCompany();
-		
-		String name = "Software Engineering";
-		String client = "Google";
-		Project project1 = new Project(name, client);
-		company.addProject(project1);
-		
-		Employee employee = new Employee("hlb");
-		company.addEmployee(employee);
-		project1.addLeader(employee);
-		assertEquals(employee, project1.getLeader());
-		
-		boolean login = ProjectManagerApp.employeeLogin("hlb");
-		assertTrue(project1.getActivities().isEmpty());
-		
-		int serialNumber = project1.getSerialNumber();
-		Project chosenProject = company.projectBySerialNumber(serialNumber);
-		
-		String actName = "activity1";		
-		Activity activity = new Activity(actName);
-		chosenProject.addActivity(activity);
-		
-		// projectmanageren tilf¿jer dato'er
-		Activity chosenActivity = chosenProject.activityByName(actName);
-		chosenActivity.setStart(15, 2011);
-		
-		try {
-			chosenActivity.setEnd(10, 2011);
-			fail("A AlreadyRegisteredWorkException should have been thrown");
-		} catch (CreatingActivityException e) {
-			assertEquals("The end-date is before the start-date.", e.getMessage());
-		}	
-		
-	}
+	}	
 }

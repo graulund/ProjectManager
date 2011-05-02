@@ -53,23 +53,9 @@ public class Activity {
 	}
 	
 	public void setEnd(int week, int year) {
-		if (this.isValidActivityDate(false, week, year)) {
-			this.end = new GregorianCalendar();
-			this.end.set(Calendar.YEAR, year);
-			this.end.set(Calendar.WEEK_OF_YEAR, week);
-		}
-	}
-	
-	private boolean isValidActivityDate(boolean isStart, int week, int year) {
-		if (isStart) {
-			if (week > this.getEnd().get(Calendar.WEEK_OF_YEAR) &&
-				year == this.getEnd().get(Calendar.YEAR)) {
-				return false;
-			} 
-		} else {
-			
-		}
-		return false;
+		this.end = new GregorianCalendar();
+		this.end.set(Calendar.YEAR, year);
+		this.end.set(Calendar.WEEK_OF_YEAR, week);
 	}
 
 	public Calendar getStart() {
