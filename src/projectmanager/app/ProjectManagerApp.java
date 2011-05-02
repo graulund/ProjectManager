@@ -45,27 +45,31 @@ public class ProjectManagerApp {
 		if (employee == this.getEmployeeLoggedIn()) employee.addRegisteredWork(regWork1);
 	}
 
-	public void assignEmployeeToActivity(Employee employee, Activity activity,int hours) {
+	/*public void assignEmployeeToActivity(Employee employee, Activity activity,int hours) {
 		// mangler at tjekke, om medarbejder, der "assigner" er projektleder
 		activity.addEmployee(employee);
 		
 		employee.addDelegatedWork(new DelegatedWork(hours/weeks, activity));
-	}
+	}*/
 	
-	private int hoursParseHalfhours(int hours, Activity activity) {
+	/*private int hoursParseHalfhours(int hours, Activity activity) {
 		int week = activity.getEnd().get(Calendar.WEEK_OF_YEAR) - activity.getStart().get(Calendar.WEEK_OF_YEAR);
 		int halfHoursPerWork = (hours*2)/;
 		while (halfHoursPerWork % hours == 0) {
 			
 		}
-	}
+	}*/
 	
 	// The app itself
 	public static void main(String[] args) throws IOException {
-		ProjectManagerUI ui = new ProjectManagerUI();
-		ui.in = new BufferedReader(new InputStreamReader(System.in));
-		PrintWriter out = new PrintWriter(System.out, true);
-		ui.basicLoop(ui.in, out);
+//		ProjectManagerUI ui = new ProjectManagerUI();
+//		ui.in = new BufferedReader(new InputStreamReader(System.in));
+//		PrintWriter out = new PrintWriter(System.out, true);
+//		ui.basicLoop(ui.in, out);
+		
+		AppStorage storage = new AppStorage();
+		StoredData obj     = storage.storeCurrentState();
+		storage.printState(obj);
 	}
 
 }
