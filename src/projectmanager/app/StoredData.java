@@ -9,14 +9,14 @@ public class StoredData implements Serializable {
 		public char[] name;
 		public char[] client;
 		public int serialNumber;
-		public char[] projectLeaderName;
+		public char[] projectLeaderName = new char[]{};
 		public char[][] employeeNames;
 		public StoredActivity[] activities;
 	}
 	
 	public class StoredEmployee {
 		public char[] username;
-		public char[] fullname;
+		public char[] fullname = new char[]{};
 		public StoredWorkWeek[] workWeeks;
 	}
 	

@@ -44,7 +44,9 @@ public class AppStorage {
 			p.name              = project.getName().toCharArray();
 			p.client            = project.getClient().toCharArray();
 			p.serialNumber      = project.getSerialNumber();
-			p.projectLeaderName = project.getLeader().getUsername().toCharArray();
+			if(project.getLeader() != null){
+				p.projectLeaderName = project.getLeader().getUsername().toCharArray();
+			}
 			p.employeeNames     = this.getEmployeeNames(project.getEmployees());
 			
 			ArrayList<StoredData.StoredActivity> activities = new ArrayList<StoredData.StoredActivity>();
@@ -57,7 +59,7 @@ public class AppStorage {
 				a.endTime       = this.formatCalendarString(activity.getEnd());
 				activities.add(a);
 			}
-			p.activities        = (StoredActivity[]) activities.toArray();
+			p.activities        = activities.toArray(new StoredActivity[activities.size()]);
 			
 			projects.add(p);
 		}
@@ -67,7 +69,9 @@ public class AppStorage {
 		for(Employee employee: Company.c.getEmployees()){
 			StoredData.StoredEmployee e = data.new StoredEmployee();
 			e.username = employee.getUsername().toCharArray();
-			e.fullname = employee.getFullname().toCharArray();
+			if(employee.getFullname() != null){
+				e.fullname = employee.getFullname().toCharArray();
+			}
 			
 			ArrayList<StoredData.StoredWorkWeek> weeks = new ArrayList<StoredData.StoredWorkWeek>();
 			for(WorkWeek week: employee.getWorkWeeks()){
@@ -76,13 +80,13 @@ public class AppStorage {
 				w.year = week.getYear();
 				w.workIds = this.getWorkIds(week.getWork(), data, works);
 			}
-			e.workWeeks = (StoredWorkWeek[]) weeks.toArray();
+			e.workWeeks = weeks.toArray(new StoredWorkWeek[weeks.size()]);
 			
 			employees.add(e);
 		}
-		data.projects  = (StoredProject[])  projects.toArray();
-		data.employees = (StoredEmployee[]) employees.toArray();
-		data.works     = (StoredWork[])     works.toArray();
+		data.projects  = projects.toArray(new StoredProject[projects.size()]);
+		data.employees = employees.toArray(new StoredEmployee[employees.size()]);
+		data.works     = works.toArray(new StoredWork[works.size()]);
 		return data;
 	}
 	public void saveCurrentState(){
@@ -163,7 +167,7 @@ public class AppStorage {
 		for(Employee e: employees){
 			names.add(e.getUsername().toCharArray());
 		}
-		return (char[][]) names.toArray();
+		return names.toArray(new char[names.size()][]);
 	}
 	public boolean hasWorkId(int workId, ArrayList<StoredData.StoredWork> storedworks){
 		for(StoredData.StoredWork work: storedworks){
@@ -176,19 +180,21 @@ public class AppStorage {
 	public int[] getWorkIds(List<Work> works, StoredData data, ArrayList<StoredData.StoredWork> storedworks){
 		ArrayList<Integer> workIds = new ArrayList<Integer>();
 		for(Work work: works){
-			if(data != null && storedworks != null && !this.hasWorkId(work.serialNumber, storedworks)){
-				StoredData.StoredWork swork = data.new StoredWork();
-				swork.workId = work.serialNumber;
-				if(work.getClass() == DelegatedWork.class){
-					swork.halfHours = ((DelegatedWork) work).getHalfHoursWorked();
+			if(work != null){
+				if(data != null && storedworks != null && !this.hasWorkId(work.serialNumber, storedworks)){
+					StoredData.StoredWork swork = data.new StoredWork();
+					swork.workId = work.serialNumber;
+					if(work.getClass() == DelegatedWork.class){
+						swork.halfHours = ((DelegatedWork) work).getHalfHoursWorked();
+					}
+					if(work.getClass() == RegisteredWork.class){
+						swork.startTime = this.formatCalendarString(((RegisteredWork) work).getStartTime());
+						swork.endTime   = this.formatCalendarString(((RegisteredWork) work).getEndTime());
+					}
+					storedworks.add(swork);
 				}
-				if(work.getClass() == RegisteredWork.class){
-					swork.startTime = this.formatCalendarString(((RegisteredWork) work).getStartTime());
-					swork.endTime   = this.formatCalendarString(((RegisteredWork) work).getEndTime());
-				}
-				storedworks.add(swork);
+				workIds.add(work.serialNumber);
 			}
-			workIds.add(work.serialNumber);
 		}
 		int[] ids = new int[workIds.size()];
 		for(int i = 0; i < workIds.size(); i++){
@@ -200,8 +206,11 @@ public class AppStorage {
 		return this.getWorkIds(works, null, null);
 	}
 	public char[] formatCalendarString(Calendar c){
-		SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		return f.format(c.getTime()).toCharArray();
+		if(c != null){
+			SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			return f.format(c.getTime()).toCharArray();
+		}
+		return new char[]{};
 	}
 //	public Calendar parseCalendarString(String s){
 //		
