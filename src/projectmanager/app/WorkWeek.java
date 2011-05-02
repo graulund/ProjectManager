@@ -95,4 +95,15 @@ public class WorkWeek {
 //		}
 //		return total;
 //	}
+	
+	public List<Work> getWork(){
+		List<Work> works = new ArrayList<Work>();
+		for(DelegatedWork w: this.delegatedWork){
+			works.add(w);
+		}
+		for(RegisteredWork w: this.registeredWork){
+			works.add(w);
+		}
+		return works;
+	}
 }
