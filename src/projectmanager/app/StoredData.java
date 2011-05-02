@@ -17,7 +17,7 @@ public class StoredData implements Serializable {
 	public class StoredEmployee {
 		public char[] username;
 		public char[] fullname;
-		public int[] workIds;
+		public StoredWorkWeek[] workWeeks;
 	}
 	
 	public class StoredActivity {
@@ -28,10 +28,15 @@ public class StoredData implements Serializable {
 		public char[] endTime;
 	}
 	
+	public class StoredWorkWeek {
+		public int week;
+		public int year;
+		public int[] workIds;
+	}
+	
 	public class StoredWork {
 		public int workId;
 		public int halfHours = 0;
-		//public char[][] employeeNames;
 		public char[] startTime = new char[0];
 		public char[] endTime   = new char[0];
 	}
@@ -43,4 +48,6 @@ public class StoredData implements Serializable {
 	public StoredProject[] projects;
 	// --> Employees
 	public StoredEmployee[] employees;
+	// --> Works
+	public StoredWork[] works;
 }

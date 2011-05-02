@@ -11,6 +11,8 @@ import java.util.List;
 import projectmanager.app.StoredData.StoredActivity;
 import projectmanager.app.StoredData.StoredEmployee;
 import projectmanager.app.StoredData.StoredProject;
+import projectmanager.app.StoredData.StoredWork;
+import projectmanager.app.StoredData.StoredWorkWeek;
 
 public class AppStorage {
 	public static final String default_filename = "pmapp.data";
@@ -43,6 +45,7 @@ public class AppStorage {
 			p.serialNumber      = project.getSerialNumber();
 			p.projectLeaderName = project.getLeader().getUsername().toCharArray();
 			p.employeeNames     = this.getEmployeeNames(project.getEmployees());
+			
 			ArrayList<StoredData.StoredActivity> activities = new ArrayList<StoredData.StoredActivity>();
 			for(Activity activity: project.getActivities()){
 				StoredData.StoredActivity a = data.new StoredActivity();
@@ -54,6 +57,7 @@ public class AppStorage {
 				activities.add(a);
 			}
 			p.activities        = (StoredActivity[]) activities.toArray();
+			
 			projects.add(p);
 		}
 		
@@ -63,11 +67,21 @@ public class AppStorage {
 			StoredData.StoredEmployee e = data.new StoredEmployee();
 			e.username = employee.getUsername().toCharArray();
 			e.fullname = employee.getFullname().toCharArray();
-			e.workIds  = this.getWorkIds(employee.getWork(), data, works);
+			
+			ArrayList<StoredData.StoredWorkWeek> weeks = new ArrayList<StoredData.StoredWorkWeek>();
+			for(WorkWeek week: employee.getWorkWeeks()){
+				StoredData.StoredWorkWeek w = data.new StoredWorkWeek();
+				w.week = week.getWeekNumber();
+				w.year = week.getYear();
+				w.workIds = this.getWorkIds(week.getWork(), data, works);
+			}
+			e.workWeeks = (StoredWorkWeek[]) weeks.toArray();
+			
 			employees.add(e);
 		}
 		data.projects  = (StoredProject[])  projects.toArray();
 		data.employees = (StoredEmployee[]) employees.toArray();
+		data.works     = (StoredWork[])     works.toArray();
 		return data;
 	}
 	public void saveCurrentState(){
