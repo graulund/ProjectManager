@@ -61,11 +61,11 @@ public class Employee {
 		
 		// Checks if the entered time is valid for registered work
 		if (!isValidRegwork(regwork)) {
-			throw new RegisterWorkException("Invalid time registration: the start time is after the end time.");
+			throw new RegisterWorkException("The starting time is after the ending time.");
 		
 		// Checks if the time of the registered work is outside of the time-interval of the activity			
 		} else if (timeOutsideActivity(regwork, regwork.getActivity())) {
-			throw new RegisterWorkException("You have registered time outside the timer-interval of the given activity");
+			throw new RegisterWorkException("You have registered time outside the timer-interval of the given activity.");
 			
 		// Checks if workweek for the registered work already exists
 		} else if (workWeek == null) {
@@ -144,7 +144,6 @@ public class Employee {
 	public void addDelegatedWork(int weekFrom, int weekTo, int yearFrom, int yearTo, Activity activity, int hours) {
 		// det deligerede arbejde str¾kker sig kun over 1 uge
 		if (weekTo - weekFrom == 0 && yearFrom == yearTo) {
-			System.out.println("ONLY 1 WEEK!");
 			WorkWeek workweek = this.getWorkWeek(weekFrom, yearFrom);
 			if (workweek == null) {
 				WorkWeek newWorkWeek = new WorkWeek(weekFrom, yearFrom);

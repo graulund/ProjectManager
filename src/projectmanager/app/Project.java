@@ -42,7 +42,11 @@ public class Project {
 	public Employee getLeader() {
 		return this.projectLeader;
 	}
-	public void addActivity(Activity activity) {
+	public void addActivity(Activity activity) throws OperationNotAllowedException, ActivityAlreadyCreatedException {
+		if (ProjectManagerApp.getEmployeeLoggedIn() != this.projectLeader)
+			throw new OperationNotAllowedException("Create activity");
+		else if (this.activityByName(activity.getName()) != null)
+			throw new ActivityAlreadyCreatedException("You have already created an activity by this name.");
 		this.activities.add(activity);
 	}
 	public void removeActivity(Activity activity) {
@@ -82,5 +86,9 @@ public class Project {
 	}
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
+	}
+	public boolean hasProjectManager() {
+		if (projectLeader == null) return false;
+		else return true;
 	}
 }

@@ -17,7 +17,7 @@ public class AssignEmployeeToActivity {
 	Project project;
 	
 	@Before
-	public void setUpProjectAndEmployee() {
+	public void setUpProjectAndEmployee() throws OperationNotAllowedException, ActivityAlreadyCreatedException {
 		company = ProjectManagerApp.getCompany();
 		
 		employee1 = new Employee("emp1");
@@ -26,23 +26,27 @@ public class AssignEmployeeToActivity {
 		company.addEmployee(employee2);
 		
 		project = new Project("lolproject", "Google");
-		company.addProject(project);
-		
-		activity = new Activity("lolcat");
-		project.addActivity(activity);		
+		company.addProject(project);	
 	}
 	
 	/**
 	 * Tester scenariet, hvor en medarbejder successfuldt
 	 * tildeler en medarbejder til en aktivitet
+	 * @throws ActivityAlreadyCreatedException 
+	 * @throws OperationNotAllowedException 
 	 */
 	@Test
-	public void testAssignEmployeeToActivity() {
+	public void testAssignEmployeeToActivity() throws OperationNotAllowedException, ActivityAlreadyCreatedException {
 		// medarbejder logger ind med initialer, der findes i databasen
 		boolean login = ProjectManagerApp.employeeLogin("emp1");
 		
 		// tilf¿jer den ene projektleder som projektleder
 		project.addLeader(employee1);
+		System.out.println(ProjectManagerApp.getEmployeeLoggedIn().getUsername());
+		
+		// tilf¿jer et projekt
+		activity = new Activity("lolcat");
+		project.addActivity(activity);	
 		
 		// medarbejderen v¾lger et projekt, som han er projektleder for
 		Project projectChosen = ProjectManagerApp.getEmployeeLoggedIn().getProjectLeader().get(0);
