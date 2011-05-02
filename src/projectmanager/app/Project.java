@@ -10,7 +10,7 @@ public class Project {
 	private Employee projectLeader;
 	private List<Employee> employees = new ArrayList<Employee>();
 	private List<Activity> activities = new ArrayList<Activity>();
-	// private Company company; ?
+
 	
 	public Project(String name, String client) {
 		this.name = name;
@@ -48,6 +48,7 @@ public class Project {
 		return activities;
 	}
 	
+	
 	public String getReport() {
 		double registeredHours = 0;
 		int delegatedHours = 0;
@@ -64,5 +65,12 @@ public class Project {
 			}
 		}
 		return null;
+	}
+	
+	public void addEmployee(Employee employee) {
+		this.employees.add(employee);
+	}
+	public void removeEmployee(Employee employee) {
+		this.employees.remove(employee);
 	}
 }
