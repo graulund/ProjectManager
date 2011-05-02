@@ -21,6 +21,7 @@ public class RegisteredWork {
 	}
 	
 	public RegisteredWork(Activity activity, int halfHoursWorked) {
+		this.serialNumber = Company.c.newSerialNumber();
 		this.activity = activity;
 		this.halfHoursWorked = halfHoursWorked;
 		this.activity.addRegisteredWork(this);
