@@ -21,6 +21,15 @@ public class RegisteredWork extends Work {
 	public RegisteredWork(Activity activity, int halfHoursWorked) {
 		this.serialNumber = Company.c.newSerialNumber();
 		this.activity = activity;
+		int hours   = halfHoursWorked / 2;
+		int minutes = (halfHoursWorked % 2) * 30;
+		Calendar startCalendar = new GregorianCalendar();
+		Calendar endCalendar = new GregorianCalendar();
+		startCalendar.set(2000, 0, 1, 0, 0);
+		endCalendar.set(2000, 0, 1, hours, minutes);
+		this.startTime = startCalendar;
+		this.endTime = endCalendar;
+		this.date = setDate(startCalendar);
 		this.halfHoursWorked = halfHoursWorked;
 		this.activity.addRegisteredWork(this);
 	}
