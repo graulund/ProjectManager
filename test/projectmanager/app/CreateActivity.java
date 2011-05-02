@@ -16,6 +16,20 @@ public class CreateActivity {
 	 */
 	@Test
 	public void CreateActivity() {
+		Company company = ProjectManagerApp.getCompany();
 		
+		String name = "Software Engineering";
+		String client = "Google";
+		Project project1 = new Project(name, client);
+		company.addProject(project1);
+		
+		Employee employee = new Employee("hlb");
+		company.addEmployee(employee);
+		project1.addLeader(employee);
+		
+		assertEquals(employee, project1.getLeader());
+		
+		// checker at der ikke eksisterer nogle aktiviteter
+		assertTrue(project1.
 	}
 }

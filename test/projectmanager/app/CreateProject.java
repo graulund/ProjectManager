@@ -21,8 +21,7 @@ public class CreateProject {
 	 */
 	@Test
 	public void testCreateProject() {
-		ProjectManagerApp PMApp = new ProjectManagerApp();
-		Company company = PMApp.getCompany();
+		Company company = ProjectManagerApp.getCompany();
 		Employee employee = new Employee("hlb");
 		company.addEmployee(employee);
 		
@@ -30,11 +29,11 @@ public class CreateProject {
 		assertTrue(company.getProjects().isEmpty());
 		
 		// medarbejder logger ind med initialer, der findes i databasen
-		boolean login = PMApp.employeeLogin("hlb");
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen er logget ind
 		assertTrue(login);
-		assertTrue(PMApp.isEmployeeLoggedIn());
+		assertTrue(ProjectManagerApp.isEmployeeLoggedIn());
 		
 		// medarbejderen indtaster f¿lgende informationer
 		String name = "Software Engineering";
@@ -56,18 +55,17 @@ public class CreateProject {
 	 */
 	@Test
 	public void testCreateProjectWrongLogin() {
-		ProjectManagerApp PMApp = new ProjectManagerApp();
-		Company company = PMApp.getCompany();
+		Company company = ProjectManagerApp.getCompany();
 		
 		// checker at der ikke eksisterer nogle projekter
 		assertTrue(company.getProjects().isEmpty());
 		
 		// medarbejder logger ind med initialer, der IKKE findes i databasen
-		boolean login = PMApp.employeeLogin("hlb");
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen IKKE er logget ind
 		assertFalse(login);
-		assertFalse(PMApp.isEmployeeLoggedIn());
+		assertFalse(ProjectManagerApp.isEmployeeLoggedIn());
 	}
 	
 }

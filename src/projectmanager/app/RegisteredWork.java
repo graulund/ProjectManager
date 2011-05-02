@@ -25,8 +25,8 @@ public class RegisteredWork extends Work {
 		int minutes = (halfHoursWorked % 2) * 30;
 		Calendar startCalendar = new GregorianCalendar();
 		Calendar endCalendar = new GregorianCalendar();
-		startCalendar.set(2000, 0, 1, 0, 0);
-		endCalendar.set(2000, 0, 1, hours, minutes);
+		startCalendar.set(2000, 0, 1, 0, 0, 0);
+		endCalendar.set(2000, 0, 1, hours, minutes, 0);
 		this.startTime = startCalendar;
 		this.endTime = endCalendar;
 		this.date = setDate(startCalendar);
