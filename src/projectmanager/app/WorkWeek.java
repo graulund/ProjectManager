@@ -49,7 +49,7 @@ public class WorkWeek {
 	public int getDelegatedHours(){
 		int total = 0;
 		for(DelegatedWork work: this.delegatedWork){
-			total += work.getHours();
+			total += work.getHalfHoursWorked();
 		}
 		return total;
 	}

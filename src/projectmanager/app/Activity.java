@@ -69,7 +69,7 @@ public class Activity {
 	public int getDelegatedHours() {
 		int total = 0;
 		for (DelegatedWork del_work: this.del_works) {
-			total += del_work.getHours();
+			total += del_work.getHalfHoursWorked();
 		}
 		return total;
 	}
@@ -81,5 +81,31 @@ public class Activity {
 		}
 		return total;
 	}
+
+	public List<DelegatedWork> getDelegatedWork() {
+		return del_works;
+	}
+
+	public void setDelegatedWork(List<DelegatedWork> del_works) {
+		this.del_works = del_works;
+	}
+
+	public List<RegisteredWork> getRegisteredWork() {
+		return reg_works;
+	}
+
+	public void setRegisteredWork(List<RegisteredWork> reg_works) {
+		this.reg_works = reg_works;
+	}
 	
+	public List<Work> getWork(){
+		List<Work> works = new ArrayList<Work>();
+		for(DelegatedWork w: this.del_works){
+			works.add(w);
+		}
+		for(RegisteredWork w: this.reg_works){
+			works.add(w);
+		}
+		return works;
+	}
 }

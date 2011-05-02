@@ -9,16 +9,16 @@ import java.util.List;
 public class Employee {
 	private String username; // 4 letters
 	private ArrayList<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
-	private Company employedAtCompany;
 	private List<Project> leader_of_projects = new ArrayList<Project>();
 	private List<Activity> activities = new ArrayList<Activity>(); // ??
 	private String fullname;
 
 	public Employee(String username){
-		this.username   = username;
+		this.username = username;
 	}
 	
 	public Employee(String username, String fullname) {
+		this.username = username;
 		this.fullname = fullname;
 	}
 	
@@ -36,10 +36,6 @@ public class Employee {
 	
 	public void setUsername(String name) {
 		this.username = name;
-	}
-	
-	public void setEmployedAtCompany(Company company) {
-		this.employedAtCompany = company;
 	}
 	
 	public void setProjectLeaderOf(Project project) {
@@ -139,8 +135,8 @@ public class Employee {
 	}
 
 	public void addDelegatedWork(DelegatedWork delwork) {
-		Calendar run = delwork.getActivity().getStart();
-		Calendar end = delwork.getActivity().getEnd();
+		Calendar run = (Calendar) delwork.getActivity().getStart().clone();
+		Calendar end = (Calendar) delwork.getActivity().getEnd().clone();
 		end.add(Calendar.WEEK_OF_YEAR, 1);
 		while (run.before(end)) {
 			WorkWeek workweek = this.getWorkWeek(run.get(Calendar.WEEK_OF_YEAR), Calendar.YEAR);
@@ -152,8 +148,7 @@ public class Employee {
 				workweek.addDelegatedWork(delwork);
 			}
 			run.add(Calendar.WEEK_OF_YEAR, 1);
-		}
-		
+		}		
 	}
 
 	public Activity getActivity(Activity activityChosen) {
@@ -165,4 +160,16 @@ public class Employee {
 		return null;
 	}
 	
+	public List<Work> getWork(){
+		List<Work> works = new ArrayList<Work>();
+		for(WorkWeek week: this.workWeeks){
+			for(DelegatedWork w: week.getDelegatedWork()){
+				works.add(w);
+			}
+			for(RegisteredWork w: week.getRegisteredWork()){
+				works.add(w);
+			}
+		}
+		return works;
+	}
 }
