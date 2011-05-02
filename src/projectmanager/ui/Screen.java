@@ -16,7 +16,7 @@ abstract class Screen {
 	// General screen utilities
 	protected void println(PrintWriter out, String s){
 		out.println(s);
-		System.out.print("> ");
+		System.out.print("> "); // Just "out.print" doesn't work?
 		chars += s.length();
 	}
 	protected void clearScreen(PrintWriter out){

@@ -18,7 +18,6 @@ public class LoginScreen extends Screen {
 	@Override
 	boolean processInput(String input, PrintWriter out) {
 		//System.out.println("Trying to log in as user '" + input + "'");
-		//boolean login = ;
 		if(ProjectManagerApp.employeeLogin(input)){
 			out.println("You are now logged in!");
 		} else {

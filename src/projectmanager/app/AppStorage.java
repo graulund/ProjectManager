@@ -1,7 +1,9 @@
 package projectmanager.app;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class AppStorage {
 		// --> Company
 		data.currentSerialNumber = ProjectManagerApp.getCurrentSerialNumber();
 		
-		// --> Works
+		// --> Work
 		ArrayList<StoredData.StoredWork> works = new ArrayList<StoredData.StoredWork>();
 		
 		// --> Projects
@@ -103,7 +105,26 @@ public class AppStorage {
 			System.out.println("Error: Could not save file\n" + e);
 		}
 	}
-	public void loadState(){
+	public StoredData loadState(){
+		try {
+			ObjectInputStream objIn   = new ObjectInputStream(new FileInputStream(this.filename));
+			StoredData obj = (StoredData) objIn.readObject();
+			objIn.close();
+			return obj;
+		} catch (Exception e) {
+			System.out.println("Error: Could not load file\n" + e);
+		}
+		return null;
+	}
+	public void restoreState(){
+		this.restoreState(this.loadState());
+	}
+	public void restoreState(StoredData data){
+		// Restoring information for:
+		// --> Company
+		// --> Work
+		// --> Projects
+		// --> Employees
 		
 	}
 	public void printState(StoredData data){
