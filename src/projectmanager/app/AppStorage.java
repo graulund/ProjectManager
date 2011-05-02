@@ -25,6 +25,9 @@ public class AppStorage {
 		// --> Company
 		data.currentSerialNumber = Company.c.getCurrentSerialNumber();
 		
+		// --> Works
+		ArrayList<StoredData.StoredWork> works = new ArrayList<StoredData.StoredWork>();
+		
 		// --> Projects
 		ArrayList<StoredData.StoredProject> projects = new ArrayList<StoredData.StoredProject>();
 		for(Project project: Company.c.getProjects()){
@@ -60,6 +63,9 @@ public class AppStorage {
 		}
 		return (char[][]) names.toArray();
 	}
+//	public int[] getWorkIds(List<Work> works){
+//		
+//	}
 	public char[] formatCalendarString(Calendar c){
 		return c.toString().toCharArray();
 	}
