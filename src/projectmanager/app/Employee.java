@@ -3,6 +3,7 @@ package projectmanager.app;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Employee {
@@ -123,7 +124,21 @@ public class Employee {
 	}
 
 	public void addDelegatedWork(DelegatedWork delwork) {
-				
+		Calendar run = delwork.getActivity().getStart();
+		Calendar end = delwork.getActivity().getEnd();
+		end.add(Calendar.WEEK_OF_YEAR, 1);
+		while (run.before(end)) {
+			WorkWeek workweek = this.getWorkWeek(run.get(Calendar.WEEK_OF_YEAR), Calendar.YEAR);
+			if (workweek == null) {
+				WorkWeek newWorkWeek = new WorkWeek(run.get(Calendar.WEEK_OF_YEAR),run.get(Calendar.YEAR));
+				this.workWeeks.add(newWorkWeek);
+				newWorkWeek.addDelegatedWork(delwork);
+			} else {
+				workweek.addDelegatedWork(delwork);
+			}
+			run.add(Calendar.WEEK_OF_YEAR, 1);
+		}
+		
 	}
 
 	private WorkWeek workWeekByWeeknumber(int i) {
