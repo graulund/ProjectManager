@@ -16,6 +16,7 @@ abstract class Screen {
 	// General screen utilities
 	protected void println(PrintWriter out, String s){
 		out.println(s);
+		System.out.print("> ");
 		chars += s.length();
 	}
 	protected void clearScreen(PrintWriter out){
@@ -50,5 +51,8 @@ abstract class Screen {
 	}
 	public String menuString(String[] choices){
 		return menuString(choices, "Cancel");
+	}
+	public String formatTitle(String title){
+		return "== " + title.toUpperCase() + "\n";
 	}
 }

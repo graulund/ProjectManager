@@ -1,6 +1,11 @@
 package projectmanager.app;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
+import projectmanager.ui.ProjectManagerUI;
 
 public class ProjectManagerApp {
 	private static Company company = new Company();
@@ -12,11 +17,19 @@ public class ProjectManagerApp {
 	 */
 	private static int currentSerialNumber = 1;
 
-	
+	/**
+	 * Get the Company object instance in use at the moment
+	 * @return Company instance
+	 */
 	public static Company getCompany(){
 		return company;
 	}
-
+	
+	/**
+	 * Log in to the app with the given username
+	 * @param username Employee username
+	 * @return Boolean defining whether or not you're now logged in
+	 */
 	public static boolean employeeLogin(String username) {
 		loggedInEmployee = company.employeeByUsername(username);
 		if (loggedInEmployee != null) {
@@ -24,15 +37,27 @@ public class ProjectManagerApp {
 		}
 		return isEmployeeLoggedIn;
 	}
-
+	
+	/**
+	 * Am I logged in?
+	 * @return Boolean
+	 */
 	public static boolean isEmployeeLoggedIn() {
 		return isEmployeeLoggedIn;
 	}
-
+	
+	/**
+	 * Who's logged in?
+	 * @return Employee object (you)
+	 */
 	public static Employee getEmployeeLoggedIn() {
 		return loggedInEmployee;
 	}
-
+	
+	/**
+	 * Log out from the app
+	 * @return Boolean defining whether or not you're now logged in
+	 */
 	public static boolean employeeLogout() {
 		loggedInEmployee = null;
 		isEmployeeLoggedIn = false;
@@ -58,24 +83,38 @@ public class ProjectManagerApp {
 		}
 	}*/
 	
-	// The app itself
+	/**
+	 * Main function; the main method starting the app.
+	 */
 	public static void main(String[] args) throws IOException {
-//		ProjectManagerUI ui = new ProjectManagerUI();
-//		ui.in = new BufferedReader(new InputStreamReader(System.in));
-//		PrintWriter out = new PrintWriter(System.out, true);
-//		ui.basicLoop(ui.in, out);
-		
-		AppStorage storage = new AppStorage();
-		StoredData obj     = storage.storeCurrentState();
-		storage.printState(obj);
+		ProjectManagerUI ui = new ProjectManagerUI();
+		ui.in = new BufferedReader(new InputStreamReader(System.in));
+		PrintWriter out = new PrintWriter(System.out, true);
+		ui.basicLoop(ui.in, out);
 	}
 	
+	/**
+	 * Generate and return a new serial number for use for identifying various objects around the app
+	 * @return A new serial number ready for use
+	 */
 	public static int newSerialNumber(){
 		return currentSerialNumber++;
 	}
 	
+	/**
+	 * Return the upcoming to-be-used ("current") serial number
+	 * @return Current serial number
+	 */
 	public static int getCurrentSerialNumber(){
 		return currentSerialNumber;
+	}
+	
+	/**
+	 * Set what number will be used as the next serial number
+	 * @param currentSerialNumber Number to be used
+	 */
+	public static void setCurrentSerialNumber(int currentSerialNumber) {
+		ProjectManagerApp.currentSerialNumber = currentSerialNumber;
 	}
 
 }

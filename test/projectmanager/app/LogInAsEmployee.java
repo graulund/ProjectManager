@@ -16,21 +16,21 @@ public class LogInAsEmployee {
 	@Test
 	public void testLogin() {
 		
-		ProjectManagerApp PMApp = new ProjectManagerApp();
+		
 		Employee employee = new Employee("hlb");
-		Company company = PMApp.getCompany();
+		Company company = ProjectManagerApp.getCompany();
 		company.addEmployee(employee);
 		
 		// checker at medarbejderen ikke er logget ind
-		assertFalse(PMApp.isEmployeeLoggedIn());
+		assertFalse(ProjectManagerApp.isEmployeeLoggedIn());
 		
 		// medarbejder logger ind med initialer, der findes i databasen
-		boolean login = PMApp.employeeLogin("hlb");
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen er logget ind
 		assertTrue(login);
-		assertTrue(PMApp.isEmployeeLoggedIn());
-		assertEquals(employee, PMApp.getEmployeeLoggedIn());
+		assertTrue(ProjectManagerApp.isEmployeeLoggedIn());
+		assertEquals(employee, ProjectManagerApp.getEmployeeLoggedIn());
 	}
 	
 	/**
@@ -40,18 +40,18 @@ public class LogInAsEmployee {
 	@Test
 	public void testLoginFailed() {
 		
-		ProjectManagerApp PMApp = new ProjectManagerApp();
+		
 		
 		// checker at medarbejderen ikke er logget ind
-		assertFalse(PMApp.isEmployeeLoggedIn());
+		assertFalse(ProjectManagerApp.isEmployeeLoggedIn());
 		
 		// medarbejder logger ind med initialer, der ikke findes i databasen
-		boolean login = PMApp.employeeLogin("hlb");
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen ikke er logget ind
 		assertFalse(login);
-		assertFalse(PMApp.isEmployeeLoggedIn());
-		assertEquals(null, PMApp.getEmployeeLoggedIn());
+		assertFalse(ProjectManagerApp.isEmployeeLoggedIn());
+		assertEquals(null, ProjectManagerApp.getEmployeeLoggedIn());
 	}
 	
 	/**
@@ -60,28 +60,28 @@ public class LogInAsEmployee {
 	@Test
 	public void testLogout() {
 	
-		ProjectManagerApp PMApp = new ProjectManagerApp();
+		
 		Employee employee = new Employee("hlb");
-		Company company = PMApp.getCompany();
+		Company company = ProjectManagerApp.getCompany();
 		company.addEmployee(employee);
 		
 		// checker at medarbejderen ikke er logget ind
-		assertFalse(PMApp.isEmployeeLoggedIn());
+		assertFalse(ProjectManagerApp.isEmployeeLoggedIn());
 		
 		// medarbejder logger ind med initialer, der ikke findes i databasen
-		boolean login = PMApp.employeeLogin("hlb");
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen er logget ind
 		assertTrue(login);
-		assertTrue(PMApp.isEmployeeLoggedIn());
-		assertEquals(employee, PMApp.getEmployeeLoggedIn());
+		assertTrue(ProjectManagerApp.isEmployeeLoggedIn());
+		assertEquals(employee, ProjectManagerApp.getEmployeeLoggedIn());
 		
 		// medarbejderen logger ud
-		boolean logout = PMApp.employeeLogout();
+		boolean logout = ProjectManagerApp.employeeLogout();
 		
 		// checker at medarbejderen ikke er logget ind
 		assertFalse(logout);
-		assertFalse(PMApp.isEmployeeLoggedIn());
-		assertEquals(null, PMApp.getEmployeeLoggedIn());
+		assertFalse(ProjectManagerApp.isEmployeeLoggedIn());
+		assertEquals(null, ProjectManagerApp.getEmployeeLoggedIn());
 	}
 }
