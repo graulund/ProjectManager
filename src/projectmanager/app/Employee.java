@@ -14,10 +14,11 @@ public class Employee {
 	private String fullname;
 
 	public Employee(String username){
-		this.username   = username;
+		this.username = username;
 	}
 	
 	public Employee(String username, String fullname) {
+		this.username = username;
 		this.fullname = fullname;
 	}
 	
@@ -159,4 +160,16 @@ public class Employee {
 		return null;
 	}
 	
+	public List<Work> getWork(){
+		List<Work> works = new ArrayList<Work>();
+		for(WorkWeek week: this.workWeeks){
+			for(DelegatedWork w: week.getDelegatedWork()){
+				works.add(w);
+			}
+			for(RegisteredWork w: week.getRegisteredWork()){
+				works.add(w);
+			}
+		}
+		return works;
+	}
 }

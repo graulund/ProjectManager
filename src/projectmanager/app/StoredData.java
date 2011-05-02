@@ -1,6 +1,9 @@
 package projectmanager.app;
 
-public class StoredData {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class StoredData implements Serializable {
 	// Storage structure:
 	public class StoredProject {
 		public char[] name;
@@ -12,7 +15,8 @@ public class StoredData {
 	}
 	
 	public class StoredEmployee {
-		public char[] name;
+		public char[] username;
+		public char[] fullname;
 		public int[] workIds;
 	}
 	
@@ -26,10 +30,10 @@ public class StoredData {
 	
 	public class StoredWork {
 		public int workId;
-		public int weekNumber;
+		public int halfHours = 0;
 		//public char[][] employeeNames;
-		public char[] startTime;
-		public char[] endTime;
+		public char[] startTime = new char[0];
+		public char[] endTime   = new char[0];
 	}
 	
 	// Stored data for:
