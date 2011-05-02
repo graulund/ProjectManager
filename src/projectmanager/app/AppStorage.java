@@ -122,9 +122,17 @@ public class AppStorage {
 	public void restoreState(StoredData data){
 		// Restoring information for:
 		// --> Company
+		ProjectManagerApp.setCurrentSerialNumber(data.currentSerialNumber);
 		// --> Work
+		ArrayList<Work> work = new ArrayList<Work>();
 		// --> Projects
+		ArrayList<Project> projects = new ArrayList<Project>();
 		// --> Employees
+		ArrayList<Employee> employees = new ArrayList<Employee>();
+		
+		Company c = ProjectManagerApp.getCompany();
+		c.setProjects(projects);
+		c.setEmployees(employees);
 		
 	}
 	public void printState(StoredData data){
@@ -191,12 +199,23 @@ public class AppStorage {
 		return names.toArray(new char[names.size()][]);
 	}
 	public boolean hasWorkId(int workId, ArrayList<StoredData.StoredWork> storedworks){
+		return this.hasWorkId(workId, storedworks.toArray(new StoredData.StoredWork[storedworks.size()]));
+	}
+	public boolean hasWorkId(int workId, StoredData.StoredWork[] storedworks){
 		for(StoredData.StoredWork work: storedworks){
 			if(work.workId == workId){
 				return true;
 			}
 		}
 		return false;
+	}
+	public StoredData.StoredWork getWorkInfo(int workId, StoredData.StoredWork[] storedworks){
+		for(StoredData.StoredWork work: storedworks){
+			if(work.workId == workId){
+				return work;
+			}
+		}
+		return null;
 	}
 	public int[] getWorkIds(List<Work> works, StoredData data, ArrayList<StoredData.StoredWork> storedworks){
 		ArrayList<Integer> workIds = new ArrayList<Integer>();

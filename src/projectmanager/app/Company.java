@@ -19,6 +19,10 @@ public class Company {
 	public List<Project> getProjects() {
 		return this.projects;
 	}
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+
 	public void addProject(Project project) {
 		// TODO: What if it already exists in the list?
 		this.projects.add(project);
