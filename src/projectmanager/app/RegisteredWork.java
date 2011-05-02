@@ -9,6 +9,7 @@ public class RegisteredWork {
 	private Calendar startTime;
 	private Calendar endTime;
 	private int halfHoursWorked;
+	private int serialNumber;
 	
 	public RegisteredWork(Activity activity, Calendar startCalendar1, Calendar endCalendar1) {
 		this.activity = activity;
@@ -102,5 +103,12 @@ public class RegisteredWork {
 
 	public Calendar getEndTime() {
 		return this.endTime;
+	}
+	
+	public void setSerialNumber(int serialKey) {
+		this.serialNumber = serialKey;
+	}
+	public int getSerialNumber() {
+		return this.serialNumber;
 	}
 }

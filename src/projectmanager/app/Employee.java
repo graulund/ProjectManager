@@ -11,7 +11,7 @@ public class Employee {
 	private ArrayList<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
 	private Company employedAtCompany;
 	private List<Project> leader_of_projects = new ArrayList<Project>();
-	private List<Activity> activities = new ArrayList<Activity>();
+	private List<Activity> activities = new ArrayList<Activity>(); // ??
 
 	public Employee(String name){
 		this.name   = name;

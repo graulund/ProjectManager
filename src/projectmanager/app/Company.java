@@ -6,8 +6,18 @@ import java.util.List;
 public class Company {
 	private List<Project> projects = new ArrayList<Project>();
 	private List<Employee> employees = new ArrayList<Employee>();
+	/**
+	 * The current auto-incrementing serial number used to reference various objects
+	 */
 	private int currentSerialNumber = 1;
+	/**
+	 * Reference to the current Company object
+	 */
+	public static Company c;
 	
+	public Company(){
+		c = this;
+	}
 	
 	public List<Project> getProjects() {
 		return this.projects;
@@ -15,7 +25,7 @@ public class Company {
 	public void addProject(Project project) {
 		// TODO: What if it already exists in the list?
 		this.projects.add(project);
-		project.setSerialNumber(currentSerialNumber++);
+		//project.setSerialNumber(currentSerialNumber++);
 	}
 	
 	public void addEmployee(Employee employee) {
@@ -30,7 +40,7 @@ public class Company {
 	
 	public void setEmployees(ArrayList<Employee> employees){
 		this.employees = employees;
-		this.currentSerialNumber = this.employees.size() + 1;
+		//this.currentSerialNumber = this.employees.size() + 1;
 	}
 	
 	public Employee employeeByUsername(String username) {
@@ -55,5 +65,9 @@ public class Company {
 		return "On coffee break."; // TODO: FIX THIS!
 		
 		// Should return a list of all employees and their (near) future availability
+	}
+	
+	public int newSerialNumber(){
+		return this.currentSerialNumber++;
 	}
 }
