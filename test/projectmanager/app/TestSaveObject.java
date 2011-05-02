@@ -2,7 +2,7 @@ package projectmanager.app;
 
 import org.junit.Test;
 
-public class TestSaveObject extends SampleDataSetup {
+public class TestSaveObject {//extends SampleDataSetup {
 	@Test
 	public void printSaveObject(){
 		AppStorage storage = new AppStorage();
@@ -10,6 +10,8 @@ public class TestSaveObject extends SampleDataSetup {
 		//StoredData obj     = storage.storeCurrentState();
 		//storage.printState(obj);
 		//storage.saveState(obj);
-		storage.saveCurrentState();
+		//storage.saveCurrentState();
+		StoredData obj = storage.loadState();
+		storage.printState(obj);
 	}
 }
