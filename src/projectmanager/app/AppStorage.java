@@ -125,10 +125,24 @@ public class AppStorage {
 		ProjectManagerApp.setCurrentSerialNumber(data.currentSerialNumber);
 		// --> Work
 		ArrayList<Work> work = new ArrayList<Work>();
-		// --> Projects
-		ArrayList<Project> projects = new ArrayList<Project>();
+		for(StoredData.StoredWork w: data.works){
+			if(w.halfHours > 0){
+				// Delegated
+				//work.add(new DelegatedWork())
+			} else {
+				// Registered
+				
+			}
+		}
 		// --> Employees
 		ArrayList<Employee> employees = new ArrayList<Employee>();
+		// --> Projects
+		ArrayList<Project> projects = new ArrayList<Project>();
+		for(StoredData.StoredProject p: data.projects){
+			Project project = new Project(new String(p.name), new String(p.client), p.serialNumber);
+			
+		}
+		
 		
 		Company c = ProjectManagerApp.getCompany();
 		c.setProjects(projects);
@@ -244,6 +258,22 @@ public class AppStorage {
 	}
 	public int[] getWorkIds(List<Work> works){
 		return this.getWorkIds(works, null, null);
+	}
+	public Work getWorkObject(int serialNumber, List<Work> works){
+		for(Work work: works){
+			if(work.serialNumber == serialNumber){
+				return work;
+			}
+		}
+		return null;
+	}
+	public Employee getEmployeeObject(String username, List<Employee> employees){
+		for(Employee employee: employees){
+			if(employee.getUsername().equals(username)){
+				return employee;
+			}
+		}
+		return null;
 	}
 	public char[] formatCalendarString(Calendar c){
 		if(c != null){

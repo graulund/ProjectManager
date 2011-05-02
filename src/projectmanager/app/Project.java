@@ -13,7 +13,10 @@ public class Project {
 
 	
 	public Project(String name, String client) {
-		this.serialNumber = ProjectManagerApp.newSerialNumber();
+		this(name, client, ProjectManagerApp.newSerialNumber());
+	}
+	public Project(String name, String client, int serialNumber){
+		this.serialNumber = serialNumber;
 		this.name = name;
 		this.client = client;
 	}

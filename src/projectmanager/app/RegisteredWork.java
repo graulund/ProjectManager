@@ -9,17 +9,26 @@ public class RegisteredWork extends Work {
 	private Calendar endTime;
 	private int halfHoursWorked;
 	
-	public RegisteredWork(Activity activity, Calendar startCalendar1, Calendar endCalendar1) {
-		this.activity = activity;
-		this.startTime = startCalendar1;
-		this.endTime = endCalendar1;
-		this.date = setDate(startCalendar1);
-		this.halfHoursWorked = countHalfHoursWorked(startCalendar1, endCalendar1);
-		this.activity.addRegisteredWork(this);
+	public RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar) {
+		this(activity, startCalendar, endCalendar, ProjectManagerApp.newSerialNumber());
 	}
 	
 	public RegisteredWork(Activity activity, int halfHoursWorked) {
-		this.serialNumber = ProjectManagerApp.newSerialNumber();
+		this(activity, halfHoursWorked, ProjectManagerApp.newSerialNumber());
+	}
+	
+	public RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar, int serialNumber){
+		this.serialNumber = serialNumber;
+		this.activity = activity;
+		this.startTime = startCalendar;
+		this.endTime = endCalendar;
+		this.date = setDate(startCalendar);
+		this.halfHoursWorked = countHalfHoursWorked(startCalendar, endCalendar);
+		this.activity.addRegisteredWork(this);
+	}
+	
+	public RegisteredWork(Activity activity, int halfHoursWorked, int serialNumber){
+		this.serialNumber = serialNumber;
 		this.activity = activity;
 		int hours   = halfHoursWorked / 2;
 		int minutes = (halfHoursWorked % 2) * 30;
@@ -33,6 +42,7 @@ public class RegisteredWork extends Work {
 		this.halfHoursWorked = halfHoursWorked;
 		this.activity.addRegisteredWork(this);
 	}
+	
 	/*
 	public RegisteredWork(Employee employee, Activity activity, int halfHoursWorked, GregorianCalendar date) {
 		this(employee, activity, halfHoursWorked);
