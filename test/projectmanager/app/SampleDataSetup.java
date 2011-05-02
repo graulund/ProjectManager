@@ -19,13 +19,14 @@ import projectmanager.app.RegisteredWork;
  */
 public class SampleDataSetup {
 	
-	ProjectManagerApp PMApp = new ProjectManagerApp();
-	Company company = PMApp.getCompany();
-	Random r = new Random();
+	public static ProjectManagerApp PMApp = new ProjectManagerApp();
+	public static Company company = PMApp.getCompany();
+	public static Random r = new Random();
 	
-	@Before
-	public void setUp() throws Exception {
-		
+	//@Before
+	//public void setUp() throws Exception {
+	public static void main(String[] args) throws RegisterWorkException {
+
 		
 		// 10 employees with random names
 		for (int i = 1; i <= 10; i++) {
@@ -67,5 +68,7 @@ public class SampleDataSetup {
 				}
 			}
 		}
+		
+		System.out.println(company.getProjects().get(0).getReport());
 	}
 }
