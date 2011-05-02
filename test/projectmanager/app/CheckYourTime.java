@@ -17,17 +17,32 @@ import projectmanager.app.ProjectManagerApp;
 public class CheckYourTime {
 
 	/**
-	 * Se hvornår du selv har tid
+	 * Se hvornår du selv har tid 
 	 */
 	@Test
-	public void checkYourTime() {
+	public void checkYourTime() throws Exception {
 		
 		Employee employee = new Employee("hlb");
 		Company company = ProjectManagerApp.getCompany();
 		company.addEmployee(employee);
 		company.addProject(new Project("project mayhem", "Google"));
 		Project currentProject = company.getProjects().get(0);
-		currentProject.addActivity(new Activity("funky activity"));
 		
+		Activity a1 = new Activity("funky activity");
+		Activity a2 = new Activity("sweet activity");
+		
+		currentProject.getActivities().add(a1);
+		currentProject.getActivities().add(a2);
+		
+		a1.addEmployee(employee);
+		a2.addEmployee(employee);
+		
+		employee.addDelegatedWork(25, 2011, a1, 40);
+		employee.addDelegatedWork(25, 2011, a2, 30);
+		
+		employee.addRegisteredWork(new RegisteredWork(a1, 15));
+		employee.addRegisteredWork(new RegisteredWork(a2, 10));
+		
+		System.out.println(employee.getWorkWeeks().get(0).getWeekSchedule());
 	}
 }
