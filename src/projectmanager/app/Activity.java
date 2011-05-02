@@ -26,6 +26,14 @@ public class Activity {
 		this.employees.remove(employee);
 	}
 	
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
+	}
+
 	public void addRegisteredWork(RegisteredWork rw) {
 		this.reg_works.add(rw);
 	}

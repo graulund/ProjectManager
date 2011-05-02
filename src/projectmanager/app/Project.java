@@ -77,4 +77,10 @@ public class Project {
 	public void removeEmployee(Employee employee) {
 		this.employees.remove(employee);
 	}
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
+	}
 }
