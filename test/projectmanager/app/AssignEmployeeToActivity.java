@@ -10,7 +10,6 @@ import org.junit.Test;
 
 public class AssignEmployeeToActivity {
 	
-	private ProjectManagerApp PMApp;
 	private Employee employee1;
 	private Employee employee2;
 	Activity activity;
@@ -19,8 +18,7 @@ public class AssignEmployeeToActivity {
 	
 	@Before
 	public void setUpProjectAndEmployee() {
-		PMApp = new ProjectManagerApp();
-		company = PMApp.getCompany();
+		company = ProjectManagerApp.getCompany();
 		
 		employee1 = new Employee("emp1");
 		employee2 = new Employee("emp2");
@@ -41,13 +39,13 @@ public class AssignEmployeeToActivity {
 	@Test
 	public void testAssignEmployeeToActivity() {
 		// medarbejder logger ind med initialer, der findes i databasen
-		boolean login = PMApp.employeeLogin("emp1");
+		boolean login = ProjectManagerApp.employeeLogin("emp1");
 		
 		// tilf퓂er den ene projektleder som projektleder
 		project.addLeader(employee1);
 		
 		// medarbejderen v푡ger et projekt, som han er projektleder for
-		Project projectChosen = PMApp.getEmployeeLoggedIn().getProjectLeader().get(0);
+		Project projectChosen = ProjectManagerApp.getEmployeeLoggedIn().getProjectLeader().get(0);
 		
 		// medarbejdern v푡ger en aktivitet
 		Activity activityChosen = projectChosen.activityByName("lolcat");
@@ -62,19 +60,19 @@ public class AssignEmployeeToActivity {
 		int weekTo = 8;
 		
 		// medarbejdern v푡ger antal timer
-		int hours = 10;
+		int hours = 5;
 		
 		// medarbejder tilf퓂er en medarbejder til en aktivitet
 		employeeChosen.addDelegatedWork(weekFrom, weekTo, yearFrom, yearTo, activityChosen, hours);
 		
 		// checker en masse
 		assertEquals(activityChosen, employee2.getWorkWeek(5, 2011).getDelegatedWork().get(0).getActivity());
-		assertEquals(8, employee2.getWorkWeek(5, 2011).getDelegatedWork().get(0).getHalfHoursWorked());	
+		assertEquals(4, employee2.getWorkWeek(5, 2011).getDelegatedWork().get(0).getHalfHoursWorked());	
 		
 		assertEquals(activityChosen, employee2.getWorkWeek(6, 2011).getDelegatedWork().get(0).getActivity());
-		assertEquals(6, employee2.getWorkWeek(6, 2011).getDelegatedWork().get(0).getHalfHoursWorked());	
+		assertEquals(2, employee2.getWorkWeek(6, 2011).getDelegatedWork().get(0).getHalfHoursWorked());	
 		
 		assertEquals(activityChosen, employee2.getWorkWeek(7, 2011).getDelegatedWork().get(0).getActivity());
-		assertEquals(6, employee2.getWorkWeek(7, 2011).getDelegatedWork().get(0).getHalfHoursWorked());
+		assertEquals(2, employee2.getWorkWeek(7, 2011).getDelegatedWork().get(0).getHalfHoursWorked());
 	}
 }

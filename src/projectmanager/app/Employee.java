@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Employee {
 	private String username; // 4 letters
-	private ArrayList<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
+	private List<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
 	private List<Project> leader_of_projects = new ArrayList<Project>();
 	private List<Activity> activities = new ArrayList<Activity>(); // ??
 	private String fullname;
@@ -144,9 +144,11 @@ public class Employee {
 	public void addDelegatedWork(int weekFrom, int weekTo, int yearFrom, int yearTo, Activity activity, int hours) {
 		// det deligerede arbejde str¾kker sig kun over 1 uge
 		if (weekTo - weekFrom == 0 && yearFrom == yearTo) {
+			System.out.println("ONLY 1 WEEK!");
 			WorkWeek workweek = this.getWorkWeek(weekFrom, yearFrom);
 			if (workweek == null) {
 				WorkWeek newWorkWeek = new WorkWeek(weekFrom, yearFrom);
+				this.workWeeks.add(newWorkWeek);
 				newWorkWeek.addDelegatedWork(new DelegatedWork(hours*2, activity));
 			} else {
 				workweek.addDelegatedWork(new DelegatedWork(hours*2, activity));
@@ -161,21 +163,24 @@ public class Employee {
 			dateRun.set(Calendar.WEEK_OF_YEAR, weekFrom);
 			dateTo.set(Calendar.YEAR, yearTo);
 			dateTo.set(Calendar.WEEK_OF_YEAR, weekTo);
-			int weeks = dateTo.get(Calendar.WEEK_OF_YEAR) - dateRun.get(Calendar.WEEK_OF_YEAR);
+			int weeks = dateTo.get(Calendar.WEEK_OF_YEAR) - dateRun.get(Calendar.WEEK_OF_YEAR) + 1;
 			dateTo.add(Calendar.WEEK_OF_YEAR, 1);
 			int week, year, i = 1, halfHoursPerWork = (hours*2)/weeks;
 			while (dateRun.before(dateTo)) {
-				if (i == 1) halfHoursPerWork = halfHoursPerWork + halfHoursPerWork*weeks % hours*2;
+				if (i == 1) halfHoursPerWork = halfHoursPerWork + ((hours*2) % (halfHoursPerWork*weeks));
 				else halfHoursPerWork = (hours*2)/weeks;
 				week = dateRun.get(Calendar.WEEK_OF_YEAR);
 				year = dateRun.get(Calendar.YEAR);
 				WorkWeek workweek = this.getWorkWeek(week, year);
 				if (workweek == null) {
 					WorkWeek newWorkWeek = new WorkWeek(week, year);
+					this.workWeeks.add(newWorkWeek);
 					newWorkWeek.addDelegatedWork(new DelegatedWork(halfHoursPerWork, activity));
 				} else {
 					workweek.addDelegatedWork(new DelegatedWork(halfHoursPerWork, activity));
 				}
+				dateRun.add(Calendar.WEEK_OF_YEAR, 1);
+				i++;
 			}
 		}
 	}
