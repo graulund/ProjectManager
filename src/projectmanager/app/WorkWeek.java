@@ -115,16 +115,12 @@ public class WorkWeek {
 			int totalRegHours = 0;
 			for (RegisteredWork rw: this.registeredWork) {
 				if (rw.getActivity().equals(currentActivity)) {
-					totalRegHours += rw.getHalfHoursWorked();
+					totalRegHours += rw.getHalfHoursWorked(); // why u zero?
 				}
 			}
-			
-			schedule.add(currentActivity.getName() + ": " + totalRegHours + "/" + currentActivity.getDelegatedHours());
+			totalRegHours /= 2;
+			schedule.add(currentActivity.getName() + ": " + totalRegHours + "/" + dw.getHalfHoursWorked()/2);
 		}
-		
-		
-		
-		
 		return schedule;
 	}
 	
