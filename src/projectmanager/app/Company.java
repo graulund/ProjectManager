@@ -6,11 +6,7 @@ import java.util.List;
 public class Company {
 	private List<Project> projects = new ArrayList<Project>();
 	private List<Employee> employees = new ArrayList<Employee>();
-	/**
-	 * The current auto-incrementing serial number used to reference various objects
-	 */
-	private int currentSerialNumber = 1;
-
+	
 	/**
 	 * Reference to the current Company object
 	 */
@@ -65,13 +61,5 @@ public class Company {
 		return "On coffee break."; // TODO: FIX THIS!
 		
 		// Should return a list of all employees and their (near) future availability
-	}
-	
-	public int newSerialNumber(){
-		return this.currentSerialNumber++;
-	}
-	
-	public int getCurrentSerialNumber(){
-		return this.currentSerialNumber;
 	}
 }

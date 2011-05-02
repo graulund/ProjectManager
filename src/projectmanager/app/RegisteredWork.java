@@ -19,7 +19,7 @@ public class RegisteredWork extends Work {
 	}
 	
 	public RegisteredWork(Activity activity, int halfHoursWorked) {
-		this.serialNumber = Company.c.newSerialNumber();
+		this.serialNumber = ProjectManagerApp.newSerialNumber();
 		this.activity = activity;
 		int hours   = halfHoursWorked / 2;
 		int minutes = (halfHoursWorked % 2) * 30;
