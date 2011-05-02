@@ -5,7 +5,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class StoredData implements Serializable {
 	// Storage structure:
-	public class StoredProject {
+	public class StoredProject implements Serializable {
 		public char[] name;
 		public char[] client;
 		public int serialNumber;
@@ -14,13 +14,13 @@ public class StoredData implements Serializable {
 		public StoredActivity[] activities;
 	}
 	
-	public class StoredEmployee {
+	public class StoredEmployee implements Serializable {
 		public char[] username;
 		public char[] fullname = new char[]{};
 		public StoredWorkWeek[] workWeeks;
 	}
 	
-	public class StoredActivity {
+	public class StoredActivity implements Serializable {
 		public char[] name;
 		public char[][] employeeNames;
 		public int[] workIds;
@@ -28,13 +28,13 @@ public class StoredData implements Serializable {
 		public char[] endTime;
 	}
 	
-	public class StoredWorkWeek {
+	public class StoredWorkWeek implements Serializable {
 		public int week;
 		public int year;
 		public int[] workIds;
 	}
 	
-	public class StoredWork {
+	public class StoredWork implements Serializable {
 		public int workId;
 		public int halfHours = 0;
 		public char[] startTime = new char[0];

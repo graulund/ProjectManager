@@ -30,8 +30,8 @@ public class SampleDataSetup {
 		
 		// 10 employees with random names
 		for (int i = 1; i <= 10; i++) {
-			String user = Long.toString(Math.abs(r.nextLong()), 36).substring(0, r.nextInt(2)+2);
-			company.addEmployee(new Employee(user));
+			//String user = Long.toString(Math.abs(r.nextLong()), 36)..substring(0, r.nextInt(3)+2);
+			company.addEmployee(new Employee(getRandomUserName()));
 		}
 		
 		// 5 projects
@@ -61,7 +61,7 @@ public class SampleDataSetup {
 					latestActivity.addEmployee(randomEmployee);
 					
 					// Delegate work
-					//randomEmployee.addDelegatedWork(new DelegatedWork(40, latestActivity));
+					randomEmployee.addDelegatedWork(25+i, 2011, latestActivity, 40);
 					
 					// Register work
 					randomEmployee.addRegisteredWork(new RegisteredWork(latestActivity, rand/2+10));
@@ -70,5 +70,14 @@ public class SampleDataSetup {
 		}
 		
 		System.out.println(company.getProjects().get(0).getReport());
+	}
+	
+	public static String getRandomUserName() {
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		String username = "";
+		for(int i=r.nextInt(3); i<4; i++) {
+			username = username.concat(String.valueOf(alphabet.charAt(r.nextInt(alphabet.length()-1))));
+		}
+		return username;
 	}
 }
