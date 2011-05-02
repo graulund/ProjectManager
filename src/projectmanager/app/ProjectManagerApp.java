@@ -43,6 +43,12 @@ public class ProjectManagerApp {
 	public void registerWork(Employee employee, RegisteredWork regWork1) throws RegisterWorkException {
 		if (employee == this.getEmployeeLoggedIn()) employee.addRegisteredWork(regWork1);
 	}
+
+	public void assignEmployeeToActivity(Employee employee, Activity activity,int hours) {
+		// mangler at tjekke, om medarbejder, der "assigner" er projektleder
+		activity.addEmployee(employee);
+		employee.addDelegatedWork(new DelegatedWork(hours, activity));
+	}
 	
 	// The app itself
 	public static void main(String[] args) throws IOException {
@@ -52,9 +58,4 @@ public class ProjectManagerApp {
 		ui.basicLoop(ui.in, out);
 	}
 
-	public void assignEmployeeToActivity(Employee employee, Activity activity,int hours) {
-		// mangler at tjekke, om medarbejder, der "assigner" er projektleder
-		activity.addEmployee(employee);
-		employee.addDelegatedWork(new DelegatedWork(hours, activity));
-	}
 }

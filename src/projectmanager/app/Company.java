@@ -10,6 +10,7 @@ public class Company {
 	 * The current auto-incrementing serial number used to reference various objects
 	 */
 	private int currentSerialNumber = 1;
+
 	/**
 	 * Reference to the current Company object
 	 */
@@ -69,5 +70,9 @@ public class Company {
 	
 	public int newSerialNumber(){
 		return this.currentSerialNumber++;
+	}
+	
+	public int getCurrentSerialNumber(){
+		return this.currentSerialNumber;
 	}
 }
