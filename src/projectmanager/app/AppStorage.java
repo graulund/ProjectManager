@@ -5,10 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import projectmanager.app.StoredData.StoredActivity;
@@ -20,6 +22,7 @@ import projectmanager.app.StoredData.StoredWorkWeek;
 public class AppStorage {
 	public static final String default_filename = "pmapp.data";
 	private String filename;
+	private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	public AppStorage(){
 		this(default_filename);
 	}
@@ -125,22 +128,33 @@ public class AppStorage {
 		ProjectManagerApp.setCurrentSerialNumber(data.currentSerialNumber);
 		// --> Work
 		ArrayList<Work> work = new ArrayList<Work>();
-		for(StoredData.StoredWork w: data.works){
+		/*for(StoredData.StoredWork w: data.works){
 			if(w.halfHours > 0){
 				// Delegated
+				//DelegatedWork(int hours, Activity activity, int serialNumber)
 				//work.add(new DelegatedWork())
 			} else {
 				// Registered
-				
+				//RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar, int serialNumber)
+				work.add(new RegisteredWork())
 			}
-		}
+		}*/
+		
+		// I will have to add the work once I stumble upon them
 		// --> Employees
 		ArrayList<Employee> employees = new ArrayList<Employee>();
+		for(StoredData.StoredEmployee e: data.employees){
+			Employee employee = new Employee(new String(e.username), new String(e.fullname));
+			employees.add(employee);
+		}
 		// --> Projects
 		ArrayList<Project> projects = new ArrayList<Project>();
 		for(StoredData.StoredProject p: data.projects){
 			Project project = new Project(new String(p.name), new String(p.client), p.serialNumber);
-			
+			if(p.projectLeaderName.length > 0){
+				project.addLeader(this.getEmployeeObject(new String(p.projectLeaderName), employees));
+			}
+			projects.add(project);
 		}
 		
 		
@@ -277,14 +291,19 @@ public class AppStorage {
 	}
 	public char[] formatCalendarString(Calendar c){
 		if(c != null){
-			SimpleDateFormat f = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-			return f.format(c.getTime()).toCharArray();
+			return this.sdf.format(c.getTime()).toCharArray();
 		}
 		return new char[]{};
 	}
-//	public Calendar parseCalendarString(String s){
-//		
-//	}
+	public Calendar parseCalendarString(String s){
+		GregorianCalendar c = new GregorianCalendar();
+		try {
+			c.setTime(this.sdf.parse(s));
+		} catch (ParseException e) {
+			return null;
+		}
+		return c;
+	}
 	public String[] parseStringArray(char[][] array){
 		String[] s = new String[array.length];
 		for(int i = 0; i < array.length; i++){
