@@ -13,6 +13,13 @@ public class AppStorage {
 		return filename;
 	}
 	public void saveCurrentState(){
+		StoredData data = new StoredData();
+		// Save information for:
+		// --> Company
+		data.currentSerialNumber = Company.c.getCurrentSerialNumber();
+		// --> Projects
+		
+		// --> Employees
 		
 	}
 	public void loadState(){

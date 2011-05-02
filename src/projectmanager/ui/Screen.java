@@ -14,6 +14,10 @@ abstract class Screen {
 	abstract boolean processInput(String input, PrintWriter out);
 	
 	// General screen utilities
+	protected void println(PrintWriter out, String s){
+		out.println(s);
+		chars += s.length();
+	}
 	protected void clearScreen(PrintWriter out){
 		StringBuilder clear = new StringBuilder();
 		for(int i = 0; i < chars; i++){
