@@ -51,8 +51,8 @@ public class AssignEmployeeToActivity {
 		
 		// medarbejdern v¾lger en aktivitet
 		Activity activityChosen = projectChosen.activityByName("lolcat");
-		activityChosen.setStart(1, 2011);
-		activityChosen.setEnd(4, 2011);
+		activityChosen.setStart(2, 2011);
+		activityChosen.setEnd(5, 2011);
 		
 		// medarbejderen v¾lger en medarbejder
 		Employee employeeChosen = company.employeeByUsername("emp2");
@@ -66,10 +66,12 @@ public class AssignEmployeeToActivity {
 		// checker om medarbejderen er tilf¿jet til aktiviteten
 		assertEquals(activityChosen, employee2.getActivity(activityChosen));
 		
+		int start = activityChosen.getStart().get(Calendar.WEEK_OF_YEAR);
+		int end = activityChosen.getEnd().get(Calendar.WEEK_OF_YEAR);
 		// checker om der er oprettet et delegeret arbejde
-		for (int i = activityChosen.getStart().get(Calendar.WEEK_OF_YEAR);
-			 i <= activityChosen.getEnd().get(Calendar.WEEK_OF_YEAR); i++) {
-				 assertEquals(activityChosen, employee2.getWorkWeek(i, 2011).getDelegatedWork().get(0).getActivity());				 
+		for (int i = start; i <= end; i++) {
+				 assertEquals(activityChosen, employee2.getWorkWeek(i, 2011).getDelegatedWork().get(0).getActivity());
+				 assertEquals(hours/3, employee2.getWorkWeek(i, 2011).getDelegatedWork().get(0).getHours());
 			 }
 	}
 	

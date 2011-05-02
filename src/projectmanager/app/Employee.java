@@ -139,8 +139,8 @@ public class Employee {
 	}
 
 	public void addDelegatedWork(DelegatedWork delwork) {
-		Calendar run = delwork.getActivity().getStart();
-		Calendar end = delwork.getActivity().getEnd();
+		Calendar run = (Calendar) delwork.getActivity().getStart().clone();
+		Calendar end = (Calendar) delwork.getActivity().getEnd().clone();
 		end.add(Calendar.WEEK_OF_YEAR, 1);
 		while (run.before(end)) {
 			WorkWeek workweek = this.getWorkWeek(run.get(Calendar.WEEK_OF_YEAR), Calendar.YEAR);
@@ -153,6 +153,7 @@ public class Employee {
 			}
 			run.add(Calendar.WEEK_OF_YEAR, 1);
 		}
+		System.out.println(delwork.getActivity().getStart().get(Calendar.WEEK_OF_YEAR));
 		
 	}
 

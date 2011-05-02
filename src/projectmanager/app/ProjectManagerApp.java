@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -47,7 +48,8 @@ public class ProjectManagerApp {
 	public void assignEmployeeToActivity(Employee employee, Activity activity,int hours) {
 		// mangler at tjekke, om medarbejder, der "assigner" er projektleder
 		activity.addEmployee(employee);
-		employee.addDelegatedWork(new DelegatedWork(hours, activity));
+		int weeks = activity.getEnd().get(Calendar.WEEK_OF_YEAR) - activity.getStart().get(Calendar.WEEK_OF_YEAR);
+		employee.addDelegatedWork(new DelegatedWork(hours/weeks, activity));
 	}
 	
 	// The app itself
