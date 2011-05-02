@@ -1,10 +1,7 @@
 package projectmanager.app;
 
-public class DelegatedWork {
-	
+public class DelegatedWork extends Work {
 	private int hours;
-	private Activity activity;
-	private int serialNumber;
 	
 	public DelegatedWork(int hours, Activity activity){
 		this.serialNumber = Company.c.newSerialNumber();

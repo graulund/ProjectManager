@@ -3,13 +3,11 @@ package projectmanager.app;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class RegisteredWork {
-	private Activity activity; // work done on this activity
+public class RegisteredWork extends Work {
 	private Calendar date = new GregorianCalendar(); // default date = today!
 	private Calendar startTime;
 	private Calendar endTime;
 	private int halfHoursWorked;
-	private int serialNumber;
 	
 	public RegisteredWork(Activity activity, Calendar startCalendar1, Calendar endCalendar1) {
 		this.activity = activity;
