@@ -51,29 +51,30 @@ public class AssignEmployeeToActivity {
 		
 		// medarbejdern v푡ger en aktivitet
 		Activity activityChosen = projectChosen.activityByName("lolcat");
-		activityChosen.setStart(2, 2011);
-		activityChosen.setEnd(5, 2011);
 		
 		// medarbejderen v푡ger en medarbejder
 		Employee employeeChosen = company.employeeByUsername("emp2");
 		
+		// indtaster uger og 똱
+		int yearFrom = 2011;
+		int yearTo = 2011;
+		int weekFrom = 5;
+		int weekTo = 10;
+		
 		// medarbejdern v푡ger antal timer
-		int hours = 10;
+		int hours = 52;
 		
 		// medarbejder tilf퓂er en medarbejder til en aktivitet
-		PMApp.assignEmployeeToActivity(employeeChosen, activityChosen, hours);
+		employeeChosen.addDelegatedWork(weekFrom, weekTo, yearFrom, yearTo, activityChosen, hours);
 		
-		// checker om medarbejderen er tilf퓂et til aktiviteten
-		assertEquals(activityChosen, employee2.getActivity(activityChosen));
+		// checker en masse
+		assertEquals(activityChosen, employee2.getWorkWeek(2, 2011).getDelegatedWork().get(0).getActivity());
+		assertEquals(8, employee2.getWorkWeek(2, 2011).getDelegatedWork().get(0).getHalfHoursWorked());	
 		
-		int start = activityChosen.getStart().get(Calendar.WEEK_OF_YEAR);
-		int end = activityChosen.getEnd().get(Calendar.WEEK_OF_YEAR);
-		// checker om der er oprettet et delegeret arbejde
-		for (int i = start; i <= end; i++) {
-				 assertEquals(activityChosen, employee2.getWorkWeek(i, 2011).getDelegatedWork().get(0).getActivity());
-				 assertEquals(7, employee2.getWorkWeek(i, 2011).getDelegatedWork().get(0).getHalfHoursWorked());
-			 }
+		assertEquals(activityChosen, employee2.getWorkWeek(3, 2011).getDelegatedWork().get(0).getActivity());
+		assertEquals(6, employee2.getWorkWeek(3, 2011).getDelegatedWork().get(0).getHalfHoursWorked());	
+		
+		assertEquals(activityChosen, employee2.getWorkWeek(4, 2011).getDelegatedWork().get(0).getActivity());
+		assertEquals(6, employee2.getWorkWeek(4, 2011).getDelegatedWork().get(0).getHalfHoursWorked());
 	}
-	
-		
 }

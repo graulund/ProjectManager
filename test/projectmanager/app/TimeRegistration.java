@@ -29,7 +29,7 @@ public class TimeRegistration {
 		Activity activity = new Activity("lolcat");
 		company.addProject(project);
 		project.addActivity(activity);
-		employee.addActivity(activity);
+		activity.addEmployee(employee);
 		
 		// medarbejder v¾lger en aktivitet, som han er tilmeldt
 		List<Activity> activities = company.employeeByUsername("hlb").getActivities();
@@ -242,7 +242,7 @@ public class TimeRegistration {
 		activity2.setEnd(4, 2011);
 		company.addProject(project);
 		project.addActivity(activity2);
-		employee.addActivity(activity2);
+		activity2.addEmployee(employee);
 		
 		// medarbejder v¾lger en aktivitet, som han er tilmeldt
 		List<Activity> activities = company.employeeByUsername("hlb").getActivities();

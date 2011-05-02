@@ -134,21 +134,47 @@ public class Employee {
 		return null;
 	}
 
-	public void addDelegatedWork(DelegatedWork delwork) {
-		Calendar run = (Calendar) delwork.getActivity().getStart().clone();
-		Calendar end = (Calendar) delwork.getActivity().getEnd().clone();
-		end.add(Calendar.WEEK_OF_YEAR, 1);
-		while (run.before(end)) {
-			WorkWeek workweek = this.getWorkWeek(run.get(Calendar.WEEK_OF_YEAR), Calendar.YEAR);
+	public void addDelegatedWork(int weekFrom, int weekTo, int yearFrom, int yearTo, Activity activity, int hours) {
+		// det deligerede arbejde str¾kker sig kun over 1 uge
+		if (weekTo - weekFrom == 0 && yearFrom == yearTo) {
+			WorkWeek workweek = this.getWorkWeek(weekFrom, yearFrom);
 			if (workweek == null) {
-				WorkWeek newWorkWeek = new WorkWeek(run.get(Calendar.WEEK_OF_YEAR),run.get(Calendar.YEAR));
-				this.workWeeks.add(newWorkWeek);
-				newWorkWeek.addDelegatedWork(delwork);
+				WorkWeek newWorkWeek = new WorkWeek(weekFrom, yearFrom);
+				newWorkWeek.addDelegatedWork(new DelegatedWork(hours*2, activity));
 			} else {
-				workweek.addDelegatedWork(delwork);
+				workweek.addDelegatedWork(new DelegatedWork(hours*2, activity));
 			}
-			run.add(Calendar.WEEK_OF_YEAR, 1);
-		}		
+			
+		// det deligerede arbejde str¾kker sig over flere uger
+		// --> timerne deles op til flere uger
+		} else {
+			Calendar dateRun = new GregorianCalendar();
+			Calendar dateTo = new GregorianCalendar();
+			dateRun.set(Calendar.YEAR, yearFrom);
+			dateRun.set(Calendar.WEEK_OF_YEAR, weekFrom);
+			dateTo.set(Calendar.YEAR, yearTo);
+			dateTo.set(Calendar.WEEK_OF_YEAR, weekTo);
+			int weeks = dateTo.get(Calendar.WEEK_OF_YEAR) - dateRun.get(Calendar.WEEK_OF_YEAR);
+			dateTo.add(Calendar.WEEK_OF_YEAR, 1);
+			int week, year, i = 1, halfHoursPerWork = (hours*2)/weeks;
+			while (dateRun.before(dateTo)) {
+				if (i == 1) halfHoursPerWork = halfHoursPerWork + halfHoursPerWork*weeks % hours*2;
+				else halfHoursPerWork = (hours*2)/weeks;
+				week = dateRun.get(Calendar.WEEK_OF_YEAR);
+				year = dateRun.get(Calendar.YEAR);
+				WorkWeek workweek = this.getWorkWeek(week, year);
+				if (workweek == null) {
+					WorkWeek newWorkWeek = new WorkWeek(week, year);
+					newWorkWeek.addDelegatedWork(new DelegatedWork(halfHoursPerWork, activity));
+				} else {
+					workweek.addDelegatedWork(new DelegatedWork(halfHoursPerWork, activity));
+				}
+			}
+		}
+	}
+	
+	public void addDelegatedWork(int week, int year, Activity activity, int hours) {
+		this.addDelegatedWork(week, week, year, year, activity, hours);
 	}
 
 	public Activity getActivity(Activity activityChosen) {
