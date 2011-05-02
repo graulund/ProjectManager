@@ -59,22 +59,22 @@ public class AssignEmployeeToActivity {
 		int yearFrom = 2011;
 		int yearTo = 2011;
 		int weekFrom = 5;
-		int weekTo = 10;
+		int weekTo = 8;
 		
 		// medarbejdern v¾lger antal timer
-		int hours = 52;
+		int hours = 10;
 		
 		// medarbejder tilf¿jer en medarbejder til en aktivitet
 		employeeChosen.addDelegatedWork(weekFrom, weekTo, yearFrom, yearTo, activityChosen, hours);
 		
 		// checker en masse
-		assertEquals(activityChosen, employee2.getWorkWeek(2, 2011).getDelegatedWork().get(0).getActivity());
-		assertEquals(8, employee2.getWorkWeek(2, 2011).getDelegatedWork().get(0).getHalfHoursWorked());	
+		assertEquals(activityChosen, employee2.getWorkWeek(5, 2011).getDelegatedWork().get(0).getActivity());
+		assertEquals(8, employee2.getWorkWeek(5, 2011).getDelegatedWork().get(0).getHalfHoursWorked());	
 		
-		assertEquals(activityChosen, employee2.getWorkWeek(3, 2011).getDelegatedWork().get(0).getActivity());
-		assertEquals(6, employee2.getWorkWeek(3, 2011).getDelegatedWork().get(0).getHalfHoursWorked());	
+		assertEquals(activityChosen, employee2.getWorkWeek(6, 2011).getDelegatedWork().get(0).getActivity());
+		assertEquals(6, employee2.getWorkWeek(6, 2011).getDelegatedWork().get(0).getHalfHoursWorked());	
 		
-		assertEquals(activityChosen, employee2.getWorkWeek(4, 2011).getDelegatedWork().get(0).getActivity());
-		assertEquals(6, employee2.getWorkWeek(4, 2011).getDelegatedWork().get(0).getHalfHoursWorked());
+		assertEquals(activityChosen, employee2.getWorkWeek(7, 2011).getDelegatedWork().get(0).getActivity());
+		assertEquals(6, employee2.getWorkWeek(7, 2011).getDelegatedWork().get(0).getHalfHoursWorked());
 	}
 }

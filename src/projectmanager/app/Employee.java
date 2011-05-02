@@ -106,6 +106,13 @@ public class Employee {
 	}
 
 	private boolean timeAlreadyRegistered(RegisteredWork regwork, WorkWeek workweek) {
+		// if no date has been entered
+		if (regwork.getDate().get(Calendar.YEAR) == 2000 && 
+			regwork.getDate().get(Calendar.MONTH) == 0   &&
+			regwork.getDate().get(Calendar.DATE) == 1) {
+			return false;
+		}
+		
 		for (RegisteredWork regworkCompare: workweek.getRegisteredWork(regwork.getStartTime())) {
 			if (regwork.getStartTime().before(regworkCompare.getEndTime()) &&
 				regwork.getEndTime().after(regworkCompare.getStartTime())) {
