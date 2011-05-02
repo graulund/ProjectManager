@@ -7,22 +7,37 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Employee {
-	private String name; // 4 letters
+	private String username; // 4 letters
 	private ArrayList<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
 	private Company employedAtCompany;
 	private List<Project> leader_of_projects = new ArrayList<Project>();
 	private List<Activity> activities = new ArrayList<Activity>(); // ??
+	private String fullname;
 
-	public Employee(String name){
-		this.name   = name;
+	public Employee(String username){
+		this.username   = username;
+	}
+	
+	public Employee(String username, String fullname) {
+		this.fullname = fullname;
+	}
+	
+	public void setFullname(String newName)  {
+		this.fullname = newName;
+	}
+	
+	public String getFullname() {
+		return this.fullname;
 	}
 
 	public String getUsername() {
-		return this.name;
+		return this.username;
 	}
+	
 	public void setUsername(String name) {
-		this.name = name;
+		this.username = name;
 	}
+	
 	public void setEmployedAtCompany(Company company) {
 		this.employedAtCompany = company;
 	}
@@ -139,15 +154,6 @@ public class Employee {
 			run.add(Calendar.WEEK_OF_YEAR, 1);
 		}
 		
-	}
-
-	private WorkWeek workWeekByWeeknumber(int i) {
-		for (WorkWeek workweek: this.workWeeks) {
-			if (i == workweek.getWeekNumber()) {
-				return workweek;
-			}
-		}
-		return null;
 	}
 
 	public Activity getActivity(Activity activityChosen) {

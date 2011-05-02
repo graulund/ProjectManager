@@ -72,4 +72,6 @@ public class AssignEmployeeToActivity {
 				 assertEquals(activityChosen, employee2.getWorkWeek(i, 2011).getDelegatedWork().get(0).getActivity());				 
 			 }
 	}
+	
+		
 }

@@ -74,10 +74,11 @@ public class TimeRegistration {
 		PMApp.registerWork(employee, regWork);
 		
 		// tester at arbejdet er registreret korrekt
-		assertEquals(14, employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar).getHoursWorked());
-		assertEquals(1, employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar).getDate().get(Calendar.DATE));
-		assertEquals(1, employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar).getDate().get(Calendar.MONTH));
-		assertEquals(2011, employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar).getDate().get(Calendar.YEAR));		
+		RegisteredWork regworkTest = employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar);
+		assertEquals(14, regworkTest.getHoursWorked());
+		assertEquals(1, regworkTest.getDate().get(Calendar.DATE));
+		assertEquals(1, regworkTest.getDate().get(Calendar.MONTH));
+		assertEquals(2011, regworkTest.getDate().get(Calendar.YEAR));		
 	}
 	
 	/**
@@ -413,7 +414,6 @@ public class TimeRegistration {
 		// tiden registreres
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
 		PMApp.registerWork(employee, regWork1);
-		
 		assertEquals(null, employee.getWorkWeek(regWork1.getDate().get(Calendar.WEEK_OF_YEAR), regWork1.getDate().get(Calendar.YEAR)));
 	}
 }
