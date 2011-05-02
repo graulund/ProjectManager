@@ -106,4 +106,32 @@ public class WorkWeek {
 		}
 		return works;
 	}
+	
+	public List<String> getWeekSchedule() {
+		List<String> schedule = new ArrayList<String>();
+		
+		for (DelegatedWork dw: this.delegatedWork) {
+			Activity currentActivity = dw.getActivity();
+			int totalRegHours = 0;
+			for (RegisteredWork rw: this.registeredWork) {
+				if (rw.getActivity().equals(currentActivity)) {
+					totalRegHours += rw.getHalfHoursWorked();
+				}
+			}
+			
+			schedule.add(currentActivity.getName() + ": " + totalRegHours + "/" + currentActivity.getDelegatedHours());
+		}
+		
+		
+		
+		
+		return schedule;
+	}
+	
+	public RegisteredWork registeredWorkBySerialNumber(int serialNumber) {
+		for (RegisteredWork rw: this.registeredWork) {
+			if (rw.getSerialNumber() == serialNumber) return rw;
+		}
+		return null;
+	}
 }
