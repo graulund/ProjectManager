@@ -116,5 +116,14 @@ public class ProjectManagerApp {
 	public static void setCurrentSerialNumber(int currentSerialNumber) {
 		ProjectManagerApp.currentSerialNumber = currentSerialNumber;
 	}
+	
+	/**
+	 * This function is only for testing! Resets the APP!
+	 */
+	public void reset() {
+		ProjectManagerApp.company = new Company();
+		ProjectManagerApp.loggedInEmployee = null; // Currently logged in employee
+		ProjectManagerApp.isEmployeeLoggedIn = false;
+	}
 
 }
