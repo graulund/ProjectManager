@@ -40,13 +40,13 @@ public class SampleDataSetup {
 		}
 		
 		// Add project leaders to all 5 projects except the last one
-		for (int i = 0; i <= 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			Employee employee = company.getEmployees().get(i);
 			company.getProjects().get(i).addLeader(employee);
 		}
 		
 		
-		for (int i = 1; i <= 5; i++) {
+		for (int i = 0; i < 5; i++) {
 			for (int j = 1; j <= 3; j++) {
 				// Add 3 activities to each project
 				Project currentProject = company.getProjects().get(i);
