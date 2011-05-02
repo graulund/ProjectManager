@@ -7,6 +7,7 @@ public class DelegatedWork {
 	private int serialNumber;
 	
 	public DelegatedWork(int hours, Activity activity){
+		this.serialNumber = Company.c.newSerialNumber();
 		this.hours   = hours;
 		this.activity = activity;
 	}
