@@ -9,7 +9,6 @@ import java.util.List;
 public class Employee {
 	private String username; // 4 letters
 	private ArrayList<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
-	private Company employedAtCompany;
 	private List<Project> leader_of_projects = new ArrayList<Project>();
 	private List<Activity> activities = new ArrayList<Activity>(); // ??
 	private String fullname;
@@ -36,10 +35,6 @@ public class Employee {
 	
 	public void setUsername(String name) {
 		this.username = name;
-	}
-	
-	public void setEmployedAtCompany(Company company) {
-		this.employedAtCompany = company;
 	}
 	
 	public void setProjectLeaderOf(Project project) {
@@ -152,9 +147,7 @@ public class Employee {
 				workweek.addDelegatedWork(delwork);
 			}
 			run.add(Calendar.WEEK_OF_YEAR, 1);
-		}
-		System.out.println(delwork.getActivity().getStart().get(Calendar.WEEK_OF_YEAR));
-		
+		}		
 	}
 
 	public Activity getActivity(Activity activityChosen) {

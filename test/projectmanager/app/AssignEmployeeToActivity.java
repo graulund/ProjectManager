@@ -71,7 +71,7 @@ public class AssignEmployeeToActivity {
 		// checker om der er oprettet et delegeret arbejde
 		for (int i = start; i <= end; i++) {
 				 assertEquals(activityChosen, employee2.getWorkWeek(i, 2011).getDelegatedWork().get(0).getActivity());
-				 assertEquals(hours/3, employee2.getWorkWeek(i, 2011).getDelegatedWork().get(0).getHours());
+				 assertEquals(7, employee2.getWorkWeek(i, 2011).getDelegatedWork().get(0).getHalfHoursWorked());
 			 }
 	}
 	

@@ -32,7 +32,6 @@ public class Company {
 	public void addEmployee(Employee employee) {
 		// TODO: What if it already exists in the list?
 		this.employees.add(employee);
-		employee.setEmployedAtCompany(this);
 	}
 	
 	public List<Employee> getEmployees() {

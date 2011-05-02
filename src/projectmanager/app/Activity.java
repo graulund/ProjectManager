@@ -69,7 +69,7 @@ public class Activity {
 	public int getDelegatedHours() {
 		int total = 0;
 		for (DelegatedWork del_work: this.del_works) {
-			total += del_work.getHours();
+			total += del_work.getHalfHoursWorked();
 		}
 		return total;
 	}
