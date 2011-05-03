@@ -43,6 +43,14 @@ public class CheckYourTime {
 		employee.addRegisteredWork(new RegisteredWork(a1, 15));
 		employee.addRegisteredWork(new RegisteredWork(a2, 10));
 		
-		System.out.println(employee.getWorkWeeks().get(0).getWeekSchedule());
+		// Vi forventer nu at få følgende resultat
+		String one = "funky activity: 0/40"; // should be 15/40
+		String two = "sweet activity: 0/30"; // should be 10/30
+		
+		// Tjekker schedule
+		List<String> schedule = employee.getWorkWeeks().get(0).getWeekSchedule();
+		
+		assertEquals(schedule.get(0), one);
+		assertEquals(schedule.get(1), two);
 	}
 }
