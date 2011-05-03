@@ -128,17 +128,6 @@ public class AppStorage {
 		ProjectManagerApp.setCurrentSerialNumber(data.currentSerialNumber);
 		// --> Work
 		ArrayList<Work> work = new ArrayList<Work>();
-		/*for(StoredData.StoredWork w: data.works){
-			if(w.halfHours > 0){
-				// Delegated
-				//DelegatedWork(int hours, Activity activity, int serialNumber)
-				//work.add(new DelegatedWork())
-			} else {
-				// Registered
-				//RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar, int serialNumber)
-				work.add(new RegisteredWork())
-			}
-		}*/
 		
 		// I will have to add the work once I stumble upon them
 		// --> Employees
@@ -154,14 +143,50 @@ public class AppStorage {
 			if(p.projectLeaderName.length > 0){
 				project.addLeader(this.getEmployeeObject(new String(p.projectLeaderName), employees));
 			}
+			for(char[] name: p.employeeNames){
+				project.addEmployee(this.getEmployeeObject(new String(name), employees));
+			}
+			// --> Activities
+			for(StoredData.StoredActivity a: p.activities){
+				Activity activity = new Activity(new String(a.name));
+				for(char[] name: a.employeeNames){
+					activity.addEmployee(this.getEmployeeObject(new String(name), employees));
+				}
+				for(int workId: a.workIds){
+					activity.addWork(this.getWorkObject(workId, work, this.transformStoredWorkObject(this.getStoredWorkObject(workId, data.works), activity)));
+				}
+				if(a.startTime.length > 0){
+					activity.setStart(this.parseCalendarString(new String(a.startTime)));
+				}
+				if(a.endTime.length > 0){
+					activity.setEnd(this.parseCalendarString(new String(a.endTime)));
+				}
+				try {
+					project.addActivity(activity);
+				} catch (Exception e) {
+					// Owned
+				}
+			}
 			projects.add(project);
 		}
 		
+		// --> Employee work weeks
+		for(Employee employee: employees){
+			StoredData.StoredEmployee e = this.getStoredEmployeeObject(employee.getUsername(), data.employees);
+			if(e != null){
+				for(StoredData.StoredWorkWeek w: e.workWeeks){
+					WorkWeek workweek = new WorkWeek(w.week, w.year);
+					for(int workId: w.workIds){
+						workweek.addWork(this.getWorkObject(workId, work));
+					}
+					employee.addWorkWeek(workweek);
+				}
+			}
+		}
 		
 		Company c = ProjectManagerApp.getCompany();
 		c.setProjects(projects);
 		c.setEmployees(employees);
-		
 	}
 	public void printState(StoredData data){
 		System.out.println(this.stateString(data));
@@ -237,14 +262,6 @@ public class AppStorage {
 		}
 		return false;
 	}
-	public StoredData.StoredWork getWorkInfo(int workId, StoredData.StoredWork[] storedworks){
-		for(StoredData.StoredWork work: storedworks){
-			if(work.workId == workId){
-				return work;
-			}
-		}
-		return null;
-	}
 	public int[] getWorkIds(List<Work> works, StoredData data, ArrayList<StoredData.StoredWork> storedworks){
 		ArrayList<Integer> workIds = new ArrayList<Integer>();
 		for(Work work: works){
@@ -274,13 +291,45 @@ public class AppStorage {
 		return this.getWorkIds(works, null, null);
 	}
 	public Work getWorkObject(int serialNumber, List<Work> works){
+		return this.getWorkObject(serialNumber, works, null);
+	}
+	
+	public Work getWorkObject(int serialNumber, List<Work> works, Work insertObject){
 		for(Work work: works){
 			if(work.serialNumber == serialNumber){
 				return work;
 			}
 		}
+		if(insertObject != null){
+			works.add(insertObject);
+		}
+		return insertObject;
+	}
+	
+	public StoredData.StoredWork getStoredWorkObject(int workId, StoredData.StoredWork[] storedworks){
+		for(StoredData.StoredWork work: storedworks){
+			if(work.workId == workId){
+				return work;
+			}
+		}
 		return null;
 	}
+	
+	public Work transformStoredWorkObject(StoredData.StoredWork w, Activity activity){
+		if(w.halfHours > 0){
+			// Delegated
+			return new DelegatedWork(w.halfHours, activity, w.workId);
+		} else {
+			// Registered
+			return new RegisteredWork(
+				activity, 
+				this.parseCalendarString(new String(w.startTime)), 
+				this.parseCalendarString(new String(w.endTime)), 
+				w.workId
+			);
+		}
+	}
+	
 	public Employee getEmployeeObject(String username, List<Employee> employees){
 		for(Employee employee: employees){
 			if(employee.getUsername().equals(username)){
@@ -289,6 +338,16 @@ public class AppStorage {
 		}
 		return null;
 	}
+	
+	public StoredData.StoredEmployee getStoredEmployeeObject(String username, StoredData.StoredEmployee[] storedemployees){
+		for(StoredData.StoredEmployee employee: storedemployees){
+			if(new String(employee.username).equals(username)){
+				return employee;
+			}
+		}
+		return null;
+	}
+	
 	public char[] formatCalendarString(Calendar c){
 		if(c != null){
 			return this.sdf.format(c.getTime()).toCharArray();

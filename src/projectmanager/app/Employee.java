@@ -139,6 +139,10 @@ public class Employee {
 		}
 		return null;
 	}
+	
+	public void addWorkWeek(WorkWeek workweek){
+		this.workWeeks.add(workweek);
+	}
 
 	public void addDelegatedWork(int weekFrom, int weekTo, int yearFrom, int yearTo, Activity activity, int hours) {
 		// det deligerede arbejde str¾kker sig kun over 1 uge

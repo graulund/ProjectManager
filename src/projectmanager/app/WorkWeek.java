@@ -46,6 +46,17 @@ public class WorkWeek {
 		this.registeredWork.add(work);
 	}
 	
+	public void addWork(Work w){
+		if(w != null){
+			if(w.getClass() == RegisteredWork.class){
+				this.addRegisteredWork((RegisteredWork) w);
+			}
+			if(w.getClass() == DelegatedWork.class){
+				this.addDelegatedWork((DelegatedWork) w);
+			}
+		}
+	}
+	
 	public int getDelegatedHours(){
 		int total = 0;
 		for(DelegatedWork work: this.delegatedWork){

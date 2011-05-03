@@ -13,5 +13,6 @@ public class TestSaveObject {//extends SampleDataSetup {
 		//storage.saveCurrentState();
 		StoredData obj = storage.loadState();
 		storage.printState(obj);
+		storage.restoreState(obj);
 	}
 }
