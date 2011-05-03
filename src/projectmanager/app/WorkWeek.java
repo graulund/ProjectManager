@@ -126,7 +126,7 @@ public class WorkWeek {
 			int totalRegHours = 0;
 			for (RegisteredWork rw: this.registeredWork) {
 				if (rw.getActivity().equals(currentActivity)) {
-					totalRegHours += rw.getHalfHoursWorked(); // why u zero?
+					totalRegHours += rw.getHalfHoursWorked();
 				}
 			}
 			totalRegHours /= 2;
