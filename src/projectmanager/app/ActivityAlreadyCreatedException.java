@@ -1,7 +1,7 @@
 package projectmanager.app;
 
-public class ActivityAlreadyCreatedException extends Exception {
+public class ActivityAlreadyCreatedException extends ProjectManagerException {
 	public ActivityAlreadyCreatedException(String message) {
-		super("An activity with the desired name already exists.");
+		super(message);
 	}
 }

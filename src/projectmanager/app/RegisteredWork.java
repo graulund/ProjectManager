@@ -8,15 +8,7 @@ public class RegisteredWork extends Work {
 	private Calendar startTime;
 	private Calendar endTime;
 	private int halfHoursWorked;
-	
-	public RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar) {
-		this(activity, startCalendar, endCalendar, ProjectManagerApp.newSerialNumber());
-	}
-	
-	public RegisteredWork(Activity activity, int halfHoursWorked) {
-		this(activity, halfHoursWorked, ProjectManagerApp.newSerialNumber());
-	}
-	
+		
 	public RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar, int serialNumber){
 		this.serialNumber = serialNumber;
 		this.activity = activity;
@@ -25,6 +17,10 @@ public class RegisteredWork extends Work {
 		this.date = setDate(startCalendar);
 		this.halfHoursWorked = countHalfHoursWorked(startCalendar, endCalendar);
 		this.activity.addRegisteredWork(this);
+	}
+	
+	public RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar) {
+		this(activity, startCalendar, endCalendar, ProjectManagerApp.newSerialNumber());
 	}
 	
 	public RegisteredWork(Activity activity, int halfHoursWorked, int serialNumber){
@@ -41,6 +37,10 @@ public class RegisteredWork extends Work {
 		this.date = setDate(startCalendar);
 		this.halfHoursWorked = halfHoursWorked;
 		this.activity.addRegisteredWork(this);
+	}
+	
+	public RegisteredWork(Activity activity, int halfHoursWorked) {
+		this(activity, halfHoursWorked, ProjectManagerApp.newSerialNumber());
 	}
 	
 	/*
