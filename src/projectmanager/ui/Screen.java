@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import projectmanager.app.ProjectManagerApp;
+
 abstract class Screen {
 	public ProjectManagerUI ui;
 	protected int chars = 0;
@@ -32,6 +34,10 @@ abstract class Screen {
 	protected String wrong = "Wrong selection; please repeat.";
 	protected void wrongInputMessage(PrintWriter out){
 		out.println(this.wrong);
+	}
+	protected void exit(PrintWriter out){
+		out.println("Goodbye!");
+		ProjectManagerApp.exit();
 	}
 	protected int parseNumberInput(String input, PrintWriter out){
 		int selection = -1;

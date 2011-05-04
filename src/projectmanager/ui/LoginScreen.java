@@ -23,7 +23,7 @@ public class LoginScreen extends Screen {
 			this.clearScreen(out);
 			this.ui.setScreen(new MainMenuScreen());
 		} else {
-			this.println(out, "Could not log you in. Please restart the app to try again.");
+			out.println("Could not log you in. Please restart the app to try again.");
 			System.exit(0);
 		}
 		return false;

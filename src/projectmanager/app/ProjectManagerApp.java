@@ -9,6 +9,7 @@ import projectmanager.ui.ProjectManagerUI;
 
 public class ProjectManagerApp {
 	private static Company company = new Company();
+	private static AppStorage storage = new AppStorage();
 	private static Employee loggedInEmployee; // Currently logged in employee
 	private static boolean isEmployeeLoggedIn = false;
 	
@@ -84,21 +85,6 @@ public class ProjectManagerApp {
 	}*/
 	
 	/**
-	 * Main function; the main method starting the app.
-	 */
-	public static void main(String[] args) throws IOException {
-		// Load data
-		AppStorage storage = new AppStorage();
-		storage.restoreState();
-		//storage.printState(storage.storeCurrentState()); //DEBUG
-		// Start CLI
-		ProjectManagerUI ui = new ProjectManagerUI();
-		ui.in = new BufferedReader(new InputStreamReader(System.in));
-		PrintWriter out = new PrintWriter(System.out, true);
-		ui.basicLoop(ui.in, out);
-	}
-	
-	/**
 	 * Generate and return a new serial number for use for identifying various objects around the app
 	 * @return A new serial number ready for use
 	 */
@@ -127,8 +113,30 @@ public class ProjectManagerApp {
 	 */
 	public static void reset() {
 		ProjectManagerApp.company = new Company();
-		ProjectManagerApp.loggedInEmployee = null; // Currently logged in employee
+		ProjectManagerApp.loggedInEmployee = null; // Employee currently logged in
 		ProjectManagerApp.isEmployeeLoggedIn = false;
+	}
+	
+	/**
+	 * Exits the app and saves the current state.
+	 */
+	public static void exit(){
+		storage.saveCurrentState();
+		System.exit(0);
+	}
+	
+	/**
+	 * Main function; the main method starting the app.
+	 */
+	public static void main(String[] args) throws IOException {
+		// Load data
+		storage.restoreState();
+		//storage.printState(storage.storeCurrentState()); //DEBUG
+		// Start CLI
+		ProjectManagerUI ui = new ProjectManagerUI();
+		ui.in = new BufferedReader(new InputStreamReader(System.in));
+		PrintWriter out = new PrintWriter(System.out, true);
+		ui.basicLoop(ui.in, out);
 	}
 
 }
