@@ -120,7 +120,10 @@ public class AppStorage {
 		return null;
 	}
 	public void restoreState(){
-		this.restoreState(this.loadState());
+		StoredData data = this.loadState();
+		if(data != null){
+			this.restoreState(data);
+		}
 	}
 	public void restoreState(StoredData data){
 		// Restoring information for:

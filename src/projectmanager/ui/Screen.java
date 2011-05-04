@@ -19,6 +19,9 @@ abstract class Screen {
 		System.out.print("> "); // Just "out.print" doesn't work?
 		chars += s.length();
 	}
+	protected void println(String s, PrintWriter out){
+		this.println(out, s);
+	}
 	protected void clearScreen(PrintWriter out){
 		StringBuilder clear = new StringBuilder();
 		for(int i = 0; i < chars; i++){

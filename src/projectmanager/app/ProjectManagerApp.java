@@ -87,6 +87,11 @@ public class ProjectManagerApp {
 	 * Main function; the main method starting the app.
 	 */
 	public static void main(String[] args) throws IOException {
+		// Load data
+		AppStorage storage = new AppStorage();
+		storage.restoreState();
+		//storage.printState(storage.storeCurrentState()); //DEBUG
+		// Start CLI
 		ProjectManagerUI ui = new ProjectManagerUI();
 		ui.in = new BufferedReader(new InputStreamReader(System.in));
 		PrintWriter out = new PrintWriter(System.out, true);
