@@ -17,16 +17,17 @@ public class ProjectMenuScreen extends Screen {
 		String create = "Create a new project";
 		Employee you = ProjectManagerApp.getEmployeeLoggedIn();
 		List<Project> projects = you.getProjectLeader();
-		if(projects.size() > 0){
+		int size = projects.size();
+		if(size > 0){
 			s.append("You are a leader of the following projects:\n");
-			this.choices = new String[projects.size() + 1];
-			this.numbers = new int[projects.size()];
-			for(int i = 0; i < projects.size(); i++){
+			this.choices = new String[size + 1];
+			this.numbers = new int[size];
+			for(int i = 0; i < size; i++){
 				Project project = projects.get(i);
 				this.choices[i] = "* " + project.getName();
 				this.numbers[i] = project.getSerialNumber();
 			}
-			this.choices[projects.size()] = create;
+			this.choices[size] = create;
 		} else {
 			s.append("You aren't currently a leader of any projects.");
 			this.choices = new String[] { create };
@@ -44,8 +45,7 @@ public class ProjectMenuScreen extends Screen {
 			return false;
 		}
 		if(this.choices.length > 0){
-			if(selection < this.choices.length){
-				System.out.println("You picked project " + this.choices[selection-1] + " (" + this.numbers[selection-1] + ")");
+			if(selection < this.choices.length && selection >= 0){
 				this.ui.setScreen(new ManageProjectScreen(this.numbers[selection-1]));
 			} else if(selection == this.choices.length){
 				this.ui.setScreen(new CreateProjectScreen());
