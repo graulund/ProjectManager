@@ -9,5 +9,4 @@ public class ProjectManagerException extends Exception {
 	public String getMessage() {
 		return this.message;
 	}
-
 }
