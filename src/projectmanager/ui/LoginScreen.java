@@ -14,7 +14,7 @@ public class LoginScreen extends Screen {
 			"Please type your initials below to proceed:"
 		);
 	}
-
+	
 	@Override
 	boolean processInput(String input, PrintWriter out) {
 		//System.out.println("Trying to log in as user '" + input + "'");
