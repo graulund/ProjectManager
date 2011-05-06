@@ -74,7 +74,7 @@ public class RegisteredWork extends Work {
         return getFairHours(diffHalfHours, startTime.get(Calendar.MINUTE), endTime.get(Calendar.MINUTE));
 	}
 	
-	private void updateHalfHoursWorked() {
+	public void updateHalfHoursWorked() {
 		this.halfHoursWorked = countHalfHoursWorked(this.startTime, this.endTime);
 	}
 	
@@ -129,16 +129,20 @@ public class RegisteredWork extends Work {
 	public int getSerialNumber() {
 		return this.serialNumber;
 	}
-
-	public void setStartTime(int newHour, int newMinutes) {
-		this.startTime.set(Calendar.HOUR_OF_DAY, newHour);
-		this.startTime.set(Calendar.MINUTE, newMinutes);
-		this.updateHalfHoursWorked();
+	
+	public RegisteredWork clone() {
+		return new RegisteredWork(this.activity, this.getStartTime(), this.getEndTime());
 	}
-
-	public void setEndTime(int newHour, int newMinutes) {
-		this.endTime.set(Calendar.HOUR_OF_DAY, newHour);
-		this.endTime.set(Calendar.MINUTE, newMinutes);
-		this.updateHalfHoursWorked();
-	}
+	
+//	public void setStartTime(int newHourStart, int newMinutesStart) {
+//		this.setTime(newHourStart, newMinutesStart, 
+//				     this.endTime.get(Calendar.HOUR_OF_DAY),
+//				     this.endTime.get(Calendar.MINUTE));
+//	}
+//	
+//	public void setEndTime(int newHourEnd, int newMinutesEnd) {
+//		this.setTime(this.startTime.get(Calendar.HOUR_OF_DAY), 
+//					 this.startTime.get(Calendar.MINUTE), 
+//					 newHourEnd, newMinutesEnd);
+//	}
 }

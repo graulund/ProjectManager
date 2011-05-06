@@ -49,21 +49,22 @@ public class EditRegisteredWork {
 	
 	/**
 	 * Tester scenariet, hvor en medarbejder successfuldt redigere i sit registrerede arbejde
+	 * @throws ProjectManagerException 
 	 */
 	@Test
-	public void testEditRegisteredWork() {
+	public void testEditRegisteredWork() throws ProjectManagerException {
 		// Tester den allerede registrerede tid
 		assertEquals(10, employee.getWorkWeek(week, year).getRegisteredWork().get(0).getHalfHoursWorked());
 		
 		assertEquals(week, regwork1.getStartTime().get(Calendar.WEEK_OF_YEAR));
 		assertEquals(year, regwork1.getStartTime().get(Calendar.YEAR));
 		assertEquals(10, regwork1.getStartTime().get(Calendar.HOUR_OF_DAY));
-		assertEquals(30, regwork1.getStartTime().get(Calendar.MINUTE));
+		assertEquals(00, regwork1.getStartTime().get(Calendar.MINUTE));
 		
 		assertEquals(week, regwork1.getEndTime().get(Calendar.WEEK_OF_YEAR));
 		assertEquals(year, regwork1.getEndTime().get(Calendar.YEAR));
 		assertEquals(15, regwork1.getEndTime().get(Calendar.HOUR_OF_DAY));
-		assertEquals(30, regwork1.getEndTime().get(Calendar.MINUTE));
+		assertEquals(00, regwork1.getEndTime().get(Calendar.MINUTE));
 		
 		// 1: medarbejder logger ind
 		ProjectManagerApp.employeeLogin("hlb");
@@ -79,8 +80,7 @@ public class EditRegisteredWork {
 		int newHourFrom = 9, newMinutesFrom = 45;
 		int newHourTo   = 17, newMinutesTo  = 30;
 		
-		regworkChosen.setStartTime(newHourFrom, newMinutesFrom);
-		regworkChosen.setEndTime(newHourTo, newMinutesTo);
+		employee.setRegisteredWork(regworkChosen, newHourFrom, newMinutesFrom, newHourTo, newMinutesTo);
 		
 		// der testes om det registrerede arbejde er rettet
 		Calendar regworkStart = regworkChosen.getStartTime();
@@ -98,41 +98,36 @@ public class EditRegisteredWork {
 		
 		assertEquals(15, regworkChosen.getHalfHoursWorked());
 	}
-	
-//	@Test
-//	public void testEditRegisteredWorkCollision() throws RegisterWorkException {
-//		Calendar startDate2 = (Calendar) regwork1.getStartTime().clone();
-//		Calendar endDate2 = (Calendar) regwork1.getEndTime().clone();
-//		startDate2.add(Calendar.HOUR, 6);
-//		endDate2.add(Calendar.HOUR, 4);
-//		
-//		assertEquals(regwork1.getDate(), startDate2.get(Calendar.DATE));
-//		assertEquals(regwork1.getDate(), endDate2.get(Calendar.DATE));
-//		
-//		RegisteredWork regwork2 = new RegisteredWork(activity, startDate2, endDate2);
-//		employee.addRegisteredWork(regwork2);
-//		
-//		// medarbejderen vælger et registreret arbejde
-//		RegisteredWork regworkChosen = regwork2;
-//		
-//		// medbarjedern ændrer tiden, så den kollidere med et andet registreret arbejde
-//		int newStartHour = 12, newStartMinutes = 0;
-//		int newEndHour   = 13, newEndMinutes = 0;
-//		
-//		try {
-//			regworkChosen.setStartTime(newStartHour, newStartMinutes);
-//			fail("A AlreadyRegisteredWorkException should have been thrown");			
-//		} catch (RegisterWorkException e) {
-//			// Step 4
-//			assertEquals("You have already registered a work at the given time", e.getMessage());
-//		}	
-//		
-//		try {
-//			regworkChosen.setEndTime(newEndHour, newEndMinutes);
-//			fail("A AlreadyRegisteredWorkException should have been thrown");			
-//		} catch (RegisterWorkException e) {
-//			// Step 4
-//			assertEquals("You have already registered a work at the given time", e.getMessage());
-//		}	
-//	}
+
+	@Test
+	public void testEditRegisteredWorkCollision() throws ProjectManagerException {
+		Calendar startDate2 = (Calendar) regwork1.getStartTime().clone();
+		Calendar endDate2 = (Calendar) regwork1.getEndTime().clone();
+		startDate2.add(Calendar.HOUR_OF_DAY, 6);
+		endDate2.add(Calendar.HOUR_OF_DAY, 4);
+		assertEquals(16, startDate2.get(Calendar.HOUR_OF_DAY));
+		assertEquals(19, endDate2.get(Calendar.HOUR_OF_DAY));
+		// startDate2 --> endDate2 = 16.00 - 19.00
+		
+		assertEquals(regwork1.getDate().get(Calendar.DATE), startDate2.get(Calendar.DATE));
+		assertEquals(regwork1.getDate().get(Calendar.DATE), endDate2.get(Calendar.DATE));
+		
+		RegisteredWork regwork2 = new RegisteredWork(activity, startDate2, endDate2);
+		employee.addRegisteredWork(regwork2);
+		
+		// medarbejderen vælger et registreret arbejde
+		RegisteredWork regworkChosen = regwork2;
+		
+		// medbarjedern ændrer tiden, så den kollidere med et andet registreret arbejde
+		int newStartHour = 11, newStartMinutes = 0;
+		int newEndHour   = 16, newEndMinutes = 0;
+		
+		try {
+			employee.setRegisteredWork(regworkChosen, newStartHour, newStartMinutes, newEndHour, newEndMinutes);
+			fail("A AlreadyRegisteredWorkException should have been thrown");			
+		} catch (RegisterWorkException e) {
+			// Step 4
+			assertEquals("You have already registered a work at the given time", e.getMessage());
+		}	
+	}
 }
