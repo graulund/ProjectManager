@@ -235,11 +235,11 @@ public class Employee {
 		
 		Calendar oldStart = regwork.getStartTime();
 		Calendar oldEnd	  = regwork.getEndTime();
-		regwork.getStartTime().set(Calendar.HOUR_OF_DAY, newHourStart);
-		regwork.getStartTime().set(Calendar.MINUTE, newMinutesStart);
-		regwork.getEndTime().set(Calendar.HOUR_OF_DAY, newHourEnd);
-		regwork.getEndTime().set(Calendar.MINUTE, newMinutesEnd);
+		regwork.setStartTime(newHourStart, newMinutesStart);
+		regwork.setEndTime(newHourEnd, newMinutesEnd);
 		if (!isValidRegwork(regwork)) {
+			regwork.setStartTime(oldStart.get(Calendar.HOUR_OF_DAY), oldStart.get(Calendar.MINUTE));
+			regwork.setEndTime(oldEnd.get(Calendar.HOUR_OF_DAY), oldEnd.get(Calendar.MINUTE));
 			throw new RegisterWorkException("The starting time is after the ending time.");
 			
 		} else if (timeAlreadyRegistered(regwork, workWeek)) {
@@ -247,7 +247,6 @@ public class Employee {
 		
 		// new values are valid
 		} else {
-			
 			Calendar startTime = regwork.getStartTime();
 			Calendar endTime   = regwork.getEndTime();
 			startTime.set(Calendar.HOUR_OF_DAY, newHourStart);
@@ -256,7 +255,6 @@ public class Employee {
 			endTime.set(Calendar.MINUTE, newMinutesEnd);
 			regwork.updateHalfHoursWorked();
 		}
-		
 	}
 	
 	public void setRegisteredWorkStart(RegisteredWork regwork, int newHourStart, int newMinutesStart) throws ProjectManagerException {

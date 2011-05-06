@@ -103,6 +103,16 @@ public class RegisteredWork extends Work {
 		}
 	}
 	
+	public void setStartTime(int hour, int minutes) {
+		this.startTime.set(Calendar.HOUR_OF_DAY, hour);
+		this.startTime.set(Calendar.MINUTE, minutes);
+	}
+	
+	public void setEndTime(int hour, int minutes) {
+		this.endTime.set(Calendar.HOUR_OF_DAY, hour);
+		this.endTime.set(Calendar.MINUTE, minutes);
+	}
+	
 	public Calendar getDate() {
 		return this.date;
 	}

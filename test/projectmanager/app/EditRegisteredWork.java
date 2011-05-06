@@ -15,6 +15,7 @@ public class EditRegisteredWork {
 	Activity activity;
 	int week, year;
 	RegisteredWork regwork1;
+	RegisteredWork regwork2;
 	
 	@Before
 	public void setUp() throws OperationNotAllowedException, ProjectManagerException {
@@ -38,6 +39,14 @@ public class EditRegisteredWork {
 		year = 2011; week = 25;
 		Calendar startDate1 = TestingUtilities.createCalendar(2011, 25, 10, 0);
 		Calendar endDate1 = TestingUtilities.createCalendar(2011, 25, 15, 0);
+		Calendar startDate2 = (Calendar) startDate1.clone();
+		Calendar endDate2 = (Calendar) endDate1.clone();
+		startDate2.add(Calendar.HOUR_OF_DAY, 7);
+		endDate2.add(Calendar.HOUR_OF_DAY, 4);
+		// startDate2 --> endDate2 = 16.00 - 19.00
+		
+		regwork2 = new RegisteredWork(activity, startDate2, endDate2);
+		employee.addRegisteredWork(regwork2);
 		
 		regwork1 = new RegisteredWork(activity, startDate1, endDate1);
 		//RegisteredWork regwork2 = new RegisteredWork(activity, startDate2, endDate2);
@@ -54,7 +63,7 @@ public class EditRegisteredWork {
 	@Test
 	public void testEditRegisteredWork() throws ProjectManagerException {
 		// Tester den allerede registrerede tid
-		assertEquals(10, employee.getWorkWeek(week, year).getRegisteredWork().get(0).getHalfHoursWorked());
+		assertEquals(10, employee.getWorkWeek(week, year).getRegisteredWork().get(1).getHalfHoursWorked());
 		
 		assertEquals(week, regwork1.getStartTime().get(Calendar.WEEK_OF_YEAR));
 		assertEquals(year, regwork1.getStartTime().get(Calendar.YEAR));
@@ -74,11 +83,11 @@ public class EditRegisteredWork {
 		List<RegisteredWork> regworks = ProjectManagerApp.getEmployeeLoggedIn().getWorkWeek(week, year).getRegisteredWork();
 		
 		// 3: medarbejder v¾lger en af de registrerede tider
-		RegisteredWork regworkChosen = regworks.get(0);
+		RegisteredWork regworkChosen = regworks.get(1);
 		
 		// 4: medarbejder skriver en ny start-tid og en ny slut-tid
-		int newHourFrom = 9, newMinutesFrom = 45;
-		int newHourTo   = 17, newMinutesTo  = 30;
+		int newHourFrom = 9, newMinutesFrom = 15;
+		int newHourTo   = 15, newMinutesTo  = 30;
 		
 		employee.setRegisteredWork(regworkChosen, newHourFrom, newMinutesFrom, newHourTo, newMinutesTo);
 		
@@ -96,24 +105,11 @@ public class EditRegisteredWork {
 		assertEquals(newHourTo, regworkEnd.get(Calendar.HOUR_OF_DAY));
 		assertEquals(newMinutesTo, regworkEnd.get(Calendar.MINUTE));
 		
-		assertEquals(15, regworkChosen.getHalfHoursWorked());
+		assertEquals(12, regworkChosen.getHalfHoursWorked());
 	}
 
 	@Test
 	public void testEditRegisteredWorkCollision() throws ProjectManagerException {
-		Calendar startDate2 = (Calendar) regwork1.getStartTime().clone();
-		Calendar endDate2 = (Calendar) regwork1.getEndTime().clone();
-		startDate2.add(Calendar.HOUR_OF_DAY, 6);
-		endDate2.add(Calendar.HOUR_OF_DAY, 4);
-		assertEquals(16, startDate2.get(Calendar.HOUR_OF_DAY));
-		assertEquals(19, endDate2.get(Calendar.HOUR_OF_DAY));
-		// startDate2 --> endDate2 = 16.00 - 19.00
-		
-		assertEquals(regwork1.getDate().get(Calendar.DATE), startDate2.get(Calendar.DATE));
-		assertEquals(regwork1.getDate().get(Calendar.DATE), endDate2.get(Calendar.DATE));
-		
-		RegisteredWork regwork2 = new RegisteredWork(activity, startDate2, endDate2);
-		employee.addRegisteredWork(regwork2);
 		
 		// medarbejderen v¾lger et registreret arbejde
 		RegisteredWork regworkChosen = regwork2;
