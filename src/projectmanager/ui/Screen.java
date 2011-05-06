@@ -18,7 +18,6 @@ abstract class Screen {
 	// General screen utilities
 	protected void println(PrintWriter out, String s){
 		out.println(s);
-		System.out.print("> "); // Just "out.print" doesn't work?
 		chars += s.length();
 	}
 	protected void println(String s, PrintWriter out){
@@ -49,6 +48,7 @@ abstract class Screen {
 		return selection;
 	}
 	protected String[] inputSequence(String[] inputs, String[] defaults) throws IOException {
+		if(inputs.length <= 0){ return new String[]{ null }; }
 		String[] in = new String[inputs.length];
 		String def  = null;
 		for(int i = 0; i < inputs.length; i++){

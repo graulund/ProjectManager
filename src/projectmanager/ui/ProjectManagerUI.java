@@ -35,6 +35,7 @@ public class ProjectManagerUI {
 		String selection;
 		do {
 			printMenu(out);
+			System.out.print("> ");
 			selection = readInput(in);
 		} while (!processInput(selection, out));
 	}

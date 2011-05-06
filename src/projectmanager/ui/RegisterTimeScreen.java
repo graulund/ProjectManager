@@ -1,5 +1,7 @@
 package projectmanager.ui;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 
 public class RegisterTimeScreen extends Screen {
@@ -7,9 +9,23 @@ public class RegisterTimeScreen extends Screen {
 	@Override
 	void printMenu(PrintWriter out) {
 		this.println(out, 
-				this.formatTitle("Edit Registered Time") +
-				this.menuString(new String[]{ "" })
+			this.formatTitle("Register Time")
+		);
+		try {
+			String[] in = this.inputSequence(
+				new String[]{
+					"Date",
+					"Start time",
+					"End time"
+				}, 
+				new String[]{
+					null,
+					null,
+					"Now"
+				}
 			);
+			System.out.println(Arrays.toString(in));
+		} catch (IOException e) {}
 	}
 
 	@Override
