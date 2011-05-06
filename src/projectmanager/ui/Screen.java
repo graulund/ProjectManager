@@ -48,6 +48,22 @@ abstract class Screen {
 		}
 		return selection;
 	}
+	protected String[] inputSequence(String[] inputs, String[] defaults) throws IOException {
+		String[] in = new String[inputs.length];
+		String def  = null;
+		for(int i = 0; i < inputs.length; i++){
+			def   = (defaults.length > i) ? defaults[i] : null;
+			System.out.print("> " + inputs[i] + (def != null ? " [" + def + "]" : "") + ": ");
+			in[i] = this.readInput(this.ui.in);
+			if(in[i].isEmpty() && def != null){ 
+				in[i] = def;
+			}
+		}
+		return in;
+	}
+	protected String[] inputSequence(String[] inputs) throws IOException {
+		return this.inputSequence(inputs, new String[]{ null });
+	}
 	public String menuString(String[] choices, String cancel){
 		StringBuilder s = new StringBuilder();
 		for(int i = 0; i < choices.length; i++){
