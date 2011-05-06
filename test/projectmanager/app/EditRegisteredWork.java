@@ -12,6 +12,7 @@ public class EditRegisteredWork {
 	private Employee employee;
 	Company company;
 	Project project;
+	Activity activity;
 	int week, year;
 	RegisteredWork regwork1;
 	
@@ -23,7 +24,7 @@ public class EditRegisteredWork {
 		company.addEmployee(employee);
 		
 		project = new Project("lolproject", "Google");
-		Activity activity = new Activity("lolcat");
+		activity = new Activity("lolcat");
 		company.addProject(project);
 		project.addLeader(employee);
 		
@@ -35,13 +36,8 @@ public class EditRegisteredWork {
 		// regwork 1: week 25, 5 hours = 10 halfhours
 		// regwork 2: week 25, 7 hours = 14 halfhours
 		year = 2011; week = 25;
-		Calendar startDate1 = TestingUtilities.createCalendar(2011, 25, 10, 30);
-		Calendar endDate1 = TestingUtilities.createCalendar(2011, 25, 15, 30);
-		Calendar startDate2 = (Calendar) startDate1.clone();
-		Calendar endDate2 = (Calendar) endDate1.clone();
-		startDate2.add(Calendar.DATE, 1);
-		endDate2.add(Calendar.DATE, 1);
-		endDate2.add(Calendar.HOUR, 2);
+		Calendar startDate1 = TestingUtilities.createCalendar(2011, 25, 10, 0);
+		Calendar endDate1 = TestingUtilities.createCalendar(2011, 25, 15, 0);
 		
 		regwork1 = new RegisteredWork(activity, startDate1, endDate1);
 		//RegisteredWork regwork2 = new RegisteredWork(activity, startDate2, endDate2);
@@ -102,4 +98,41 @@ public class EditRegisteredWork {
 		
 		assertEquals(15, regworkChosen.getHalfHoursWorked());
 	}
+	
+//	@Test
+//	public void testEditRegisteredWorkCollision() throws RegisterWorkException {
+//		Calendar startDate2 = (Calendar) regwork1.getStartTime().clone();
+//		Calendar endDate2 = (Calendar) regwork1.getEndTime().clone();
+//		startDate2.add(Calendar.HOUR, 6);
+//		endDate2.add(Calendar.HOUR, 4);
+//		
+//		assertEquals(regwork1.getDate(), startDate2.get(Calendar.DATE));
+//		assertEquals(regwork1.getDate(), endDate2.get(Calendar.DATE));
+//		
+//		RegisteredWork regwork2 = new RegisteredWork(activity, startDate2, endDate2);
+//		employee.addRegisteredWork(regwork2);
+//		
+//		// medarbejderen vælger et registreret arbejde
+//		RegisteredWork regworkChosen = regwork2;
+//		
+//		// medbarjedern ændrer tiden, så den kollidere med et andet registreret arbejde
+//		int newStartHour = 12, newStartMinutes = 0;
+//		int newEndHour   = 13, newEndMinutes = 0;
+//		
+//		try {
+//			regworkChosen.setStartTime(newStartHour, newStartMinutes);
+//			fail("A AlreadyRegisteredWorkException should have been thrown");			
+//		} catch (RegisterWorkException e) {
+//			// Step 4
+//			assertEquals("You have already registered a work at the given time", e.getMessage());
+//		}	
+//		
+//		try {
+//			regworkChosen.setEndTime(newEndHour, newEndMinutes);
+//			fail("A AlreadyRegisteredWorkException should have been thrown");			
+//		} catch (RegisterWorkException e) {
+//			// Step 4
+//			assertEquals("You have already registered a work at the given time", e.getMessage());
+//		}	
+//	}
 }
