@@ -71,8 +71,13 @@ public class RegisteredWork extends Work {
         long diffHalfHours = (diff / (60 * 60 * 1000))*2;
         
         //return (int)diffHalfHours;
-        return getMostHours(diffHalfHours, startTime.get(Calendar.MINUTE), endTime.get(Calendar.MINUTE));
+        return getFairHours(diffHalfHours, startTime.get(Calendar.MINUTE), endTime.get(Calendar.MINUTE));
 	}
+	
+	private void updateHalfHoursWorked() {
+		this.halfHoursWorked = countHalfHoursWorked(this.startTime, this.endTime);
+	}
+	
 	/**
 	 * Method that corrects the half hours so that they are fair
 	 * @param diffHalfHours
@@ -80,17 +85,12 @@ public class RegisteredWork extends Work {
 	 * @param endMinutes
 	 * @return
 	 */
-	private int getMostHours(long diffHalfHours, int startMinutes, int endMinutes) {
-		int halfHours = (int)diffHalfHours;
-		if (startMinutes > 0 && startMinutes <= 15) {
-			halfHours+=2;
-		} else if (startMinutes >= 15 && startMinutes < 45) {
-			halfHours++;;
-		}
-		if (endMinutes >= 15 && endMinutes < 45) {
-			halfHours++;
-		} else if (endMinutes >= 45) {
-			halfHours+=2;
+	private int getFairHours(long diffHalfHours, int startMinutes, int endMinutes) {
+		int halfHours = (int) diffHalfHours;
+		if (startMinutes >= 15 && startMinutes < 45) {
+			if (endMinutes < 15 || endMinutes >= 45) halfHours++;
+		} else if (startMinutes < 15 || startMinutes >= 45) {
+			if (endMinutes >= 15 && endMinutes < 45) halfHours++;
 		}
 		return halfHours;
 	}
@@ -128,5 +128,17 @@ public class RegisteredWork extends Work {
 	}
 	public int getSerialNumber() {
 		return this.serialNumber;
+	}
+
+	public void setStartTime(int newHour, int newMinutes) {
+		this.startTime.set(Calendar.HOUR_OF_DAY, newHour);
+		this.startTime.set(Calendar.MINUTE, newMinutes);
+		this.updateHalfHoursWorked();
+	}
+
+	public void setEndTime(int newHour, int newMinutes) {
+		this.endTime.set(Calendar.HOUR_OF_DAY, newHour);
+		this.endTime.set(Calendar.MINUTE, newMinutes);
+		this.updateHalfHoursWorked();
 	}
 }

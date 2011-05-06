@@ -262,32 +262,25 @@ public class TimeRegistration {
 		String[] endTimeSplit1 = endTime1.split(":");
 		
 		// gemmer inputtet som kalendre
-		Calendar startCalendar1 = new GregorianCalendar(Locale.ENGLISH);
-		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
-						  Integer.parseInt(dateSplit1[1])-1, 
-						  Integer.parseInt(dateSplit1[0]), 
-						  Integer.parseInt(startTimeSplit1[0]), 
-						  Integer.parseInt(startTimeSplit1[1])); 
-		GregorianCalendar endCalendar1 = new GregorianCalendar();
-		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
-						Integer.parseInt(dateSplit1[1])-1, 
-						Integer.parseInt(dateSplit1[0]), 
-						Integer.parseInt(endTimeSplit1[0]), 
-						Integer.parseInt(endTimeSplit1[1]));
+		Calendar startCalendar1 = TestingUtilities.createCalendar(
+				Integer.parseInt(dateSplit1[2]),
+				Integer.parseInt(dateSplit1[1]),
+				Integer.parseInt(dateSplit1[0]),
+				Integer.parseInt(startTimeSplit1[0]),
+				Integer.parseInt(startTimeSplit1[1])
+				);
+		Calendar endCalendar1 = TestingUtilities.createCalendar(
+				Integer.parseInt(dateSplit1[2]),
+				Integer.parseInt(dateSplit1[1]),
+				Integer.parseInt(dateSplit1[0]),
+				Integer.parseInt(endTimeSplit1[0]),
+				Integer.parseInt(endTimeSplit1[1])
+				);	
 		
-		
+		System.out.println(startCalendar1.get(Calendar.YEAR));
 		// tiden registreres
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
 		ProjectManagerApp.registerWork(employee, regWork1);
-		int serialNumber = regWork1.getSerialNumber();
-		
-		RegisteredWork regwork = employee.getWorkWeek(1, 2011).registeredWorkBySerialNumber(serialNumber);
-		
-		assertEquals(chosenActivity, regwork.getActivity());
-		assertEquals(1, regwork.getActivity().getStart().get(Calendar.WEEK_OF_YEAR));
-		assertEquals(4, regwork.getActivity().getEnd().get(Calendar.WEEK_OF_YEAR));
-		assertEquals(2011, regwork.getActivity().getStart().get(Calendar.YEAR));
-		assertEquals(2011, regwork.getActivity().getEnd().get(Calendar.YEAR));
 	}
 	
 //	/**
