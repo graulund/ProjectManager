@@ -9,19 +9,37 @@ import java.util.Calendar;
 
 import projectmanager.ui.ProjectManagerUI;
 
+/**
+ * Main class for the Project Manager Application. The class holds essential information related to the application logic.
+ */
 public class ProjectManagerApp {
+	/**
+	 * Link to the current Company object.
+	 */
 	private static Company company = new Company();
+	
+	/**
+	 * Link to the current AppStorage object.
+	 */
 	private static AppStorage storage = new AppStorage();
-	private static Employee loggedInEmployee; // Currently logged in employee
+	
+	/**
+	 * Link to the current logged in Employee object, if any.
+	 */
+	private static Employee loggedInEmployee = null;
+	
+	/**
+	 * Boolean determining whether an employee is logged in or not.
+	 */
 	private static boolean isEmployeeLoggedIn = false;
 	
 	/**
-	 * The current auto-incrementing serial number used to reference various objects
+	 * The current auto-incrementing serial number used to reference various objects.
 	 */
 	private static int currentSerialNumber = 1;
 
 	/**
-	 * Get the Company object instance in use at the moment
+	 * Gets the Company object instance in use at the moment.
 	 * @return Company instance
 	 */
 	public static Company getCompany(){
@@ -29,7 +47,7 @@ public class ProjectManagerApp {
 	}
 	
 	/**
-	 * Log in to the app with the given username
+	 * Logs in to the app with the given username.
 	 * @param username Employee username
 	 * @return Boolean defining whether or not you're now logged in
 	 */
@@ -58,7 +76,7 @@ public class ProjectManagerApp {
 	}
 	
 	/**
-	 * Log out from the app
+	 * Logs out from the app.
 	 * @return Boolean defining whether or not you're now logged in
 	 */
 	public static boolean employeeLogout() {
@@ -67,27 +85,18 @@ public class ProjectManagerApp {
 		return isEmployeeLoggedIn;
 	}
 	
+	/**
+	 * 
+	 * @param regwork
+	 * @throws ProjectManagerException
+	 */
 	public static void registerWork(RegisteredWork regwork) throws ProjectManagerException {
 		getEmployeeLoggedIn().addRegisteredWork(regwork);
 	}
-
-	/*public static void assignEmployeeToActivity(Employee employee, Activity activity,int hours) {
-		// mangler at tjekke, om medarbejder, der "assigner" er projektleder
-		activity.addEmployee(employee);
-		
-		employee.addDelegatedWork(new DelegatedWork(hours/weeks, activity));
-	}*/
 	
-	/*private static int hoursParseHalfhours(int hours, Activity activity) {
-		int week = activity.getEnd().get(Calendar.WEEK_OF_YEAR) - activity.getStart().get(Calendar.WEEK_OF_YEAR);
-		int halfHoursPerWork = (hours*2)/;
-		while (halfHoursPerWork % hours == 0) {
-			
-		}
-	}*/
 	
 	/**
-	 * Generate and return a new serial number for use for identifying various objects around the app
+	 * Generates and returns a new serial number for use for identifying various objects around the app.
 	 * @return A new serial number ready for use
 	 */
 	public static int newSerialNumber(){
@@ -95,7 +104,7 @@ public class ProjectManagerApp {
 	}
 	
 	/**
-	 * Return the upcoming to-be-used ("current") serial number
+	 * Returns the upcoming to-be-used ("current") serial number.
 	 * @return Current serial number
 	 */
 	public static int getCurrentSerialNumber(){
@@ -103,7 +112,7 @@ public class ProjectManagerApp {
 	}
 	
 	/**
-	 * Set what number will be used as the next serial number
+	 * Sets what number will be used as the next serial number.
 	 * @param currentSerialNumber Number to be used
 	 */
 	public static void setCurrentSerialNumber(int currentSerialNumber) {
@@ -111,11 +120,11 @@ public class ProjectManagerApp {
 	}
 	
 	/**
-	 * This function is only for testing! Resets the APP!
+	 * Resets the application memory. Only to be used for testing.
 	 */
 	public static void reset() {
 		ProjectManagerApp.company = new Company();
-		ProjectManagerApp.loggedInEmployee = null; // Employee currently logged in
+		ProjectManagerApp.loggedInEmployee = null;
 		ProjectManagerApp.isEmployeeLoggedIn = false;
 	}
 	
@@ -128,12 +137,28 @@ public class ProjectManagerApp {
 	}
 	
 	/**
-	 * Main function; the main method starting the app.
+	 * Creates a calendar object from the given date informations.
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @param hour
+	 * @param minutes
+	 * @return Calendar object
+	 */
+	public static Calendar createCalendar(int year, int month,
+			int day, int hour, int minutes) {
+		Calendar cal = new GregorianCalendar();
+		cal.set(year, month-1, day, hour, minutes, 0);
+		return cal;
+	}
+	
+	/**
+	 * Main method; this method starts the app and loads the UI.
 	 */
 	public static void main(String[] args) throws IOException {
 		// Load data
 		storage.restoreState();
-		//storage.printState(storage.storeCurrentState()); //DEBUG
+		
 		// Start CLI
 		ProjectManagerUI ui = new ProjectManagerUI();
 		ui.in = new BufferedReader(new InputStreamReader(System.in));
@@ -141,11 +166,5 @@ public class ProjectManagerApp {
 		ui.basicLoop(ui.in, out);
 	}
 
-	public static Calendar createCalendar(int year, int month,
-			int day, int hour, int minutes) {
-		Calendar cal = new GregorianCalendar();
-		cal.set(year, month-1, day, hour, minutes, 0);
-		return cal;
-	}
-
+	// NO NEW METHODS BELOW THE MAIN METHOD! THIS SHOULD ALWAYS BE THE LAST ONE
 }
