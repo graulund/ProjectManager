@@ -46,11 +46,13 @@ public class Project {
 		return this.projectLeader;
 	}
 	public void addActivity(Activity activity) throws OperationNotAllowedException, CreatingActivityException {
-		if (ProjectManagerApp.getEmployeeLoggedIn() != this.projectLeader)
-			throw new OperationNotAllowedException("Create activity");
-		else if (this.activityByName(activity.getName()) != null)
-			throw new CreatingActivityException("You have already created an activity by this name.");
-		this.activities.add(activity);
+		if (this.projectLeader != null) {
+			if (ProjectManagerApp.getEmployeeLoggedIn() != this.projectLeader)
+				throw new OperationNotAllowedException("Create activity");
+			else if (this.activityByName(activity.getName()) != null)
+				throw new CreatingActivityException("You have already created an activity by this name.");
+			this.activities.add(activity);
+		}	
 	}
 	public void removeActivity(Activity activity) {
 		this.activities.remove(activity);

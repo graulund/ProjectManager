@@ -59,6 +59,9 @@ public class SampleDataSetup {
 					// Add 3 random employees to each activity
 					latestActivity.addEmployee(randomEmployee);
 					
+					// Work weeks
+					randomEmployee.addWorkWeek(new WorkWeek(25+i, 2011));
+					
 					// Delegate work
 					randomEmployee.addDelegatedWork(25+i, 2011, latestActivity, 40);
 					

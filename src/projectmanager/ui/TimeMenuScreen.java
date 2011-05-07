@@ -24,7 +24,6 @@ public class TimeMenuScreen extends Screen {
 				this.ui.setScreen(new MainMenuScreen());
 				break;
 			case 1:
-				//this.ui.setScreen(new RegisterTimeScreen(new Activity("lulz")));
 				this.ui.setScreen(new ChooseWorkWeekScreen("Register"));
 				break;
 			case 2:

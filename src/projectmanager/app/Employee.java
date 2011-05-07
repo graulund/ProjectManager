@@ -275,7 +275,25 @@ public class Employee {
 							   newMinutesEnd);
 	}
 
-	public List<Activity> getActivities(int weekStart, int weekEnd) {
-		return new ArrayList<Activity>();
+	public List<Activity> getActivities(int weekStart, int yearStart, int weekEnd, int yearEnd) {
+		Calendar cal = new GregorianCalendar();
+		cal.set(Calendar.WEEK_OF_YEAR, weekStart);
+		cal.set(Calendar.YEAR, yearStart);
+		Calendar cal2 = new GregorianCalendar();
+		cal2.set(Calendar.WEEK_OF_YEAR, weekEnd);
+		cal2.set(Calendar.YEAR, yearEnd);
+		cal2.add(Calendar.WEEK_OF_YEAR, 1);
+		List<Activity> activities = new ArrayList<Activity>();
+		while (cal.before(cal2)) {
+			WorkWeek workweek = this.getWorkWeek(cal.get(Calendar.WEEK_OF_YEAR), cal.get(Calendar.YEAR));
+			if (workweek != null) {
+				List<RegisteredWork> regworks = workweek.getRegisteredWork();
+				for (RegisteredWork rw: regworks) {
+					activities.add(rw.getActivity());
+				}
+			}
+			cal.add(Calendar.WEEK_OF_YEAR, 1);
+		}
+		return activities;
 	}
 }

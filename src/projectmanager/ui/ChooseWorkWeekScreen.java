@@ -16,6 +16,7 @@ public class ChooseWorkWeekScreen extends Screen {
 	void printMenu(PrintWriter out) {
 		this.println(out, 
 				this.formatTitle("Select week(s)")
+			  + "Week/Year format: WW/YYYY"
 		);
 		String[] in = new String[] {"-1"};
 		try {
@@ -30,6 +31,7 @@ public class ChooseWorkWeekScreen extends Screen {
 					}
 				);
 		} catch (IOException e) {}
+		
 		startWeek = this.parseNumberInput(in[0], out);
 		if (in[1].equals("Only 1 week")) endWeek = startWeek;
 		else endWeek   = this.parseNumberInput(in[1], out);
