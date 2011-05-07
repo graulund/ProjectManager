@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 import projectmanager.ui.ProjectManagerUI;
 
@@ -65,8 +67,8 @@ public class ProjectManagerApp {
 		return isEmployeeLoggedIn;
 	}
 	
-	public static void registerWork(Employee employee, RegisteredWork regWork1) throws RegisterWorkException {
-		if (employee == getEmployeeLoggedIn()) employee.addRegisteredWork(regWork1);
+	public static void registerWork(RegisteredWork regwork) throws ProjectManagerException {
+		getEmployeeLoggedIn().addRegisteredWork(regwork);
 	}
 
 	/*public static void assignEmployeeToActivity(Employee employee, Activity activity,int hours) {
@@ -137,6 +139,13 @@ public class ProjectManagerApp {
 		ui.in = new BufferedReader(new InputStreamReader(System.in));
 		PrintWriter out = new PrintWriter(System.out, true);
 		ui.basicLoop(ui.in, out);
+	}
+
+	public static Calendar createCalendar(int year, int month,
+			int day, int hour, int minutes) {
+		Calendar cal = new GregorianCalendar();
+		cal.set(year, month-1, day, hour, minutes, 0);
+		return cal;
 	}
 
 }

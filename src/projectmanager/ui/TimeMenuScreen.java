@@ -22,7 +22,7 @@ public class TimeMenuScreen extends Screen {
 				this.ui.setScreen(new MainMenuScreen());
 				break;
 			case 1:
-				this.ui.setScreen(new RegisterTimeScreen());
+				this.ui.setScreen(new ChooseWorkWeekScreen(this));
 				break;
 			case 2:
 				this.ui.setScreen(new EditRegisteredTimeScreen());

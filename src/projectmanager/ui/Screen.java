@@ -3,6 +3,8 @@ package projectmanager.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import projectmanager.app.ProjectManagerApp;
 
@@ -47,6 +49,49 @@ abstract class Screen {
 		}
 		return selection;
 	}
+	
+	protected int[] parseDateInput(String date, PrintWriter out) {
+		String[] dateSplit = date.split("\\");
+		if (dateSplit.length == 3) {
+			int year  = this.parseNumberInput(dateSplit[2], out);
+			int month = this.parseNumberInput(dateSplit[1], out) - 1;
+			int day   = this.parseNumberInput(dateSplit[0], out);
+			if (isValidDate(year, month, day))
+				return new int[] { year, month, day };
+		}
+		return new int[] { -1, -1, -1 };
+		
+	}
+	
+	private boolean isValidDate(int year, int month, int day) {
+		Calendar now = GregorianCalendar.getInstance();
+		if (year < 1900 || year > now.get(Calendar.YEAR)) return false;
+		if (month < 0 || month > 11) return false;
+		if (day < 0 || day > 31) return false;
+		return true;
+	}
+	
+	protected int[] parseTimeInput(String time, PrintWriter out) {
+		String[] timeSplit = time.split(":");
+		if (timeSplit.length == 2) {
+			int hour = this.parseNumberInput(timeSplit[0], out);
+			int min  = this.parseNumberInput(timeSplit[1], out);
+			if (isValidTime(hour, min))
+				return new int[] { hour, min };
+		} else if (time.equals("Now")) {
+			Calendar now = GregorianCalendar.getInstance();
+			return new int[] { now.get(Calendar.HOUR_OF_DAY), 
+							   now.get(Calendar.MINUTE) };
+		}
+		return new int[] { -1, -1 };
+	}
+	
+	private boolean isValidTime(int hour, int min) {
+		if (hour < 0 || hour > 24) return false;
+		if (min  < 0 || min  > 60) return false;
+		return true;
+	}
+	
 	protected String[] inputSequence(String[] inputs, String[] defaults) throws IOException {
 		if(inputs.length <= 0){ return new String[]{ null }; }
 		String[] in = new String[inputs.length];

@@ -55,7 +55,7 @@ public class Employee {
 //		this.activities.remove(activity);
 //	}
 	
-	public void addRegisteredWork(RegisteredWork regwork) throws RegisterWorkException {		
+	public void addRegisteredWork(RegisteredWork regwork) throws ProjectManagerException {		
 		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
 		
 		// TODO: Der mangler et statement for, hvis det er registreret arbejde uden dato (standard-dato)
