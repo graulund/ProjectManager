@@ -25,7 +25,6 @@ public class ChooseActivityScreen extends Screen {
 
 	@Override
 	void printMenu(PrintWriter out) {
-		System.out.println("Choose activity!");
 		StringBuilder s = new StringBuilder(this.formatTitle("Activities"));
 		Employee you = ProjectManagerApp.getEmployeeLoggedIn();
 		List<Activity> activities = you.getActivities(this.weekStart, this.weekEnd);
@@ -57,12 +56,22 @@ public class ChooseActivityScreen extends Screen {
 		}
 		if(this.choices.length > 0){
 			if(selection < this.choices.length && selection >= 0){
-				this.ui.setScreen(new EditRegisteredTimeScreen(this.activities[selection-1]));
+				this.ui.setScreen(this.getNextScreen(this.activities[selection-1]));
 			} else {
 				this.wrongInputMessage(out);
 			}
 		return false;
 		}
 		return false;
+	}
+	
+	private Screen getNextScreen(Activity activity) {
+		if (this.operation.equals("Register")) {
+			return new RegisterTimeScreen(activity);
+		} else if (this.operation.equals("Edit")) {
+			return new EditRegisteredTimeScreen(activity);
+		} else {
+			return new TimeMenuScreen();
+		}
 	}
 }
