@@ -3,19 +3,19 @@ package projectmanager.app;
 public class DelegatedWork extends Work {
 	private int halfHoursWorked;
 	
-	public DelegatedWork(int hours, Activity activity){
-		this(hours, activity, ProjectManagerApp.newSerialNumber());
+	public DelegatedWork(int halfhours, Activity activity){
+		this(halfhours, activity, ProjectManagerApp.newSerialNumber());
 	}
-	public DelegatedWork(int hours, Activity activity, int serialNumber){
+	public DelegatedWork(int halfhours, Activity activity, int serialNumber){
 		this.serialNumber = serialNumber;
-		this.halfHoursWorked = hours;
+		this.halfHoursWorked = halfhours;
 		this.activity = activity;
 	}
 	public int getHalfHoursWorked() {
 		return halfHoursWorked;
 	}
-	public void setHalfHoursWorked(int hours) {
-		this.halfHoursWorked = hours;
+	public void setHalfHoursWorked(int halfhours) {
+		this.halfHoursWorked = halfhours;
 	}
 	public Activity getActivity() {
 		return activity;

@@ -8,15 +8,7 @@ public class RegisteredWork extends Work {
 	private Calendar startTime;
 	private Calendar endTime;
 	private int halfHoursWorked;
-	
-	public RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar) {
-		this(activity, startCalendar, endCalendar, ProjectManagerApp.newSerialNumber());
-	}
-	
-	public RegisteredWork(Activity activity, int halfHoursWorked) {
-		this(activity, halfHoursWorked, ProjectManagerApp.newSerialNumber());
-	}
-	
+		
 	public RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar, int serialNumber){
 		this.serialNumber = serialNumber;
 		this.activity = activity;
@@ -25,6 +17,10 @@ public class RegisteredWork extends Work {
 		this.date = setDate(startCalendar);
 		this.halfHoursWorked = countHalfHoursWorked(startCalendar, endCalendar);
 		this.activity.addRegisteredWork(this);
+	}
+	
+	public RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar) {
+		this(activity, startCalendar, endCalendar, ProjectManagerApp.newSerialNumber());
 	}
 	
 	public RegisteredWork(Activity activity, int halfHoursWorked, int serialNumber){
@@ -41,6 +37,10 @@ public class RegisteredWork extends Work {
 		this.date = setDate(startCalendar);
 		this.halfHoursWorked = halfHoursWorked;
 		this.activity.addRegisteredWork(this);
+	}
+	
+	public RegisteredWork(Activity activity, int halfHoursWorked) {
+		this(activity, halfHoursWorked, ProjectManagerApp.newSerialNumber());
 	}
 	
 	/*
@@ -71,8 +71,13 @@ public class RegisteredWork extends Work {
         long diffHalfHours = (diff / (60 * 60 * 1000))*2;
         
         //return (int)diffHalfHours;
-        return getMostHours(diffHalfHours, startTime.get(Calendar.MINUTE), endTime.get(Calendar.MINUTE));
+        return getFairHours(diffHalfHours, startTime.get(Calendar.MINUTE), endTime.get(Calendar.MINUTE));
 	}
+	
+	public void updateHalfHoursWorked() {
+		this.halfHoursWorked = countHalfHoursWorked(this.startTime, this.endTime);
+	}
+	
 	/**
 	 * Method that corrects the half hours so that they are fair
 	 * @param diffHalfHours
@@ -80,17 +85,12 @@ public class RegisteredWork extends Work {
 	 * @param endMinutes
 	 * @return
 	 */
-	private int getMostHours(long diffHalfHours, int startMinutes, int endMinutes) {
-		int halfHours = (int)diffHalfHours;
-		if (startMinutes > 0 && startMinutes <= 15) {
-			halfHours+=2;
-		} else if (startMinutes >= 15 && startMinutes < 45) {
-			halfHours++;;
-		}
-		if (endMinutes >= 15 && endMinutes < 45) {
-			halfHours++;
-		} else if (endMinutes >= 45) {
-			halfHours+=2;
+	private int getFairHours(long diffHalfHours, int startMinutes, int endMinutes) {
+		int halfHours = (int) diffHalfHours;
+		if (startMinutes >= 15 && startMinutes < 45) {
+			if (endMinutes < 15 || endMinutes >= 45) halfHours++;
+		} else if (startMinutes < 15 || startMinutes >= 45) {
+			if (endMinutes >= 15 && endMinutes < 45) halfHours++;
 		}
 		return halfHours;
 	}
@@ -101,6 +101,16 @@ public class RegisteredWork extends Work {
 		} else {
 			return minuteInput;
 		}
+	}
+	
+	public void setStartTime(int hour, int minutes) {
+		this.startTime.set(Calendar.HOUR_OF_DAY, hour);
+		this.startTime.set(Calendar.MINUTE, minutes);
+	}
+	
+	public void setEndTime(int hour, int minutes) {
+		this.endTime.set(Calendar.HOUR_OF_DAY, hour);
+		this.endTime.set(Calendar.MINUTE, minutes);
 	}
 	
 	public Calendar getDate() {
@@ -129,4 +139,20 @@ public class RegisteredWork extends Work {
 	public int getSerialNumber() {
 		return this.serialNumber;
 	}
+	
+	public RegisteredWork clone() {
+		return new RegisteredWork(this.activity, this.getStartTime(), this.getEndTime());
+	}
+	
+//	public void setStartTime(int newHourStart, int newMinutesStart) {
+//		this.setTime(newHourStart, newMinutesStart, 
+//				     this.endTime.get(Calendar.HOUR_OF_DAY),
+//				     this.endTime.get(Calendar.MINUTE));
+//	}
+//	
+//	public void setEndTime(int newHourEnd, int newMinutesEnd) {
+//		this.setTime(this.startTime.get(Calendar.HOUR_OF_DAY), 
+//					 this.startTime.get(Calendar.MINUTE), 
+//					 newHourEnd, newMinutesEnd);
+//	}
 }

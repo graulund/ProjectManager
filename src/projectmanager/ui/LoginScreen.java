@@ -14,17 +14,18 @@ public class LoginScreen extends Screen {
 			"Please type your initials below to proceed:"
 		);
 	}
-
+	
 	@Override
 	boolean processInput(String input, PrintWriter out) {
 		//System.out.println("Trying to log in as user '" + input + "'");
 		if(ProjectManagerApp.employeeLogin(input)){
-			out.println("You are now logged in!");
+			//this.println(out, "You are now logged in!");
+			this.clearScreen(out);
+			this.ui.setScreen(new MainMenuScreen());
 		} else {
 			out.println("Could not log you in. Please restart the app to try again.");
+			System.exit(0);
 		}
-		this.clearScreen(out);
-		System.exit(0); //DEBUG
 		return false;
 	}
 }

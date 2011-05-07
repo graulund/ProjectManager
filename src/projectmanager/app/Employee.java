@@ -55,8 +55,10 @@ public class Employee {
 //		this.activities.remove(activity);
 //	}
 	
-	public void addRegisteredWork(RegisteredWork regwork) throws RegisterWorkException {		
+	public void addRegisteredWork(RegisteredWork regwork) throws ProjectManagerException {		
 		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
+		
+		// TODO: Der mangler et statement for, hvis det er registreret arbejde uden dato (standard-dato)
 		
 		// Checks if the entered time is valid for registered work
 		if (!isValidRegwork(regwork)) {
@@ -113,10 +115,12 @@ public class Employee {
 		}
 		
 		for (RegisteredWork regworkCompare: workweek.getRegisteredWork(regwork.getStartTime())) {
-			if (regwork.getStartTime().before(regworkCompare.getEndTime()) &&
-				regwork.getEndTime().after(regworkCompare.getStartTime())) {
-				return true;
-			} 
+			if (regwork != regworkCompare) {
+				if (regwork.getStartTime().before(regworkCompare.getEndTime()) &&
+						regwork.getEndTime().after(regworkCompare.getStartTime())) {
+						return true;
+					} 
+			}
 		}
 		return false;
 	}
@@ -138,6 +142,10 @@ public class Employee {
 			}
 		}
 		return null;
+	}
+	
+	public void addWorkWeek(WorkWeek workweek){
+		this.workWeeks.add(workweek);
 	}
 
 	public void addDelegatedWork(int weekFrom, int weekTo, int yearFrom, int yearTo, Activity activity, int hours) {
@@ -215,5 +223,59 @@ public class Employee {
 
 	public List<Project> getProjectLeader() {
 		return this.leaderOfProjects;
+	}
+	
+
+	public void setRegisteredWork(RegisteredWork regwork, int newHourStart,
+								  int newMinutesStart, int newHourEnd, int newMinutesEnd) throws ProjectManagerException {
+		// TODO: Test hvis den nye tid kollidere med en anden registreret tid.
+		//		 Derved kast exception.
+		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), 
+				 							 regwork.getDate().get(Calendar.YEAR));
+		
+		Calendar oldStart = regwork.getStartTime();
+		Calendar oldEnd	  = regwork.getEndTime();
+		regwork.setStartTime(newHourStart, newMinutesStart);
+		regwork.setEndTime(newHourEnd, newMinutesEnd);
+		if (!isValidRegwork(regwork)) {
+			regwork.setStartTime(oldStart.get(Calendar.HOUR_OF_DAY), oldStart.get(Calendar.MINUTE));
+			regwork.setEndTime(oldEnd.get(Calendar.HOUR_OF_DAY), oldEnd.get(Calendar.MINUTE));
+			throw new RegisterWorkException("The starting time is after the ending time.");
+			
+		} else if (timeAlreadyRegistered(regwork, workWeek)) {
+			throw new RegisterWorkException("You have already registered a work at the given time");
+		
+		// new values are valid
+		} else {
+			Calendar startTime = regwork.getStartTime();
+			Calendar endTime   = regwork.getEndTime();
+			startTime.set(Calendar.HOUR_OF_DAY, newHourStart);
+			startTime.set(Calendar.MINUTE, newMinutesStart);
+			endTime.set(Calendar.HOUR_OF_DAY, newHourEnd);
+			endTime.set(Calendar.MINUTE, newMinutesEnd);
+			regwork.updateHalfHoursWorked();
+		}
+	}
+	
+	public void setRegisteredWorkStart(RegisteredWork regwork, int newHourStart, int newMinutesStart) throws ProjectManagerException {
+		Calendar endTime = regwork.getEndTime();
+		this.setRegisteredWork(regwork, 
+							   newHourStart, 
+							   newMinutesStart, 
+							   endTime.get(Calendar.HOUR_OF_DAY), 
+							   endTime.get(Calendar.MINUTE));
+	}
+	
+	public void setRegisteredWorkEnd(RegisteredWork regwork, int newHourEnd, int newMinutesEnd) throws ProjectManagerException {
+		Calendar startTime = regwork.getStartTime();
+		this.setRegisteredWork(regwork, 
+							   startTime.get(Calendar.HOUR_OF_DAY),
+							   startTime.get(Calendar.MINUTE), 
+							   newHourEnd, 
+							   newMinutesEnd);
+	}
+
+	public List<Activity> getActivities(int weekStart, int weekEnd) {
+		return new ArrayList<Activity>();
 	}
 }

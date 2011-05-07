@@ -37,6 +37,21 @@ public class Activity {
 		this.reg_works.add(rw);
 	}
 	
+	public void addDelegatedWork(DelegatedWork dw) {
+		this.del_works.add(dw);
+	}
+	
+	public void addWork(Work w){
+		if(w != null){
+			if(w.getClass() == RegisteredWork.class){
+				this.addRegisteredWork((RegisteredWork) w);
+			}
+			if(w.getClass() == DelegatedWork.class){
+				this.addDelegatedWork((DelegatedWork) w);
+			}
+		}
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -55,6 +70,14 @@ public class Activity {
 		this.end = new GregorianCalendar();
 		this.end.set(Calendar.YEAR, year);
 		this.end.set(Calendar.WEEK_OF_YEAR, week);
+	}
+
+	public void setStart(Calendar start) {
+		this.start = start;
+	}
+
+	public void setEnd(Calendar end) {
+		this.end = end;
 	}
 
 	public Calendar getStart() {
