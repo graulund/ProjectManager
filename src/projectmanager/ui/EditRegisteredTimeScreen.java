@@ -1,8 +1,15 @@
 package projectmanager.ui;
 import java.io.PrintWriter;
 
+import projectmanager.app.Activity;
+
 
 public class EditRegisteredTimeScreen extends Screen {
+	Activity activity;
+	
+	public EditRegisteredTimeScreen(Activity activity) {
+		this.activity = activity;
+	}
 
 	@Override
 	void printMenu(PrintWriter out) {

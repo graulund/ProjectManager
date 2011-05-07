@@ -38,10 +38,10 @@ public class TimeRegistration {
 	
 	/**
 	 * Main scenario: tester, hvor en medarbejder succesfuldt registrerer sin tid
-	 * @throws RegisterWorkException 
+	 * @throws ProjectManagerException 
 	 */
 	@Test
-	public void registerTime() throws RegisterWorkException {	
+	public void registerTime() throws ProjectManagerException {	
 		// medarbejder logger ind med initialer, der findes i databasen
 		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
@@ -71,7 +71,7 @@ public class TimeRegistration {
 		
 		// tiden registreres
 		RegisteredWork regWork = new RegisteredWork(chosenActivity, startCalendar, endCalendar);
-		ProjectManagerApp.registerWork(employee, regWork);
+		ProjectManagerApp.registerWork(regWork);
 		
 		// tester at arbejdet er registreret korrekt
 		RegisteredWork regworkTest = employee.getWorkWeek(startCalendar.get(Calendar.WEEK_OF_YEAR), 2011).getRegisteredWork(chosenActivity, startCalendar);
@@ -86,10 +86,10 @@ public class TimeRegistration {
 	/**
 	 * Tester, hvor en medarbejder registrerer
 	 * 2 forskellige tider inden for samme uge
-	 * @throws RegisterWorkException 
+	 * @throws ProjectManagerException 
 	 */
 	@Test
-	public void testTwoRegisteredWorkInOneWeek() throws RegisterWorkException {		
+	public void testTwoRegisteredWorkInOneWeek() throws ProjectManagerException {		
 		// medarbejder logger ind med initialer, der findes i databasen
 		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
@@ -119,7 +119,7 @@ public class TimeRegistration {
 		
 		// tiden registreres
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
-		ProjectManagerApp.registerWork(employee, regWork1);
+		ProjectManagerApp.registerWork(regWork1);
 		
 		// Senere... indtastes dette
 		String date2 = "02.01.2011";
@@ -147,7 +147,7 @@ public class TimeRegistration {
 		
 		// tiden registreres
 		RegisteredWork regWork2 = new RegisteredWork(chosenActivity, startCalendar2, endCalendar2);
-		ProjectManagerApp.registerWork(employee, regWork2);
+		ProjectManagerApp.registerWork(regWork2);
 		
 		// test if the two registered weeks are in the same workweek
 		assertEquals(startCalendar1.get(Calendar.WEEK_OF_YEAR), startCalendar2.get(Calendar.WEEK_OF_YEAR));
@@ -157,10 +157,10 @@ public class TimeRegistration {
 	/**
 	 * Tester, hvor en medarbejder registrerer en tid, 
 	 * der overlapper med en tidligere registreret tid
-	 * @throws RegisterWorkException 
+	 * @throws ProjectManagerException 
 	 */
 	@Test
-	public void testDublicationOfRegWork() throws RegisterWorkException {
+	public void testDublicationOfRegWork() throws ProjectManagerException {
 		// medarbejder logger ind med initialer, der findes i databasen
 		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
@@ -190,7 +190,7 @@ public class TimeRegistration {
 		
 		// tiden registreres
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
-		ProjectManagerApp.registerWork(employee, regWork1);
+		ProjectManagerApp.registerWork(regWork1);
 		
 		// Senere...
 		// medarbejder indtaster følgende tid (som overlappe ovenstående)
@@ -221,7 +221,7 @@ public class TimeRegistration {
 		RegisteredWork regWork2 = new RegisteredWork(chosenActivity, startCalendar2, endCalendar2);
 		
 		try {
-			ProjectManagerApp.registerWork(employee, regWork2);
+			ProjectManagerApp.registerWork(regWork2);
 			fail("A AlreadyRegisteredWorkException should have been thrown");			
 		} catch (RegisterWorkException e) {
 			// Step 4
@@ -231,12 +231,11 @@ public class TimeRegistration {
 	
 	/**
 	 * Tester scenariet, hvor en medarbejder indtaster gyldig dato/tid, som er indenfor aktivitetens tid
-	 * @throws RegisterWorkException 
-	 * @throws CreatingActivityException 
 	 * @throws OperationNotAllowedException 
+	 * @throws ProjectManagerException 
 	 */
 	@Test
-	public void testValidDateTime() throws RegisterWorkException, OperationNotAllowedException, CreatingActivityException {
+	public void testValidDateTime() throws OperationNotAllowedException, ProjectManagerException {
 		// medarbejder logger ind med initialer, der findes i databasen
 		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
@@ -280,7 +279,7 @@ public class TimeRegistration {
 		System.out.println(startCalendar1.get(Calendar.YEAR));
 		// tiden registreres
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
-		ProjectManagerApp.registerWork(employee, regWork1);
+		ProjectManagerApp.registerWork(regWork1);
 	}
 	
 //	/**

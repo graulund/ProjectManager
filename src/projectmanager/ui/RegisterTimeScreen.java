@@ -46,10 +46,26 @@ public class RegisterTimeScreen extends Screen {
 			);
 			System.out.println(Arrays.toString(in));
 		} catch (IOException e) {}
-		RegisteredWork regwork = createRegWork(in[0], in[1], in[2], out);
-		registerWork(regwork, out);
+		if (this.isValidWorkInput(in[0], in[1], in[2], out)) {
+			RegisteredWork regwork = createRegWork(in[0], in[1], in[2], out);
+			registerWork(regwork, out);
+		} 		
 		this.ui.setScreen(new TimeMenuScreen());
 		return false;
+	}
+	
+	private boolean isValidWorkInput(String dateIn, String startTime, String endTime, PrintWriter out) {
+		int[] date  = this.parseDateInput(dateIn, out);
+		int[] start = this.parseTimeInput(startTime, out);
+		int[] end   = this.parseTimeInput(endTime, out);
+		
+		if (date[0] == -1 || start[0] == -1 || end[0] == -1)
+			return false;
+		else {
+			this.println(out, this.wrong);
+			return true;
+		}
+			
 	}
 	
 	private RegisteredWork createRegWork(String dateIn, String startTime, String endTime, PrintWriter out) {

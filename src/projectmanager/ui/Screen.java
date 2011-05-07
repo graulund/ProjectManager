@@ -51,7 +51,7 @@ abstract class Screen {
 	}
 	
 	protected int[] parseDateInput(String date, PrintWriter out) {
-		String[] dateSplit = date.split("\\");
+		String[] dateSplit = date.split("\\.");
 		if (dateSplit.length == 3) {
 			int year  = this.parseNumberInput(dateSplit[2], out);
 			int month = this.parseNumberInput(dateSplit[1], out) - 1;

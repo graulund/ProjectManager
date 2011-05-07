@@ -274,4 +274,8 @@ public class Employee {
 							   newHourEnd, 
 							   newMinutesEnd);
 	}
+
+	public List<Activity> getActivities(int weekStart, int weekEnd) {
+		return new ArrayList<Activity>();
+	}
 }
