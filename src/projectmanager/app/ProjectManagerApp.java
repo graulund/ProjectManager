@@ -137,13 +137,13 @@ public class ProjectManagerApp {
 	}
 	
 	/**
-	 * 
+	 * Creates a calendar object from the given date informations.
 	 * @param year
 	 * @param month
 	 * @param day
 	 * @param hour
 	 * @param minutes
-	 * @return
+	 * @return Calendar object
 	 */
 	public static Calendar createCalendar(int year, int month,
 			int day, int hour, int minutes) {

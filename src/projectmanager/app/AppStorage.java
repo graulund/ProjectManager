@@ -19,19 +19,52 @@ import projectmanager.app.StoredData.StoredProject;
 import projectmanager.app.StoredData.StoredWork;
 import projectmanager.app.StoredData.StoredWorkWeek;
 
+/**
+ * Class that takes care of permanent storage for the app.
+ */
 public class AppStorage {
+	/**
+	 * Default filename to store data in.
+	 */
 	public static final String default_filename = "pmapp.data";
+	
+	/**
+	 * Current filename being used to store data in.
+	 */
 	private String filename;
+	
+	/**
+	 * Date format used in storage.
+	 */
 	private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	
+	/**
+	 * Create a new storage object with the default filename.
+	 */
 	public AppStorage(){
 		this(default_filename);
 	}
+	
+	/**
+	 * Create a new storage object with the given filename.
+	 * @param filename Name (and path) of file to store in
+	 */
 	public AppStorage(String filename){
 		this.filename = filename;
 	}
+	
+	/**
+	 * Get current filename being used to store data in.
+	 * @return String
+	 */
 	public String getFilename(){
 		return filename;
 	}
+	
+	/**
+	 * Stores the current state in a StoredData object.
+	 * @return StoredData object with the current state
+	 */
 	public StoredData storeCurrentState(){
 		StoredData data = new StoredData();
 		// Save information for:
@@ -94,10 +127,19 @@ public class AppStorage {
 		data.works     = works.toArray(new StoredWork[works.size()]);
 		return data;
 	}
+	
+	/**
+	 * Saves the current state to permanent storage.
+	 */
 	public void saveCurrentState(){
 		StoredData data = this.storeCurrentState();
 		this.saveState(data);
 	}
+	
+	/**
+	 * Saves the given StoredData object to permanent storage.
+	 * @param data StoredData object
+	 */
 	public void saveState(StoredData data) {
 		try {
 			ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(this.filename));
@@ -108,6 +150,11 @@ public class AppStorage {
 			System.out.println("Error: Could not save file\n" + e);
 		}
 	}
+	
+	/**
+	 * Loads the stored data from permanent storage into a StoredData object.
+	 * @return StoredData object
+	 */
 	public StoredData loadState(){
 		try {
 			ObjectInputStream objIn   = new ObjectInputStream(new FileInputStream(this.filename));
@@ -119,12 +166,21 @@ public class AppStorage {
 		}
 		return null;
 	}
+	
+	/**
+	 * Loads the stored data from permanent storage and restores the current state.
+	 */
 	public void restoreState(){
 		StoredData data = this.loadState();
 		if(data != null){
 			this.restoreState(data);
 		}
 	}
+	
+	/**
+	 * Restores the current from the given StoredData object.
+	 * @param data StoredData object
+	 */
 	public void restoreState(StoredData data){
 		// Restoring information for:
 		// --> Company
@@ -191,9 +247,20 @@ public class AppStorage {
 		c.setProjects(projects);
 		c.setEmployees(employees);
 	}
+	
+	/**
+	 * Prints the given StoredData object in human-readable format to stdout.
+	 * @param data StoredData object
+	 */
 	public void printState(StoredData data){
 		System.out.println(this.stateString(data));
 	}
+	
+	/**
+	 * Formats the given StoredData object into a human-readable string.
+	 * @param data StoredData object
+	 * @return Human-readable string with the data in the stored object
+	 */
 	public String stateString(StoredData data){
 		StringBuilder s = new StringBuilder("{ STORED DATA OBJECT\n");
 		s.append("-- Current serial number: " + data.currentSerialNumber + "\n");
@@ -247,17 +314,20 @@ public class AppStorage {
 		s.append("}");
 		return s.toString();
 	}
-	public char[][] getEmployeeNames(List<Employee> employees){
+	
+	// UTILITY METHODS
+	
+	private char[][] getEmployeeNames(List<Employee> employees){
 		ArrayList<char[]> names = new ArrayList<char[]>();
 		for(Employee e: employees){
 			names.add(e.getUsername().toCharArray());
 		}
 		return names.toArray(new char[names.size()][]);
 	}
-	public boolean hasWorkId(int workId, ArrayList<StoredData.StoredWork> storedworks){
+	private boolean hasWorkId(int workId, ArrayList<StoredData.StoredWork> storedworks){
 		return this.hasWorkId(workId, storedworks.toArray(new StoredData.StoredWork[storedworks.size()]));
 	}
-	public boolean hasWorkId(int workId, StoredData.StoredWork[] storedworks){
+	private boolean hasWorkId(int workId, StoredData.StoredWork[] storedworks){
 		for(StoredData.StoredWork work: storedworks){
 			if(work.workId == workId){
 				return true;
@@ -265,7 +335,7 @@ public class AppStorage {
 		}
 		return false;
 	}
-	public int[] getWorkIds(List<Work> works, StoredData data, ArrayList<StoredData.StoredWork> storedworks){
+	private int[] getWorkIds(List<Work> works, StoredData data, ArrayList<StoredData.StoredWork> storedworks){
 		ArrayList<Integer> workIds = new ArrayList<Integer>();
 		for(Work work: works){
 			if(work != null){
@@ -290,14 +360,14 @@ public class AppStorage {
 		}
 		return ids;
 	}
-	public int[] getWorkIds(List<Work> works){
+	/*private int[] getWorkIds(List<Work> works){
 		return this.getWorkIds(works, null, null);
-	}
-	public Work getWorkObject(int serialNumber, List<Work> works){
+	}*/
+	private Work getWorkObject(int serialNumber, List<Work> works){
 		return this.getWorkObject(serialNumber, works, null);
 	}
 	
-	public Work getWorkObject(int serialNumber, List<Work> works, Work insertObject){
+	private Work getWorkObject(int serialNumber, List<Work> works, Work insertObject){
 		for(Work work: works){
 			if(work.serialNumber == serialNumber){
 				return work;
@@ -309,7 +379,7 @@ public class AppStorage {
 		return insertObject;
 	}
 	
-	public StoredData.StoredWork getStoredWorkObject(int workId, StoredData.StoredWork[] storedworks){
+	private StoredData.StoredWork getStoredWorkObject(int workId, StoredData.StoredWork[] storedworks){
 		for(StoredData.StoredWork work: storedworks){
 			if(work.workId == workId){
 				return work;
@@ -318,7 +388,7 @@ public class AppStorage {
 		return null;
 	}
 	
-	public Work transformStoredWorkObject(StoredData.StoredWork w, Activity activity){
+	private Work transformStoredWorkObject(StoredData.StoredWork w, Activity activity){
 		if(w.halfHours > 0){
 			// Delegated
 			return new DelegatedWork(w.halfHours, activity, w.workId);
@@ -333,7 +403,7 @@ public class AppStorage {
 		}
 	}
 	
-	public Employee getEmployeeObject(String username, List<Employee> employees){
+	private Employee getEmployeeObject(String username, List<Employee> employees){
 		for(Employee employee: employees){
 			if(employee.getUsername().equals(username)){
 				return employee;
@@ -342,7 +412,7 @@ public class AppStorage {
 		return null;
 	}
 	
-	public StoredData.StoredEmployee getStoredEmployeeObject(String username, StoredData.StoredEmployee[] storedemployees){
+	private StoredData.StoredEmployee getStoredEmployeeObject(String username, StoredData.StoredEmployee[] storedemployees){
 		for(StoredData.StoredEmployee employee: storedemployees){
 			if(new String(employee.username).equals(username)){
 				return employee;
@@ -351,13 +421,13 @@ public class AppStorage {
 		return null;
 	}
 	
-	public char[] formatCalendarString(Calendar c){
+	private char[] formatCalendarString(Calendar c){
 		if(c != null){
 			return this.sdf.format(c.getTime()).toCharArray();
 		}
 		return new char[]{};
 	}
-	public Calendar parseCalendarString(String s){
+	private Calendar parseCalendarString(String s){
 		GregorianCalendar c = new GregorianCalendar();
 		try {
 			c.setTime(this.sdf.parse(s));
@@ -366,7 +436,7 @@ public class AppStorage {
 		}
 		return c;
 	}
-	public String[] parseStringArray(char[][] array){
+	private String[] parseStringArray(char[][] array){
 		String[] s = new String[array.length];
 		for(int i = 0; i < array.length; i++){
 			s[i] = new String(array[i]);
