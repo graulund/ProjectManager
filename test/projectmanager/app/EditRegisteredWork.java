@@ -31,7 +31,8 @@ public class EditRegisteredWork {
 		
 		ProjectManagerApp.employeeLogin("hlb");
 		project.addActivity(activity);
-		activity.addEmployee(employee);
+		//activity.addEmployee(employee);
+		project.addEmployee(employee, activity);
 		
 		// adding registered work
 		// regwork 1: week 25, 5 hours = 10 halfhours

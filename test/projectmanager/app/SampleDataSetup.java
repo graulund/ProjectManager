@@ -57,7 +57,8 @@ public class SampleDataSetup {
 					Employee randomEmployee = company.getEmployees().get(rand);
 					
 					// Add 3 random employees to each activity
-					latestActivity.addEmployee(randomEmployee);
+					//latestActivity.addEmployee(randomEmployee);
+					currentProject.addEmployee(randomEmployee, latestActivity);
 					
 					// Work weeks
 					randomEmployee.addWorkWeek(new WorkWeek(25+i, 2011));
