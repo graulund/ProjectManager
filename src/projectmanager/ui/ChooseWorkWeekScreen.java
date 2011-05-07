@@ -7,6 +7,7 @@ import java.util.Arrays;
 public class ChooseWorkWeekScreen extends Screen {
 	String operation;
 	int startWeek, endWeek;
+	int startYear, endYear;
 	
 	public ChooseWorkWeekScreen(String operation) {
 		this.operation = operation;
@@ -31,14 +32,24 @@ public class ChooseWorkWeekScreen extends Screen {
 					}
 				);
 		} catch (IOException e) {}
-		
-		startWeek = this.parseNumberInput(in[0], out);
-		if (in[1].equals("Only 1 week")) endWeek = startWeek;
-		else endWeek   = this.parseNumberInput(in[1], out);
-	}
-
-	@Override
-	boolean processInput(String input, PrintWriter out) {
+		Arrays.toString(in);
+		String[] startSplit = in[0].split("/");
+		String[] endSplit	= in[1].split("/");
+		if (startSplit.length == 2) {
+			startWeek = this.parseNumberInput(startSplit[0], out);
+			startYear = this.parseNumberInput(startSplit[1], out);
+			if (endSplit.length == 2) {
+				endWeek = this.parseNumberInput(endSplit[0], out);
+				endYear = this.parseNumberInput(endSplit[1], out);
+			} else if (endSplit[0].equals("Only 1 week")) {
+				endWeek = startWeek;
+				endYear = startYear;
+			} else {
+				this.println(out, this.wrong);
+				this.clearScreen(out);
+				this.ui.setScreen(new TimeMenuScreen());
+			}
+		} 
 		if (this.isValidWorkWeeks(startWeek, endWeek)) {
 			this.clearScreen(out);
 			this.ui.setScreen(this.getNextScreen());
@@ -47,16 +58,21 @@ public class ChooseWorkWeekScreen extends Screen {
 			this.println(out, this.wrong);
 			this.ui.setScreen(new TimeMenuScreen());
 		}
+	}
+
+	@Override
+	boolean processInput(String input, PrintWriter out) {
+		
 		return false;
 	}
 	
 	private Screen getNextScreen() {
 		if (this.operation.equals("Register")) {
-			return new ChooseActivityScreen(this.operation, startWeek, endWeek);
+			return new ChooseActivityScreen(this.operation, startWeek, startYear, endWeek, endYear);
 		} else if (this.operation.equals("SeeTime")) {
 			return new SeeYourTimeScreen(startWeek, endWeek);
 		} else if (this.operation.equals("Edit")) {
-			return new ChooseActivityScreen(this.operation, startWeek, endWeek);
+			return new ChooseActivityScreen(this.operation, startWeek, startYear, endWeek, endYear);
 		} else {
 			return new TimeMenuScreen();
 		}

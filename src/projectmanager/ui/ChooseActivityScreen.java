@@ -14,20 +14,22 @@ public class ChooseActivityScreen extends Screen {
 	private Activity[] activities;
 	
 	String operation;
-	int weekStart;
-	int weekEnd;
+	int weekStart, weekEnd;
+	int yearStart, yearEnd;
 	
-	public ChooseActivityScreen(String operation, int weekStart, int weekEnd) {
+	public ChooseActivityScreen(String operation, int weekStart, int yearStart, int weekEnd, int yearEnd) {
 		this.operation  = operation;
 		this.weekStart  = weekStart;
 		this.weekEnd    = weekEnd;
+		this.yearStart  = yearStart;
+		this.yearEnd    = yearEnd;
 	}
 
 	@Override
 	void printMenu(PrintWriter out) {
 		StringBuilder s = new StringBuilder(this.formatTitle("Activities"));
 		Employee you = ProjectManagerApp.getEmployeeLoggedIn();
-		List<Activity> activities = you.getActivities(this.weekStart, this.weekEnd);
+		List<Activity> activities = you.getActivities(this.weekStart, this.yearStart, this.weekEnd, this.yearEnd);
 		int size = activities.size();
 		if (size > 0) {
 			s.append("You are working on following activies: \n");

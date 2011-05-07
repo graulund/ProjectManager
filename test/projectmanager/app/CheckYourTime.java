@@ -34,8 +34,10 @@ public class CheckYourTime {
 		currentProject.getActivities().add(a1);
 		currentProject.getActivities().add(a2);
 		
-		a1.addEmployee(employee);
-		a2.addEmployee(employee);
+		//a1.addEmployee(employee);
+		//a2.addEmployee(employee);
+		currentProject.addEmployee(employee, a1);
+		currentProject.addEmployee(employee, a2);
 		
 		employee.addDelegatedWork(25, 2011, a1, 40);
 		employee.addDelegatedWork(25, 2011, a2, 30);

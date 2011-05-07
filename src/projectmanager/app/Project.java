@@ -79,8 +79,9 @@ public class Project {
 		return null;
 	}
 	
-	public void addEmployee(Employee employee) {
+	public void addEmployee(Employee employee, Activity activity) {
 		this.employees.add(employee);
+		activity.addEmployee(employee);
 	}
 	public void removeEmployee(Employee employee) {
 		this.employees.remove(employee);

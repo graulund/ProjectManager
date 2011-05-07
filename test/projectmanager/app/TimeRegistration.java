@@ -31,7 +31,8 @@ public class TimeRegistration {
 		
 		ProjectManagerApp.employeeLogin("hlb");
 		project.addActivity(activity);
-		activity.addEmployee(employee);
+		//activity.addEmployee(employee);
+		project.addEmployee(employee, activity);
 		
 		chosenActivity = activity;
 	}
@@ -245,7 +246,8 @@ public class TimeRegistration {
 		activity2.setEnd(4, 2011);
 		company.addProject(project);
 		project.addActivity(activity2);
-		activity2.addEmployee(employee);
+		//activity2.addEmployee(employee);
+		project.addEmployee(employee, activity2);
 		
 		// medarbejder v¾lger denne aktivitet, som han er tilmeldt
 		chosenActivity = activity2;
