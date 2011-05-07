@@ -25,6 +25,7 @@ public class ChooseActivityScreen extends Screen {
 
 	@Override
 	void printMenu(PrintWriter out) {
+		System.out.println("Choose activity!");
 		StringBuilder s = new StringBuilder(this.formatTitle("Activities"));
 		Employee you = ProjectManagerApp.getEmployeeLoggedIn();
 		List<Activity> activities = you.getActivities(this.weekStart, this.weekEnd);
@@ -38,10 +39,11 @@ public class ChooseActivityScreen extends Screen {
 				this.choices[i]    = activity.getName();
 				this.activities[i] = activity;
 			}
+			s.append(this.menuString(this.choices, "Back"));
 		} else {
-			s.append("You aren't working on any activities in the given week(s)");
+			s.append("You aren't working on any activities in the given week(s) \n");
+			s.append(this.menuString(new String[] { "-1" }, "Back"));
 		}
-		s.append(this.menuString(this.choices, "Back"));
 		this.println(out, s.toString());
 	}
 
