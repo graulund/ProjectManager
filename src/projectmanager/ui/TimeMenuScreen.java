@@ -2,6 +2,8 @@ package projectmanager.ui;
 
 import java.io.PrintWriter;
 
+import projectmanager.app.Activity;
+
 public class TimeMenuScreen extends Screen {
 	
 
@@ -22,13 +24,14 @@ public class TimeMenuScreen extends Screen {
 				this.ui.setScreen(new MainMenuScreen());
 				break;
 			case 1:
-				this.ui.setScreen(new ChooseWorkWeekScreen(this));
+				//this.ui.setScreen(new RegisterTimeScreen(new Activity("lulz")));
+				this.ui.setScreen(new ChooseWorkWeekScreen("Register"));
 				break;
 			case 2:
-				this.ui.setScreen(new EditRegisteredTimeScreen());
+				this.ui.setScreen(new ChooseWorkWeekScreen("Edit"));
 				break;
 			case 3:
-				this.ui.setScreen(new SeeYourTimeScreen());
+				this.ui.setScreen(new ChooseWorkWeekScreen("SeeTime"));
 				break;
 		}
 		return false;

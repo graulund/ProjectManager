@@ -10,6 +10,12 @@ import projectmanager.app.ProjectManagerApp;
 public class SeeYourTimeScreen extends Screen {
 	private String[] choices;
 	private int[] numbers;
+	int startWeek, endWeek;
+
+	public SeeYourTimeScreen(int startWeek, int endWeek) {
+		this.startWeek = startWeek;
+		this.endWeek   = endWeek;
+	}
 
 	@Override
 	void printMenu(PrintWriter out) {

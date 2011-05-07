@@ -24,12 +24,6 @@ public class RegisterTimeScreen extends Screen {
 			this.formatTitle("Register Time") +
 			"Date format: DD/MM/YYYY. Time format: HH:MM"
 		);
-		
-	}
-
-	@Override
-	boolean processInput(String input, PrintWriter out) {
-		this.clearScreen(out);
 		String[] in = { "-1" };
 		try {
 			 in = this.inputSequence(
@@ -44,12 +38,48 @@ public class RegisterTimeScreen extends Screen {
 					"Now"
 				}
 			);
-			System.out.println(Arrays.toString(in));
 		} catch (IOException e) {}
-		RegisteredWork regwork = createRegWork(in[0], in[1], in[2], out);
-		registerWork(regwork, out);
+		if (this.isValidWorkInput(in[0], in[1], in[2], out)) {
+			RegisteredWork regwork = createRegWork(in[0], in[1], in[2], out);
+			registerWork(regwork, out);
+			String endTime = in[2];
+			if (endTime.equals("Now")) {
+				endTime = ""
+					+ regwork.getEndTime().get(Calendar.HOUR_OF_DAY)+":"
+					+ regwork.getEndTime().get(Calendar.MINUTE);
+			}
+			this.println(out, 
+					"You've registered work the "+in[0]
+				  + " from "+in[1]+" to "+endTime
+				  + " at the activity \""+regwork.getActivity().getName()+"\".");
+			
+		}
+		this.clearScreen(out);
 		this.ui.setScreen(new TimeMenuScreen());
+	}
+
+	@Override
+	boolean processInput(String input, PrintWriter out) {
+		int selection = this.parseNumberInput(input, out);
+		this.clearScreen(out);
+		if (selection == 0) {
+			this.ui.setScreen(new TimeMenuScreen());
+		}
 		return false;
+	}
+	
+	private boolean isValidWorkInput(String dateIn, String startTime, String endTime, PrintWriter out) {
+		int[] date  = this.parseDateInput(dateIn, out);
+		int[] start = this.parseTimeInput(startTime, out);
+		int[] end   = this.parseTimeInput(endTime, out);
+		
+		if (date[0] == -1 || start[0] == -1 || end[0] == -1) {
+			this.println(out, this.wrong);
+			return false;
+		} else {
+			return true;
+		}
+			
 	}
 	
 	private RegisteredWork createRegWork(String dateIn, String startTime, String endTime, PrintWriter out) {
