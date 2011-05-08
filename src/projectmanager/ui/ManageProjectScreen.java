@@ -29,7 +29,7 @@ public class ManageProjectScreen extends Screen {
 		String printReport = "Print report";
 		List<Activity> activities = project.getActivities();
 		this.noOfActivities = activities.size();
-		
+
 		if(noOfActivities > 0){
 			s.append("Following activities are registered under this project:\n");
 			this.choices = new String[noOfActivities + 3];

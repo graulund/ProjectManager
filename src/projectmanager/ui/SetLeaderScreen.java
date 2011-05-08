@@ -31,18 +31,21 @@ public class SetLeaderScreen extends Screen {
 		// Set leader
 		Employee employee = ProjectManagerApp.getCompany().employeeByUsername(in[0]);
 		if (employee == null) {
-			this.wrongInputMessage(out);
+			this.println(out, "No such employee.\n");
+			
+			this.ui.setScreen(new ManageProjectScreen(this.project.getSerialNumber()));
+			try {
+				this.ui.printMenu(out);
+			} catch (IOException e) {}
 		} else {
 			project.addLeader(employee);
 			this.println(out, employee.getUsername()+" is now the leader of "+project.getName()+".\n");
-		}
-
-		// Go back
-		this.ui.setScreen(new ProjectMenuScreen());
-		try {
-			this.ui.printMenu(out);
-		} catch (IOException e) {}
-
+			
+			this.ui.setScreen(new ProjectMenuScreen());
+			try {
+				this.ui.printMenu(out);
+			} catch (IOException e) {}
+		}	
 	}
 
 	@Override
