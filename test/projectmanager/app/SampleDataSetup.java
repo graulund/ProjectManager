@@ -39,7 +39,7 @@ public class SampleDataSetup {
 		}
 		
 		// Add project leaders to all 5 projects except the last one
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 5; i++) {
 			Employee employee = company.getEmployees().get(i);
 			company.getProjects().get(i).addLeader(employee);
 		}

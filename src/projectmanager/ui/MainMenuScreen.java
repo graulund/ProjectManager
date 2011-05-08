@@ -1,8 +1,11 @@
 package projectmanager.ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.io.PrintWriter;
 
 import projectmanager.app.Employee;
+import projectmanager.app.Project;
 import projectmanager.app.ProjectManagerApp;
 
 public class MainMenuScreen extends Screen {
@@ -37,7 +40,11 @@ public class MainMenuScreen extends Screen {
 				this.ui.setScreen(new CreateEmployeeScreen());
 				break;
 			case 4:
-				// TODO: print company report
+				// print company report
+				List<Project> projects = ProjectManagerApp.getCompany().getProjects();
+				for (Project p: projects) {
+					this.println(out, p.getReport());
+				}
 				break;
 			default:
 				this.wrongInputMessage(out);
