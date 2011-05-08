@@ -290,7 +290,14 @@ public class Employee {
 			if (workweek != null) {
 				List<DelegatedWork> delworks = workweek.getDelegatedWork();
 				for (DelegatedWork dw: delworks) {
-					activities.add(dw.getActivity());
+					if (activities.size() > 0) {
+						for (Activity a: activities) {
+							if (!a.equals(dw.getActivity()))
+								activities.add(dw.getActivity());
+						}
+					} else {
+						activities.add(dw.getActivity());
+					}
 				}
 			}
 			cal.add(Calendar.WEEK_OF_YEAR, 1);

@@ -29,8 +29,8 @@ public class ChooseWorkWeekScreen extends Screen {
 						"Ending week"
 					}, 
 					new String[]{
-						null,
-						"Only 1 week"
+						"Now",
+						"Next 2 weeks"
 					}
 				);
 		} catch (IOException e) {}
@@ -39,6 +39,10 @@ public class ChooseWorkWeekScreen extends Screen {
 		if (startSplit.length == 2) {
 			startWeek = this.parseNumberInput(startSplit[0], out);
 			startYear = this.parseNumberInput(startSplit[1], out);
+		} else if (startSplit[0].toLowerCase().equals("now")) {
+			Calendar now = GregorianCalendar.getInstance();
+			startWeek = now.get(Calendar.WEEK_OF_YEAR);
+			startYear = now.get(Calendar.YEAR);
 		} else if (startSplit.length == 1) {
 			Calendar now = GregorianCalendar.getInstance();
 			startWeek = this.parseNumberInput(startSplit[0], out);
@@ -47,9 +51,15 @@ public class ChooseWorkWeekScreen extends Screen {
 		if (endSplit.length == 2) {
 			endWeek = this.parseNumberInput(endSplit[0], out);
 			endYear = this.parseNumberInput(endSplit[1], out);
-		} else if (endSplit[0].equals("Only 1 week")) {
-			endWeek = startWeek;
-			endYear = startYear;
+		} else if (endSplit[0].toLowerCase().equals("next 2 weeks")) {
+			if (endWeek <= 50) {
+				endWeek = startWeek + 2;
+				endYear = startYear;
+			} else {
+				endWeek = 52 - startWeek;
+				endYear = startYear + 1;
+			}
+			
 		} else if (endSplit.length == 1) {
 			endWeek = this.parseNumberInput(endSplit[0], out);
 			endYear = startYear;
