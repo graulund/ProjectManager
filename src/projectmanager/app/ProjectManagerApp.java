@@ -145,8 +145,7 @@ public class ProjectManagerApp {
 	 * @param minutes
 	 * @return Calendar object
 	 */
-	public static Calendar createCalendar(int year, int month,
-			int day, int hour, int minutes) {
+	public static Calendar createCalendar(int year, int month, int day, int hour, int minutes) {
 		Calendar cal = new GregorianCalendar();
 		cal.set(year, month-1, day, hour, minutes, 0);
 		return cal;

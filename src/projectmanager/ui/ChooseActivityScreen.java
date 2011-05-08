@@ -80,8 +80,6 @@ public class ChooseActivityScreen extends Screen {
 	private Screen getNextScreen(Activity activity) {
 		if (this.operation.equals("Register")) {
 			return new RegisterTimeScreen(activity);
-		} else if (this.operation.equals("Edit")) {
-			return new EditRegisteredTimeScreen(this.weekStart, this.yearStart, this.weekEnd, this.yearEnd);
 		} else {
 			return new TimeMenuScreen();
 		}

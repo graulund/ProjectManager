@@ -56,7 +56,7 @@ public class RegisterTimeScreen extends Screen {
 			RegisteredWork regwork = createRegWork(date, in[1], endTime, out);
 			if (registerWork(regwork, out) == true) {
 				this.println(out, 
-						"You've registered work the "+in[0]
+						"You've registered work the "+date
 					  + " from "+in[1]+" to "+endTime
 					  + " at the activity \""+regwork.getActivity().getName()+"\".");
 			}
@@ -96,12 +96,19 @@ public class RegisterTimeScreen extends Screen {
 		int[] end   = this.parseTimeInput(endTime, out);
 		
 		// registrerer tiden
+		Calendar testCal = new GregorianCalendar();
+		testCal.set(date[0], date[1], date[2], start[0], start[1], 0);
 		Calendar startCal = ProjectManagerApp.createCalendar(
-				date[2], date[1], date[0], start[0], start[1]			                                         
+				date[0], date[1], date[2], start[0], start[1]			                                         
 		);
 		Calendar endCal = ProjectManagerApp.createCalendar(
-				date[2], date[1], date[0], end[0], end[1]
+				date[0], date[1], date[2], end[0], end[1]
 		);
+		System.out.println("Year: "+startCal.get(Calendar.YEAR)
+				+"; Month: "+startCal.get(Calendar.MONTH)
+				+"; Day: "+startCal.get(Calendar.DATE)
+				+"; Time: "+startCal.get(Calendar.HOUR_OF_DAY)
+				+":"+startCal.get(Calendar.MINUTE));
 		return new RegisteredWork(activity, startCal, endCal);
 	}
 

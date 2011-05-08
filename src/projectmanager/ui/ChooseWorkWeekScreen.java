@@ -75,7 +75,7 @@ public class ChooseWorkWeekScreen extends Screen {
 		} else if (this.operation.equals("SeeTime")) {
 			return new SeeYourTimeScreen(startWeek, endWeek);
 		} else if (this.operation.equals("Edit")) {
-			return new EditRegisteredTimeScreen(startWeek, endYear, endWeek, endYear);
+			return new ChooseRegisteredWork(startWeek, endYear, endWeek, endYear);
 		} else {
 			return new TimeMenuScreen();
 		}
