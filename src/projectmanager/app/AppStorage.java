@@ -113,11 +113,14 @@ public class AppStorage {
 			
 			ArrayList<StoredData.StoredWorkWeek> weeks = new ArrayList<StoredData.StoredWorkWeek>();
 			for(WorkWeek week: employee.getWorkWeeks()){
-				StoredData.StoredWorkWeek w = data.new StoredWorkWeek();
-				w.week = week.getWeekNumber();
-				w.year = week.getYear();
-				w.workIds = this.getWorkIds(week.getWork(), data, works);
-				weeks.add(w);
+				List<Work> work = week.getWork();
+				if(!work.isEmpty()){
+					StoredData.StoredWorkWeek w = data.new StoredWorkWeek();
+					w.week = week.getWeekNumber();
+					w.year = week.getYear();
+					w.workIds = this.getWorkIds(work, data, works);
+					weeks.add(w);
+				}
 			}
 			e.workWeeks = weeks.toArray(new StoredWorkWeek[weeks.size()]);
 			
@@ -237,7 +240,8 @@ public class AppStorage {
 				for(StoredData.StoredWorkWeek w: e.workWeeks){
 					WorkWeek workweek = new WorkWeek(w.week, w.year);
 					for(int workId: w.workIds){
-						workweek.addWork(this.getWorkObject(workId, work));
+						Work wo = this.getWorkObject(workId, work);
+						workweek.addWork(wo);
 					}
 					employee.addWorkWeek(workweek);
 				}
