@@ -32,9 +32,9 @@ public class AddDelegatedWorkToActivityScreen extends Screen {
 					new String[]{
 							"Username of employee",
 							"Hours of work to delegate",
-							"Start week (1-52)",
+							"Start week",
 							"Start year",
-							"End week (1-52)",
+							"End week",
 							"End year"
 					}, 
 					new String[]{
@@ -52,7 +52,7 @@ public class AddDelegatedWorkToActivityScreen extends Screen {
 		Employee employee = ProjectManagerApp.getCompany().employeeByUsername(in[0]);
 		//activity.getEmployees().contains(employee);
 		
-		// Parsing work hours
+		// Parsing
 		int hours = -1;
 		int weekFrom = -1;
 		int weekTo = -1;
@@ -86,7 +86,6 @@ public class AddDelegatedWorkToActivityScreen extends Screen {
 
 	@Override
 	boolean processInput(String input, PrintWriter out) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

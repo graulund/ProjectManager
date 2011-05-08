@@ -56,10 +56,10 @@ public class ManageActivitiesScreen extends Screen {
 				this.ui.setScreen(new AddDelegatedWorkToActivityScreen(this.project, this.activity));
 				break;
 			case 3:
-				
+				this.ui.setScreen(new SetDateStartOnActivityScreen(this.project, this.activity));
 				break;
 			case 4:
-				
+				this.ui.setScreen(new SetDateEndOnActivityScreen(this.project, this.activity));
 				break;
 			case 5:
 				this.project.removeActivity(activity);
