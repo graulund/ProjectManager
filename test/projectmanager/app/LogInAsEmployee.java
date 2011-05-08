@@ -15,8 +15,6 @@ public class LogInAsEmployee {
 	 */
 	@Test
 	public void testLogin() {
-		
-		
 		Employee employee = new Employee("hlb");
 		Company company = ProjectManagerApp.getCompany();
 		company.addEmployee(employee);
@@ -39,9 +37,7 @@ public class LogInAsEmployee {
 	 */
 	@Test
 	public void testLoginFailed() {
-		
-		
-		
+		ProjectManagerApp.reset();
 		// checker at medarbejderen ikke er logget ind
 		assertFalse(ProjectManagerApp.isEmployeeLoggedIn());
 		
@@ -59,8 +55,8 @@ public class LogInAsEmployee {
 	 */
 	@Test
 	public void testLogout() {
-	
-		
+		ProjectManagerApp.reset();
+
 		Employee employee = new Employee("hlb");
 		Company company = ProjectManagerApp.getCompany();
 		company.addEmployee(employee);

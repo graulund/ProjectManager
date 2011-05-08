@@ -13,15 +13,20 @@ import projectmanager.app.ProjectManagerApp;
 
 public class ChooseYourselfAsProjectLeader {
 	
+	@Before
+	public void resetBefore() {
+		ProjectManagerApp.reset();
+	}
+	
+	
 	/**
 	 * Main scenario: Tester scenariet, hvor en medarbejder successfuldt
 	 * tildeler sig selv som projektleder på et projekt
 	 */
 	@Test
 	public void ChoosingYourselfAsProjectLeader() {
-		ProjectManagerApp PMApp = new ProjectManagerApp();
 		Employee employee1 = new Employee("hlb");
-		Company company = PMApp.getCompany();
+		Company company = ProjectManagerApp.getCompany();
 		company.addEmployee(employee1);
 		
 		// projekt med løbenummer 001 oprettes
@@ -31,11 +36,11 @@ public class ChooseYourselfAsProjectLeader {
 		company.addProject(project1);
 		
 		// medarbejder logger ind med initialer, der findes i databasen
-		boolean login = PMApp.employeeLogin("hlb");
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen er logget ind
 		assertTrue(login);
-		assertTrue(PMApp.isEmployeeLoggedIn());
+		assertTrue(ProjectManagerApp.isEmployeeLoggedIn());
 		
 		// medarbejder indtaster løbenummer for projekt
 		int serialNumber = 1;
@@ -48,10 +53,10 @@ public class ChooseYourselfAsProjectLeader {
 		assertEquals(client, projectTest.getClient());
 		
 		// medarbejder tilføjer sig selv som projektleder
-		projectTest.addLeader(PMApp.getEmployeeLoggedIn());
+		projectTest.addLeader(ProjectManagerApp.getEmployeeLoggedIn());
 		
 		// checker at medarbejderen er angivet som projektleder
-		assertEquals(PMApp.getEmployeeLoggedIn(), projectTest.getLeader());
+		assertEquals(ProjectManagerApp.getEmployeeLoggedIn(), projectTest.getLeader());
 	}
 	
 	/**
@@ -61,52 +66,35 @@ public class ChooseYourselfAsProjectLeader {
 	 */
 	@Test
 	public void ProjectLeaderAlreadyExists() {
-		ProjectManagerApp PMApp = new ProjectManagerApp();
 		Employee employee1 = new Employee("hlb");
 		Employee employee2 = new Employee("abc");
-		Company company = PMApp.getCompany();
+		Company company = ProjectManagerApp.getCompany();
 		company.addEmployee(employee1);
 		company.addEmployee(employee2);
 		
 		// medarbejder logger ind med initialer, der findes i databasen
-		boolean login = PMApp.employeeLogin("hlb");
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		
 		// checker at medarbejderen er logget ind
 		assertTrue(login);
-		assertTrue(PMApp.isEmployeeLoggedIn());
+		assertTrue(ProjectManagerApp.isEmployeeLoggedIn());
 		
-		// medarbejder indtaster årstal og løbenummer for projekt
-		int serialNumber = 002;
 		
 		// projekt med løbenummer 001 oprettes
 		String name = "Software Engineering";
 		String client = "Google";
 		Project project1 = new Project(name, client);
 		
-		// projekt med løbenummer 002 oprettes
-		String name2 = "Software Engineering 2";
-		String client2 = "Apple";
-		Project project2 = new Project(name2, client2);
-		
 		// tilføjer projekt til firmaet
 		company.addProject(project1);
-		
-		company.addProject(project2);
-		project2.addLeader(employee2);
-		
-		// projektinformation returneres
-		Project projectTest = company.projectBySerialNumber(serialNumber);
-		
-		// checker at den rette information returneres
-		assertEquals(name2, projectTest.getName());
-		assertEquals(client2, projectTest.getClient());
+		project1.addLeader(employee2);
 		
 		// medarbejder tilføjer sig selv som projektleder
-		project2.addLeader(PMApp.getEmployeeLoggedIn());
+		project1.addLeader(ProjectManagerApp.getEmployeeLoggedIn());
 		
 		// da der allerede er tilføjet et projekt, skal medarbejderen,
 		// der er logget ind, ikke være projektleder.
-		assertEquals(employee2, project2.getLeader());
+		assertEquals(employee2, project1.getLeader());
 	}
 		
 }

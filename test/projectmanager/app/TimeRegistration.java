@@ -278,147 +278,104 @@ public class TimeRegistration {
 				Integer.parseInt(endTimeSplit1[1])
 				);	
 		
-		System.out.println(startCalendar1.get(Calendar.YEAR));
 		// tiden registreres
 		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
 		ProjectManagerApp.registerWork(regWork1);
 	}
 	
-//	/**
-//	 * Tester, hvor en medarbejder indtaster gyldig dato/tid, men udenfor aktivitetens tid
-//	 * @throws RegisterWorkException 
-//	 */
-//	@Test
-//	public void testInvalidDateTime() throws RegisterWorkException {
-//		// medarbejder logger ind med initialer, der findes i databasen
-//		boolean login = ProjectManagerApp.employeeLogin("hlb");
-//		
-//		// tilf퓂er aktivitet
-//		Activity activity2 = new Activity("hamburger");
-//		activity2.setStart(20, 2010);
-//		activity2.setEnd(25, 2010);
-//		company.addProject(project);
-//		project.addActivity(activity2);
-//		employee.addActivity(activity2);
-//		
-//		// medarbejder v푡ger en aktivitet, som han er tilmeldt
-//		List<Activity> activities = company.employeeByUsername("hlb").getActivities();
-//		chosenActivity = activities.get(1);
-//		assertEquals(chosenActivity, activity2);
-//		
-//		// medarbejder indtaster f퓄gende tid 
-//		String date1 = "01.01.2011";
-//		String startTime1 = "10:30";
-//		String endTime1 = "17:00";
-//		
-//		// splitter inputtet
-//		String[] dateSplit1 = date1.split("\\.");
-//		String[] startTimeSplit1 = startTime1.split(":");
-//		String[] endTimeSplit1 = endTime1.split(":");
-//		
-//		// gemmer inputtet som kalendre
-//		Calendar startCalendar1 = new GregorianCalendar(Locale.ENGLISH);
-//		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
-//						  Integer.parseInt(dateSplit1[1])-1, 
-//						  Integer.parseInt(dateSplit1[0]), 
-//						  Integer.parseInt(startTimeSplit1[0]), 
-//						  Integer.parseInt(startTimeSplit1[1])); 
-//		GregorianCalendar endCalendar1 = new GregorianCalendar();
-//		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
-//						Integer.parseInt(dateSplit1[1])-1, 
-//						Integer.parseInt(dateSplit1[0]), 
-//						Integer.parseInt(endTimeSplit1[0]), 
-//						Integer.parseInt(endTimeSplit1[1]));
-//		
-//		
-//		// tiden registreres
-//		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
-//
-//		try {
-//			ProjectManagerApp.registerWork(employee, regWork1);
-//			fail("A AlreadyRegisteredWorkException should have been thrown");			
-//		} catch (RegisterWorkException e) {
-//			// Step 4
-//			assertEquals("You have registered time outside the timer-interval of the given activity", e.getOperation());
-//		}	
-//	}
-//	
-//	/**
-//	 * Tester scenariet, hvor en medarbejder indtaster en start-tid, der er efter sluttid
-//	 */
-//	@Test
-//	public void testInvalidTime() {
-//		// medarbejder logger ind med initialer, der findes i databasen
-//		boolean login = ProjectManagerApp.employeeLogin("hlb");
-//		
-//		// medarbejder indtaster f퓄gende tid 
-//		String date1 = "01.01.2011";
-//		String startTime1 = "17:30";
-//		String endTime1 = "10:00";
-//		
-//		// splitter inputtet
-//		String[] dateSplit1 = date1.split("\\.");
-//		String[] startTimeSplit1 = startTime1.split(":");
-//		String[] endTimeSplit1 = endTime1.split(":");
-//		
-//		// gemmer inputtet som kalendre
-//		GregorianCalendar startCalendar1 = new GregorianCalendar();
-//		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
-//						  Integer.parseInt(dateSplit1[1])-1, 
-//						  Integer.parseInt(dateSplit1[0]), 
-//						  Integer.parseInt(startTimeSplit1[0]), 
-//						  Integer.parseInt(startTimeSplit1[1])); 
-//		GregorianCalendar endCalendar1 = new GregorianCalendar();
-//		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
-//						Integer.parseInt(dateSplit1[1])-1, 
-//						Integer.parseInt(dateSplit1[0]), 
-//						Integer.parseInt(endTimeSplit1[0]), 
-//						Integer.parseInt(endTimeSplit1[1]));
-//		
-//		// tiden registreres
-//		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
-//		try {
-//			ProjectManagerApp.registerWork(employee, regWork1);
-//			fail("A AlreadyRegisteredWorkException should have been thrown");			
-//		} catch (RegisterWorkException e) {
-//			// Step 4
-//			assertEquals("Invalid time registration: the start time is after the end time.", e.getOperation());
-//		}
-//	}
-//	
-//	/**
-//	 * Tester scenariet, hvor en medarbejder registrere tid uden at v푨e logget ind
-//	 * @throws RegisterWorkException 
-//	 */
-//	@Test
-//	public void testEmployeeNotLoggedIn() throws RegisterWorkException {
-//		// medarbejder indtaster f퓄gende tid 
-//		String date1 = "01.01.2011";
-//		String startTime1 = "10:0";
-//		String endTime1 = "17:00";
-//		
-//		// splitter inputtet
-//		String[] dateSplit1 = date1.split("\\.");
-//		String[] startTimeSplit1 = startTime1.split(":");
-//		String[] endTimeSplit1 = endTime1.split(":");
-//		
-//		// gemmer inputtet som kalendre
-//		GregorianCalendar startCalendar1 = new GregorianCalendar();
-//		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
-//						  Integer.parseInt(dateSplit1[1])-1, 
-//						  Integer.parseInt(dateSplit1[0]), 
-//						  Integer.parseInt(startTimeSplit1[0]), 
-//						  Integer.parseInt(startTimeSplit1[1])); 
-//		GregorianCalendar endCalendar1 = new GregorianCalendar();
-//		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
-//						Integer.parseInt(dateSplit1[1])-1, 
-//						Integer.parseInt(dateSplit1[0]), 
-//						Integer.parseInt(endTimeSplit1[0]), 
-//						Integer.parseInt(endTimeSplit1[1]));
-//		
-//		// tiden registreres
-//		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
-//		ProjectManagerApp.registerWork(employee, regWork1);
-//		assertEquals(null, employee.getWorkWeek(regWork1.getDate().get(Calendar.WEEK_OF_YEAR), regWork1.getDate().get(Calendar.YEAR)));
-//	}
+	/**
+	 * Tester, hvor en medarbejder indtaster gyldig dato/tid, men udenfor aktivitetens tid
+	 * @throws RegisterWorkException 
+	 */
+	@Test
+	public void testInvalidDateTime() throws RegisterWorkException {
+		// medarbejder logger ind med initialer, der findes i databasen
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
+		
+		// tilf퓂er aktivitet
+		Activity activity2 = new Activity("hamburger");
+		activity2.setStart(20, 2010);
+		activity2.setEnd(25, 2010);
+		company.addProject(project);
+		
+		// medarbejder indtaster f퓄gende tid 
+		String date1 = "01.01.2011";
+		String startTime1 = "10:30";
+		String endTime1 = "17:00";
+		
+		// splitter inputtet
+		String[] dateSplit1 = date1.split("\\.");
+		String[] startTimeSplit1 = startTime1.split(":");
+		String[] endTimeSplit1 = endTime1.split(":");
+		
+		// gemmer inputtet som kalendre
+		Calendar startCalendar1 = new GregorianCalendar(Locale.ENGLISH);
+		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						  Integer.parseInt(dateSplit1[1])-1, 
+						  Integer.parseInt(dateSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[1])); 
+		GregorianCalendar endCalendar1 = new GregorianCalendar();
+		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						Integer.parseInt(dateSplit1[1])-1, 
+						Integer.parseInt(dateSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[1]));
+		
+		
+		// tiden registreres
+		RegisteredWork regWork1 = new RegisteredWork(activity2, startCalendar1, endCalendar1);
+		
+
+		try {
+			ProjectManagerApp.registerWork(regWork1);
+			fail("A AlreadyRegisteredWorkException should have been thrown");			
+		} catch (ProjectManagerException e) {
+			// Step 4
+			assertEquals("You have registered time outside the timer-interval of the given activity.", e.getMessage());
+		}	
+	}
+	
+	/**
+	 * Tester scenariet, hvor en medarbejder indtaster en start-tid, der er efter sluttid
+	 */
+	@Test
+	public void testInvalidTime() {
+		// medarbejder logger ind med initialer, der findes i databasen
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
+		
+		// medarbejder indtaster f퓄gende tid 
+		String date1 = "01.01.2011";
+		String startTime1 = "17:30";
+		String endTime1 = "10:00";
+		
+		// splitter inputtet
+		String[] dateSplit1 = date1.split("\\.");
+		String[] startTimeSplit1 = startTime1.split(":");
+		String[] endTimeSplit1 = endTime1.split(":");
+		
+		// gemmer inputtet som kalendre
+		GregorianCalendar startCalendar1 = new GregorianCalendar();
+		startCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						  Integer.parseInt(dateSplit1[1])-1, 
+						  Integer.parseInt(dateSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[0]), 
+						  Integer.parseInt(startTimeSplit1[1])); 
+		GregorianCalendar endCalendar1 = new GregorianCalendar();
+		endCalendar1.set(Integer.parseInt(dateSplit1[2]), 
+						Integer.parseInt(dateSplit1[1])-1, 
+						Integer.parseInt(dateSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[0]), 
+						Integer.parseInt(endTimeSplit1[1]));
+		
+		// tiden registreres
+		RegisteredWork regWork1 = new RegisteredWork(chosenActivity, startCalendar1, endCalendar1);
+		try {
+			ProjectManagerApp.registerWork(regWork1);
+			fail("A AlreadyRegisteredWorkException should have been thrown");			
+		} catch (ProjectManagerException e) {
+			// Step 4
+			assertEquals("The starting time is after the ending time.", e.getMessage());
+		}
+	}
 }

@@ -96,12 +96,9 @@ public class Employee {
 			if (regwork.getDate().before(activity.getStart()) ||
 					regwork.getDate().after(activity.getEnd())) {
 					return true;
-				}
-				return false;
-		} else {
-			return false;
-		}
-		
+				}	
+		} 
+		return false;
 	}
 
 	private boolean timeAlreadyRegistered(RegisteredWork regwork, WorkWeek workweek) {

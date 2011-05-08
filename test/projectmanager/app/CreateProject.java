@@ -16,6 +16,11 @@ import projectmanager.app.ProjectManagerApp;
 
 public class CreateProject {
 	
+	@Before
+	public void resetBefore() {
+		ProjectManagerApp.reset();
+	}
+	
 	/**
 	 * Tester scenariet, hvor en medarbejder successfuldt opretter et project.
 	 */
