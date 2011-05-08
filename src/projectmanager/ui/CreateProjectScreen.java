@@ -40,7 +40,6 @@ public class CreateProjectScreen extends Screen {
 
 	@Override
 	boolean processInput(String input, PrintWriter out) {
-		//this.ui.setScreen(new ProjectMenuScreen());
 		return false;
 	}
 
