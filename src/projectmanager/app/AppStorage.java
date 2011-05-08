@@ -117,6 +117,7 @@ public class AppStorage {
 				w.week = week.getWeekNumber();
 				w.year = week.getYear();
 				w.workIds = this.getWorkIds(week.getWork(), data, works);
+				weeks.add(w);
 			}
 			e.workWeeks = weeks.toArray(new StoredWorkWeek[weeks.size()]);
 			
