@@ -6,25 +6,27 @@ import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import projectmanager.app.Employee;
 import projectmanager.app.ProjectManagerApp;
+import projectmanager.app.WorkWeek;
 
 /**
  * Class that represents any screen being displayed to the user in the UI. Subclasses must be created for every screen.
  */
 abstract class Screen {
 	/**
-	 * Link to the main UI object
+	 * Link to the main UI object.
 	 */
 	public ProjectManagerUI ui;
 	
 	/**
-	 * Number of characters that has been outputted
+	 * Number of characters that has been outputted.
 	 */
 	protected int chars = 0;
 	
 	/**
 	 * Reads input from the user.
-	 * @param in BufferedReader object being read from
+	 * @param in BufferedReader object being read from.
 	 * @return String
 	 * @throws IOException
 	 */
@@ -34,15 +36,15 @@ abstract class Screen {
 	
 	/**
 	 * Prints the menu/information on this screen.
-	 * @param out PrintWriter object being written to
+	 * @param out PrintWriter object being written to.
 	 */
 	abstract void printMenu(PrintWriter out);
 	
 	/**
 	 * Processes the input from the user.
-	 * @param input Input from the user given as a String
-	 * @param out PrintWriter object that can be written to
-	 * @return boolean describing whether it's okay to quit the app
+	 * @param input Input from the user given as a String.
+	 * @param out PrintWriter object that can be written to.
+	 * @return boolean describing whether it's okay to quit the app.
 	 */
 	abstract boolean processInput(String input, PrintWriter out);
 	
@@ -50,8 +52,8 @@ abstract class Screen {
 	
 	/**
 	 * Prints a line to the PrintWriter and increments the number of characters printed.
-	 * @param out PrintWriter object being written to
-	 * @param s String being written
+	 * @param out PrintWriter object being written to.
+	 * @param s String being written.
 	 */
 	protected void println(PrintWriter out, String s){
 		out.println(s);
@@ -60,8 +62,8 @@ abstract class Screen {
 	
 	/**
 	 * Prints a line to the PrintWriter and increments the number of characters printed.
-	 * @param s String being written
-	 * @param out PrintWriter object being written to
+	 * @param s String being written.
+	 * @param out PrintWriter object being written to.
 	 */
 	protected void println(String s, PrintWriter out){
 		this.println(out, s);
@@ -69,7 +71,7 @@ abstract class Screen {
 	
 	/**
 	 * Clears the screen.
-	 * @param out PrintWriter object being written to
+	 * @param out PrintWriter object being written to.
 	 */
 	protected void clearScreen(PrintWriter out){
 		StringBuilder clear = new StringBuilder();
@@ -87,7 +89,7 @@ abstract class Screen {
 	
 	/**
 	 * Displays wrong input selection message.
-	 * @param out PrintWriter object being written to
+	 * @param out PrintWriter object being written to.
 	 */
 	protected void wrongInputMessage(PrintWriter out){
 		out.println(this.wrong);
@@ -95,7 +97,7 @@ abstract class Screen {
 	
 	/**
 	 * Exits the UI and the application.
-	 * @param out PrintWriter object being written to
+	 * @param out PrintWriter object being written to.
 	 */
 	protected void exit(PrintWriter out){
 		out.println("Goodbye!");
@@ -104,9 +106,9 @@ abstract class Screen {
 	
 	/**
 	 * Parses any number being input by the user.
-	 * @param input String being input by the user
-	 * @param out PrintWriter object that can be written to
-	 * @return Parsed integer selection number; returns -1 if not a number
+	 * @param input String being input by the user.
+	 * @param out PrintWriter object that can be written to.
+	 * @return Parsed integer selection number; returns -1 if not a number.
 	 */
 	protected int parseNumberInput(String input, PrintWriter out){
 		int selection = -1;
@@ -117,11 +119,12 @@ abstract class Screen {
 		}
 		return selection;
 	}
+	
 	/**
 	 * Parses any date being input by the user.
-	 * @param date String being input by the user
-	 * @param out PrintWriter object that can be written to
-	 * @return Integer array with year, month and day
+	 * @param date String being input by the user.
+	 * @param out PrintWriter object that can be written to.
+	 * @return Integer array with year, month and day.
 	 */
 	protected int[] parseDateInput(String date, PrintWriter out) {
 		String[] dateSplit = date.split("/");
@@ -153,9 +156,9 @@ abstract class Screen {
 	
 	/**
 	 * Parses any time being input by the user.
-	 * @param time String being input by the user
-	 * @param out PrintWriter object that can be written to
-	 * @return Integer array with hours and minutes
+	 * @param time String being input by the user.
+	 * @param out PrintWriter object that can be written to.
+	 * @return Integer array with hours and minutes.
 	 */
 	protected int[] parseTimeInput(String time, PrintWriter out) {
 		String[] timeSplit = time.split(":");
@@ -186,9 +189,9 @@ abstract class Screen {
 	
 	/**
 	 * Asks for the user's input in response to the given string array of input names.
-	 * @param inputs Array of input names as Strings
-	 * @param defaults Array of default values if any (null is no default, "" is empty default)
-	 * @return The user's input in response to all the input requests
+	 * @param inputs Array of input names as Strings.
+	 * @param defaults Array of default values if any (null is no default, "" is empty default).
+	 * @return The user's input in response to all the input requests.
 	 * @throws IOException
 	 */
 	protected String[] inputSequence(String[] inputs, String[] defaults) throws IOException {
@@ -208,8 +211,8 @@ abstract class Screen {
 	
 	/**
 	 * Asks for the user's input in response to the given string array of input names.
-	 * @param inputs Array of input names as Strings
-	 * @return The user's input in response to all the input requests
+	 * @param inputs Array of input names as Strings.
+	 * @return The user's input in response to all the input requests.
 	 * @throws IOException
 	 */
 	protected String[] inputSequence(String[] inputs) throws IOException {
@@ -218,9 +221,9 @@ abstract class Screen {
 	
 	/**
 	 * Builds a menu based on the given string array of choices.
-	 * @param choices Array of choices as Strings
-	 * @param cancel Name for the "cancel" menu item
-	 * @return Menu as string, ready to be outputted
+	 * @param choices Array of choices as Strings.
+	 * @param cancel Name for the "cancel" menu item.
+	 * @return Menu as string, ready to be outputted.
 	 */
 	public String menuString(String[] choices, String cancel){
 		StringBuilder s = new StringBuilder();
@@ -235,11 +238,44 @@ abstract class Screen {
 	
 	/**
 	 * Builds a menu based on the given string array of choices.
-	 * @param choices Array of choices as Strings
-	 * @return Menu as string, ready to be outputted
+	 * @param choices Array of choices as Strings.
+	 * @return Menu as string, ready to be outputted.
 	 */
 	public String menuString(String[] choices){
 		return menuString(choices, "Cancel");
+	}
+	
+	/**
+	 * Builds a time table based on the given array of employees and time factors.
+	 * @param employees Array of employee objects.
+	 * @param year The year of the given weeks.
+	 * @param startWeek The starting week.
+	 * @param endWeek The ending week.
+	 * @return
+	 */
+	public String employeeTimeTable(Employee[] employees, int year, int startWeek, int endWeek){
+		if(endWeek > startWeek){ return ""; }
+		StringBuilder s  = new StringBuilder();
+		StringBuilder p1 = new StringBuilder("+----+");
+		StringBuilder p2 = new StringBuilder("|Week|");
+		String sep;
+		for(Employee e: employees){
+			p1.append(this.stringRepeat("-", e.getUsername().length()) + "+");
+			p2.append(e.getUsername() + "|");
+		}
+		sep = p1.toString() + "\n";
+		s.append(sep);
+		s.append(p2.toString() + "\n");
+		s.append(sep);
+		for(int i = startWeek; i < endWeek; i++){
+			s.append("|" + i + (i < 10 ? "   " : "  ") + "|");
+			for(Employee e: employees){
+				WorkWeek w = e.getWorkWeek(i, year);
+				s.append(this.stringRepeat( (w.getWork().size() > 0 ? "/" : " "), e.getUsername().length()) + "|");
+			}
+			s.append(sep);
+		}
+		return s.toString();
 	}
 	
 	/**
@@ -249,5 +285,19 @@ abstract class Screen {
 	 */
 	public String formatTitle(String title){
 		return "== " + title.toUpperCase() + "\n";
+	}
+	
+	/**
+	 * Utility method that makes it easier to repeat a string a certain amount of times.
+	 * @param str String (usually one character) to be repeated.
+	 * @param times Times the string should be repeated.
+	 * @return The repeated string.
+	 */
+	private String stringRepeat(String str, int times){
+		StringBuilder s = new StringBuilder();
+		for(int i = 0; i < times; i++){
+			s.append(str);
+		}
+		return s.toString();
 	}
 }
