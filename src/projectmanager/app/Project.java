@@ -71,7 +71,7 @@ public class Project {
 			registeredHours += activity.getRegisteredHours();
 			delegatedHours += activity.getDelegatedHours();
 		}
-		return "Project: "+name+". Client: "+client+". Project leader: "+projectLeader.getUsername()+". Work status: "+Math.round(registeredHours)+"/"+delegatedHours+".";
+		return "Project: "+name+". Client: "+client+". Project leader: "+projectLeader.getUsername()+". Work status: "+Math.round(registeredHours/2)+"/"+delegatedHours/2+".";
 	}
 	public Activity activityByName(String name) {
 		for (Activity activity: this.activities) {
