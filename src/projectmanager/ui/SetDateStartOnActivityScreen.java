@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 
 import projectmanager.app.Activity;
 import projectmanager.app.Project;
+import projectmanager.app.ProjectManagerException;
 
 public class SetDateStartOnActivityScreen extends Screen {
 	private Project project;
@@ -50,8 +51,12 @@ public class SetDateStartOnActivityScreen extends Screen {
 			this.wrongInputMessage(out);
 			this.println(out, "");
 		} else {
-			this.activity.setStart(week, year);
-			this.println(out, "Start date set.\n");
+			try {
+				this.activity.setStart(week, year);
+				this.println(out, "Start date set.\n");
+			} catch (ProjectManagerException e) {
+				this.println(out, e.getMessage());
+			}
 		}
 		
 		// Go back

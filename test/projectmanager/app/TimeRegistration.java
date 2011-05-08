@@ -285,10 +285,10 @@ public class TimeRegistration {
 	
 	/**
 	 * Tester, hvor en medarbejder indtaster gyldig dato/tid, men udenfor aktivitetens tid
-	 * @throws RegisterWorkException 
+	 * @throws ProjectManagerException 
 	 */
 	@Test
-	public void testInvalidDateTime() throws RegisterWorkException {
+	public void testInvalidDateTime() throws ProjectManagerException {
 		// medarbejder logger ind med initialer, der findes i databasen
 		boolean login = ProjectManagerApp.employeeLogin("hlb");
 		

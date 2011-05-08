@@ -60,16 +60,31 @@ public class Activity {
 		return name;
 	}
 	
-	public void setStart(int week, int year) {
+	public void setStart(int week, int year) throws ProjectManagerException {
+		if (this.end != null) {
+			if (this.end.get(Calendar.YEAR) == year && this.end.get(Calendar.WEEK_OF_YEAR) < week) {
+				throw new CreatingActivityException("Den givne tid er invalid.");
+			} else if (this.end.get(Calendar.YEAR) < year) {
+				throw new CreatingActivityException("Den givne tid er invalid.");
+			}
+		}
 		this.start = new GregorianCalendar();
 		this.start.set(Calendar.YEAR, year);
 		this.start.set(Calendar.WEEK_OF_YEAR, week);
 	}
 	
-	public void setEnd(int week, int year) {
+	public void setEnd(int week, int year) throws ProjectManagerException {
+		if (this.start != null) {
+			if (this.start.get(Calendar.YEAR) == year && this.start.get(Calendar.WEEK_OF_YEAR) > week) {
+				throw new CreatingActivityException("Den givne tid er invalid.");
+			} else if (this.start.get(Calendar.YEAR) > year) {
+				throw new CreatingActivityException("Den givne tid er invalid.");
+			}	
+		} 
 		this.end = new GregorianCalendar();
 		this.end.set(Calendar.YEAR, year);
-		this.end.set(Calendar.WEEK_OF_YEAR, week);
+		this.end.set(Calendar.WEEK_OF_YEAR, week);	
+			
 	}
 
 	public void setStart(Calendar start) {

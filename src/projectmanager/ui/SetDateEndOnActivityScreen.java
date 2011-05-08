@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 
 import projectmanager.app.Activity;
 import projectmanager.app.Project;
+import projectmanager.app.ProjectManagerException;
 
 public class SetDateEndOnActivityScreen extends Screen {
 	private Project project;
@@ -49,8 +50,12 @@ public class SetDateEndOnActivityScreen extends Screen {
 			this.wrongInputMessage(out);
 			this.println(out, "");
 		} else {
-			this.activity.setEnd(week, year);
-			this.println(out, "End date set.\n");
+			try {
+				this.activity.setEnd(week, year);
+				this.println(out, "End date set.\n");
+			} catch (ProjectManagerException e) {
+				this.println(out, e.getMessage());
+			}
 		}
 		
 		// Go back

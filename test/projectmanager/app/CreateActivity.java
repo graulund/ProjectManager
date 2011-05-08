@@ -58,11 +58,11 @@ public class CreateActivity {
 	
 	/**
 	 * Tester scenariet, hvor en projektmanager tilf¿jer start- og slut-dato til aktiviteten
-	 * @throws CreatingActivityException 
 	 * @throws OperationNotAllowedException 
+	 * @throws ProjectManagerException 
 	 */
 	@Test
-	public void testSetActivityDate() throws OperationNotAllowedException, CreatingActivityException {
+	public void testSetActivityDate() throws OperationNotAllowedException, ProjectManagerException {
 		ProjectManagerApp.reset();
 		Company company = ProjectManagerApp.getCompany();
 		
@@ -87,13 +87,65 @@ public class CreateActivity {
 		chosenProject.addActivity(activity);
 		
 		// projectmanageren tilf¿jer dato'er
-		Activity chosenActivity = chosenProject.activityByName(actName);
-		chosenActivity.setStart(10, 2011);
-		chosenActivity.setEnd(15, 2011);
+		activity.setStart(10, 2011);
+		activity.setEnd(15, 2011);
 		
-		assertEquals(10, chosenActivity.getStart().get(Calendar.WEEK_OF_YEAR));
-		assertEquals(2011, chosenActivity.getStart().get(Calendar.YEAR));
-		assertEquals(15, chosenActivity.getEnd().get(Calendar.WEEK_OF_YEAR));
-		assertEquals(2011, chosenActivity.getStart().get(Calendar.YEAR));
-	}	
+		assertEquals(10, activity.getStart().get(Calendar.WEEK_OF_YEAR));
+		assertEquals(2011, activity.getStart().get(Calendar.YEAR));
+		assertEquals(15, activity.getEnd().get(Calendar.WEEK_OF_YEAR));
+		assertEquals(2011, activity.getStart().get(Calendar.YEAR));
+	}
+	
+	/**
+	 * Tester scenariet, hvor en medarbejder s¾tter en start-uge, der er efter slut-ugen, 
+	 * samt s¾tter en slut-uge, der er f¿r start-ugen. Ved dette kastes en exception
+	 * @throws ProjectManagerException
+	 * @throws OperationNotAllowedException
+	 */
+	@Test
+	public void testInvalidActivityDates() throws ProjectManagerException, OperationNotAllowedException {
+		ProjectManagerApp.reset();
+		Company company = ProjectManagerApp.getCompany();
+		
+		String name = "Software Engineering";
+		String client = "Google";
+		Project project1 = new Project(name, client);
+		company.addProject(project1);
+		
+		Employee employee = new Employee("hlb");
+		company.addEmployee(employee);
+		project1.addLeader(employee);
+		assertEquals(employee, project1.getLeader());
+		
+		boolean login = ProjectManagerApp.employeeLogin("hlb");
+		assertTrue(project1.getActivities().isEmpty());
+		
+		int serialNumber = project1.getSerialNumber();
+		Project chosenProject = company.projectBySerialNumber(serialNumber);
+		
+		String actName = "activity1";		
+		Activity activity = new Activity(actName);
+		chosenProject.addActivity(activity);
+		activity.setStart(10, 2011);
+		activity.setEnd(15, 2011);
+		
+		try {
+			activity.setStart(17, 2011);
+			fail("Der skulle v¾re kastet en exception!");
+		} catch (ProjectManagerException e) {
+			assertEquals("Den givne tid er invalid.", e.getMessage());
+		}
+		
+		try {
+			activity.setEnd(9, 2011);
+			fail("Der skulle v¾re kastet en exception!");
+		} catch (ProjectManagerException e) {
+			assertEquals("Den givne tid er invalid.", e.getMessage());
+		}
+		
+		assertEquals(10, activity.getStart().get(Calendar.WEEK_OF_YEAR));
+		assertEquals(2011, activity.getStart().get(Calendar.YEAR));
+		assertEquals(15, activity.getEnd().get(Calendar.WEEK_OF_YEAR));
+		assertEquals(2011, activity.getStart().get(Calendar.YEAR));
+	}
 }

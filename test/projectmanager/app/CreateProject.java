@@ -54,22 +54,4 @@ public class CreateProject {
 		assertEquals(name, projects.get(0).getName());
 		assertEquals(client, projects.get(0).getClient());
 	}
-	
-	/**
-	 * Tester scenariet, hvor en medarbejder indtaster initialerne forkert.
-	 */
-	@Test
-	public void testCreateProjectWrongLogin() {
-		Company company = ProjectManagerApp.getCompany();
-		
-		// checker at der ikke eksisterer nogle projekter
-		assertTrue(company.getProjects().isEmpty());
-		
-		// medarbejder logger ind med initialer, der IKKE findes i databasen
-		boolean login = ProjectManagerApp.employeeLogin("hlb");
-		
-		// checker at medarbejderen IKKE er logget ind
-		assertFalse(login);
-		assertFalse(ProjectManagerApp.isEmployeeLoggedIn());
-	}
 }
