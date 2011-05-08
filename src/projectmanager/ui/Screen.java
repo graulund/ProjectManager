@@ -261,7 +261,7 @@ abstract class Screen {
 	 * @param endWeek The ending week.
 	 * @return The time table as an ASCII-formatted multiline string.
 	 */
-	public String employeeTimeTable(Employee[] employees, int startWeek, int startYear, int endWeek, int endYear){
+	public String employeeTimeTable(Employee[] employees, int startWeek, int yearStart, int endWeek, int endYear){
 		if(endWeek < startWeek){ return ""; }
 		StringBuilder s  = new StringBuilder();
 		StringBuilder p1 = new StringBuilder("+----+");
@@ -277,7 +277,7 @@ abstract class Screen {
 		s.append(sep);
 		Calendar cal = new GregorianCalendar();
 		cal.set(Calendar.WEEK_OF_YEAR, startWeek);
-		cal.set(Calendar.YEAR, startYear);
+		cal.set(Calendar.YEAR, yearStart);
 		Calendar cal2 = new GregorianCalendar();
 		cal2.set(Calendar.WEEK_OF_YEAR, endWeek);
 		cal2.set(Calendar.YEAR, endYear);
@@ -342,14 +342,14 @@ abstract class Screen {
 	/**
 	 * Method that returns true or false determited by whether
 	 * the inputs are correct year-inputs
-	 * @param startYear
+	 * @param yearStart
 	 * @param endYear
 	 * @return
 	 */
-	protected boolean isValidYear(int startYear, int endYear) {
-		return !(startYear < 1900 || startYear > 2100 ||
+	protected boolean isValidYear(int yearStart, int endYear) {
+		return !(yearStart < 1900 || yearStart > 2100 ||
 				 endYear   < 1900 || endYear   > 2100 ||
-				 endYear > startYear);
+				 endYear < yearStart);
 	}
 	
 	/**
@@ -361,5 +361,15 @@ abstract class Screen {
 	 */
 	protected boolean isValidWorkWeeks(int week1, int week2) {
 		return !(week1 < 1 || week1 > 53 || week2 < 1 || week2 > 53);
+	}
+	
+	protected boolean isValidWeekInput(int startWeek, int startYear, int endWeek, int endYear) {
+		if (startYear == endYear && endWeek < startWeek) return false;
+		if (this.isValidWorkWeeks(startWeek, endWeek) &&
+			this.isValidYear(startYear, endYear)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
