@@ -10,7 +10,7 @@ public class CreateEmployeeScreen extends Screen {
 
 	@Override
 	void printMenu(PrintWriter out) {
-		this.println(out, this.formatTitle("Add employee to company") + "Some text.");
+		this.println(out, this.formatTitle("Add employee to company"));
 		
 		String[] in = new String[] {"-1"};
 		try {

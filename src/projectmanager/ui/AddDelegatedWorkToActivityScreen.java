@@ -24,7 +24,7 @@ public class AddDelegatedWorkToActivityScreen extends Screen {
 
 	@Override
 	void printMenu(PrintWriter out) {
-		this.println(out, this.formatTitle("Add delegated work to activity: "+this.activity.getName()) + "Some text.");
+		this.println(out, this.formatTitle("Add delegated work to activity: "+this.activity.getName()));
 		
 		String[] in = new String[] {"-1"};
 		try {

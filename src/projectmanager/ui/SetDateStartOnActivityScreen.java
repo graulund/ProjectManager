@@ -21,7 +21,7 @@ public class SetDateStartOnActivityScreen extends Screen {
 
 	@Override
 	void printMenu(PrintWriter out) {
-		this.println(out, this.formatTitle("Set start date on "+this.activity.getName()) + "Some text.");
+		this.println(out, this.formatTitle("Set start date on "+this.activity.getName()));
 
 		String[] in = new String[] {"-1"};
 		try {
