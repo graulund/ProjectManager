@@ -70,6 +70,7 @@ public class AddDelegatedWorkToActivityScreen extends Screen {
 		if (employee == null || hours <= 0 || !this.isValidWorkWeeks(weekFrom, weekTo)
 				|| !this.isValidYear(yearFrom, yearTo)) {
 			this.wrongInputMessage(out);
+			this.println(out, "");
 		} else {
 			employee.addDelegatedWork(weekFrom, weekTo, yearFrom, yearTo, activity, hours);
 			this.println(out, "Delegated work added to employee.\n");
