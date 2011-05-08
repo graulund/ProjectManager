@@ -39,6 +39,9 @@ public class Project {
 		return this.serialNumber;
 	}
 	public void addLeader(Employee employee) {
+		if (this.projectLeader != null) {
+			this.projectLeader.removeProjectLeaderOf(this);
+		}
 		this.projectLeader = employee;
 		employee.setProjectLeaderOf(this);
 	}

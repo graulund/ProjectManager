@@ -33,26 +33,33 @@ public class RegisterTimeScreen extends Screen {
 					"End time"
 				}, 
 				new String[]{
-					null,
+					"Now",
 					null,
 					"Now"
 				}
 			);
 		} catch (IOException e) {}
+		System.out.println(Arrays.toString(in));
 		if (this.isValidWorkInput(in[0], in[1], in[2], out)) {
-			RegisteredWork regwork = createRegWork(in[0], in[1], in[2], out);
-			registerWork(regwork, out);
 			String endTime = in[2];
-			if (endTime.equals("Now")) {
-				endTime = ""
-					+ regwork.getEndTime().get(Calendar.HOUR_OF_DAY)+":"
-					+ regwork.getEndTime().get(Calendar.MINUTE);
+			String date    = in[0];
+			if (date.toLowerCase().equals("now")) {
+				Calendar now = GregorianCalendar.getInstance();
+				date = now.get(Calendar.DATE)+"/"+(now.get(Calendar.MONTH)+1)+"/"+now.get(Calendar.YEAR);
 			}
-			this.println(out, 
-					"You've registered work the "+in[0]
-				  + " from "+in[1]+" to "+endTime
-				  + " at the activity \""+regwork.getActivity().getName()+"\".");
-			
+			if (endTime.toLowerCase().equals("now")) {
+				Calendar now = GregorianCalendar.getInstance();
+				endTime = ""
+					+ now.get(Calendar.HOUR_OF_DAY)+":"
+					+ now.get(Calendar.MINUTE);
+			}
+			RegisteredWork regwork = createRegWork(date, in[1], endTime, out);
+			if (registerWork(regwork, out) == true) {
+				this.println(out, 
+						"You've registered work the "+in[0]
+					  + " from "+in[1]+" to "+endTime
+					  + " at the activity \""+regwork.getActivity().getName()+"\".");
+			}
 		}
 		this.clearScreen(out);
 		this.ui.setScreen(new TimeMenuScreen());
@@ -98,15 +105,17 @@ public class RegisterTimeScreen extends Screen {
 		return new RegisteredWork(activity, startCal, endCal);
 	}
 
-	private void registerWork(RegisteredWork regwork, PrintWriter out) {
+	private boolean registerWork(RegisteredWork regwork, PrintWriter out) {
 		// pr¿ver at registrere tiden. returnere false hvis den er invalid. 
 		try {
 			ProjectManagerApp.registerWork(regwork);
+			return true;
 		} catch (ProjectManagerException e) {
 			this.println(out,
 					e.getMessage()
 			);
 		}
+		return false;
 	}
 	
 	

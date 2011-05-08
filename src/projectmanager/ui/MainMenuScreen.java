@@ -14,7 +14,7 @@ public class MainMenuScreen extends Screen {
 			this.formatTitle("Project Manager") + 
 			"You are logged in as " + you.getUsername() + ".\n" +
 			this.menuString(
-				new String[]{ "Manage Projects", "Manage Time" }, 
+				new String[]{ "Manage projects", "Manage time", "Add employee to company", "Print company report" }, 
 			"Exit")
 		);
 	}
@@ -32,6 +32,12 @@ public class MainMenuScreen extends Screen {
 				break;
 			case 2:
 				this.ui.setScreen(new TimeMenuScreen());
+				break;
+			case 3:
+				this.ui.setScreen(new CreateEmployeeScreen());
+				break;
+			case 4:
+				// TODO: print company report
 				break;
 			default:
 				this.wrongInputMessage(out);

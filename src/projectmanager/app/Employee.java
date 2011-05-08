@@ -317,4 +317,9 @@ public class Employee {
 		}
 		return regworks;
 	}
+
+	public void removeProjectLeaderOf(Project project) {
+		this.leaderOfProjects.remove(project);
+		
+	}
 }
