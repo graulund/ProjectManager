@@ -26,7 +26,7 @@ public class SetDateEndOnActivityScreen extends Screen {
 		try {
 			in = this.inputSequence(
 					new String[]{
-							"End week (1-52)",
+							"End week",
 							"End year"
 					}, 
 					new String[]{

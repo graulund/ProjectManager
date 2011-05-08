@@ -32,9 +32,9 @@ public class AddDelegatedWorkToActivityScreen extends Screen {
 					new String[]{
 							"Username of employee",
 							"Hours of work to delegate",
-							"Start week (1-52)",
+							"Start week",
 							"Start year",
-							"End week (1-52)",
+							"End week",
 							"End year"
 					}, 
 					new String[]{

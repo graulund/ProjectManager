@@ -27,7 +27,7 @@ public class SetDateStartOnActivityScreen extends Screen {
 		try {
 			in = this.inputSequence(
 					new String[]{
-							"Start week (1-52)",
+							"Start week",
 							"Start year"
 					}, 
 					new String[]{
