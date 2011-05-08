@@ -1,15 +1,14 @@
 package projectmanager.ui;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.Calendar;
 
 import projectmanager.app.Employee;
-import projectmanager.app.Project;
 import projectmanager.app.ProjectManagerApp;
 
 
 public class SeeYourTimeScreen extends Screen {
-	private String[] choices;
-	private int[] numbers;
+	//private String[] choices;
+	//private int[] numbers;
 	int startWeek, endWeek;
 
 	public SeeYourTimeScreen(int startWeek, int endWeek) {
@@ -19,10 +18,12 @@ public class SeeYourTimeScreen extends Screen {
 
 	@Override
 	void printMenu(PrintWriter out) {
+		Calendar now = Calendar.getInstance();
 		this.println(out, 
-				this.formatTitle("See your time") +
-				this.menuString(new String[]{ "" }, "Back")
-			);
+			this.formatTitle("Your Time Overview") +
+			this.employeeTimeTable(new Employee[]{ ProjectManagerApp.getEmployeeLoggedIn() }, now.get(Calendar.YEAR), this.startWeek, this.endWeek) +
+			this.menuString(new String[]{}, "Back")
+		);
 	}
 
 	@Override

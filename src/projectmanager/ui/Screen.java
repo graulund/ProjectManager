@@ -256,10 +256,10 @@ abstract class Screen {
 	 * @param year The year of the given weeks.
 	 * @param startWeek The starting week.
 	 * @param endWeek The ending week.
-	 * @return
+	 * @return The time table as an ASCII-formatted multiline string.
 	 */
 	public String employeeTimeTable(Employee[] employees, int year, int startWeek, int endWeek){
-		if(endWeek > startWeek){ return ""; }
+		if(endWeek < startWeek){ return ""; }
 		StringBuilder s  = new StringBuilder();
 		StringBuilder p1 = new StringBuilder("+----+");
 		StringBuilder p2 = new StringBuilder("|Week|");
@@ -272,14 +272,15 @@ abstract class Screen {
 		s.append(sep);
 		s.append(p2.toString() + "\n");
 		s.append(sep);
-		for(int i = startWeek; i < endWeek; i++){
+		for(int i = startWeek; i <= endWeek; i++){
 			s.append("|" + i + (i < 10 ? "   " : "  ") + "|");
 			for(Employee e: employees){
 				WorkWeek w = e.getWorkWeek(i, year);
-				s.append(this.stringRepeat( (w.getWork().size() > 0 ? "/" : " "), e.getUsername().length()) + "|");
+				s.append(this.stringRepeat( (w != null && w.getWork().size() > 0 ? "/" : " "), e.getUsername().length()) + "|");
 			}
-			s.append(sep);
+			s.append("\n" + sep);
 		}
+		s.append("Empty cells are clear, filled cells represent something scheduled.\n");
 		return s.toString();
 	}
 	
