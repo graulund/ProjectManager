@@ -32,7 +32,7 @@ public class ChooseWorkWeekScreen extends Screen {
 					}
 				);
 		} catch (IOException e) {}
-		Arrays.toString(in);
+		System.out.println(Arrays.toString(in));
 		String[] startSplit = in[0].split("/");
 		String[] endSplit	= in[1].split("/");
 		if (startSplit.length == 2) {
@@ -62,17 +62,16 @@ public class ChooseWorkWeekScreen extends Screen {
 
 	@Override
 	boolean processInput(String input, PrintWriter out) {
-		
 		return false;
 	}
 	
 	private Screen getNextScreen() {
 		if (this.operation.equals("Register")) {
-			return new ChooseActivityScreen(this.operation, startWeek, startYear, endWeek, endYear);
+			return new ChooseActivityScreen("Register", startWeek, startYear, endWeek, endYear);
 		} else if (this.operation.equals("SeeTime")) {
 			return new SeeYourTimeScreen(startWeek, endWeek);
 		} else if (this.operation.equals("Edit")) {
-			return new ChooseActivityScreen(this.operation, startWeek, startYear, endWeek, endYear);
+			return new EditRegisteredTimeScreen(startWeek, endYear, endWeek, endYear);
 		} else {
 			return new TimeMenuScreen();
 		}

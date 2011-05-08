@@ -2,13 +2,21 @@ package projectmanager.ui;
 import java.io.PrintWriter;
 
 import projectmanager.app.Activity;
+import projectmanager.app.RegisteredWork;
 
 
 public class EditRegisteredTimeScreen extends Screen {
-	Activity activity;
+	private String[] choices;
+	private RegisteredWork[] regworks;
 	
-	public EditRegisteredTimeScreen(Activity activity) {
-		this.activity = activity;
+	int weekStart, weekEnd;
+	int yearStart, yearEnd;
+
+	public EditRegisteredTimeScreen(int weekStart, int yearStart, int weekEnd,int yearEnd) {
+		this.weekStart = weekStart;
+		this.weekEnd   = weekEnd;
+		this.yearStart = yearStart;
+		this.yearEnd   = yearEnd;
 	}
 
 	@Override
@@ -24,10 +32,18 @@ public class EditRegisteredTimeScreen extends Screen {
 	boolean processInput(String input, PrintWriter out) {
 		int selection = this.parseNumberInput(input, out);
 		this.clearScreen(out);
-		switch(selection){
-			case 0:
-				this.ui.setScreen(new TimeMenuScreen());
-				break;
+		if(selection == 0){
+			this.ui.setScreen(new MainMenuScreen());
+			return false;
+		}
+		if (this.choices == null) this.choices = new String[] { "-1" };
+		if(this.choices.length > 0){
+			if(selection < this.choices.length && selection >= 0){
+				this.ui.setScreen(this.getNextScreen(this.regworks[selection-1]));
+			} else {
+				this.wrongInputMessage(out);
+			}
+		return false;
 		}
 		return false;
 	}
