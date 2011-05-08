@@ -29,19 +29,16 @@ public class SampleDataSetup {
 		
 		// 10 employees with random names
 		for (int i = 1; i <= 10; i++) {
-			//String user = Long.toString(Math.abs(r.nextLong()), 36)..substring(0, r.nextInt(3)+2);
 			company.addEmployee(new Employee(getRandomUserName()));
 		}
 		
 		// 5 projects
 		for (int i = 1; i <= 5; i++) {
-			company.addProject(new Project("project"+i, "Google"));
-		}
-		
-		// Add project leaders to all 5 projects except the last one
-		for (int i = 0; i < 5; i++) {
+			Project project = new Project("project"+i, "Google");
+			company.addProject(project);
+			
 			Employee employee = company.getEmployees().get(i);
-			company.getProjects().get(i).addLeader(employee);
+			project.addLeader(employee);
 		}
 		
 		
@@ -57,7 +54,6 @@ public class SampleDataSetup {
 					Employee randomEmployee = company.getEmployees().get(rand);
 					
 					// Add 3 random employees to each activity
-					//latestActivity.addEmployee(randomEmployee);
 					currentProject.addEmployee(randomEmployee, latestActivity);
 					
 					// Work weeks
