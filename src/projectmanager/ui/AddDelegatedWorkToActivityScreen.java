@@ -2,6 +2,9 @@ package projectmanager.ui;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import projectmanager.app.Activity;
 import projectmanager.app.DelegatedWork;
@@ -12,6 +15,7 @@ import projectmanager.app.ProjectManagerApp;
 public class AddDelegatedWorkToActivityScreen extends Screen {
 	private Project project;
 	private Activity activity;
+	Calendar calendar = GregorianCalendar.getInstance();
 	
 	public AddDelegatedWorkToActivityScreen(Project project, Activity activity) {
 		this.project = project;
@@ -26,21 +30,65 @@ public class AddDelegatedWorkToActivityScreen extends Screen {
 		try {
 			in = this.inputSequence(
 					new String[]{
-						"Hours of work to delegate"
+							"Username of employee",
+							"Hours of work to delegate",
+							"Start week (1-52)",
+							"Start year",
+							"End week (1-52)",
+							"End year"
+					}, 
+					new String[]{
+							null,
+							null,
+							""+this.calendar.get(Calendar.WEEK_OF_YEAR),
+							""+this.calendar.get(Calendar.YEAR),
+							""+this.calendar.get(Calendar.WEEK_OF_YEAR),
+							""+this.calendar.get(Calendar.YEAR)
 					}
-				);
+			);
 		} catch (IOException e) {}
 
-		// Add delegated work to activity
-		int input = this.parseNumberInput(in[0], out);
-		if (input == -1) {
-			this.println(out, "");
-		} else {
-			DelegatedWork dw = new DelegatedWork(input, this.activity);
-			activity.addDelegatedWork(dw);
+		// Getting employee
+		Employee employee = ProjectManagerApp.getCompany().employeeByUsername(in[0]);
+		//activity.getEmployees().contains(employee);
 
-			this.println(out, "Delegated work added to activity.\n");
+		// Checking for defaults
+		if (in[2].equals("")) {
+			in[2] = ""+this.calendar.get(Calendar.WEEK_OF_YEAR);
 		}
+		if (in[3].equals("")) {
+			in[3] = ""+this.calendar.get(Calendar.YEAR);
+		}
+		if (in[4].equals("")) {
+			in[4] = in[2];
+		}
+		if (in[5].equals("")) {
+			in[5] = in[3];
+		}
+		
+		// Parsing work hours
+		int hours = -1;
+		int weekFrom = -1;
+		int weekTo = -1;
+		int yearFrom = -1;
+		int yearTo = -1;
+		try {
+			hours = Integer.parseInt(in[1]);
+			weekFrom = Integer.parseInt(in[2]);
+			weekTo = Integer.parseInt(in[4]);
+			yearFrom = Integer.parseInt(in[3]);
+			yearTo = Integer.parseInt(in[5]);
+		} catch (Exception e) {}
+		
+		// Check if all values are alright
+		if (employee == null || hours <= 0 || !this.isValidWorkWeeks(weekFrom, weekTo)
+				|| !this.isValidYear(yearFrom, yearTo)) {
+			this.wrongInputMessage(out);
+		} else {
+			employee.addDelegatedWork(weekFrom, weekTo, yearFrom, yearTo, activity, hours);
+			this.println(out, "Delegated work added to employee.\n");
+		}
+		
 		// Go back
 		this.ui.setScreen(new ManageActivitiesScreen(this.activity.getName(), this.project));
 		try {
