@@ -3,11 +3,15 @@ package projectmanager.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+import projectmanager.app.DelegatedWork;
 import projectmanager.app.Employee;
 import projectmanager.app.ProjectManagerApp;
+import projectmanager.app.RegisteredWork;
 import projectmanager.app.WorkWeek;
 
 /**
@@ -257,7 +261,7 @@ abstract class Screen {
 	 * @param endWeek The ending week.
 	 * @return The time table as an ASCII-formatted multiline string.
 	 */
-	public String employeeTimeTable(Employee[] employees, int year, int startWeek, int endWeek){
+	public String employeeTimeTable(Employee[] employees, int startWeek, int startYear, int endWeek, int endYear){
 		if(endWeek < startWeek){ return ""; }
 		StringBuilder s  = new StringBuilder();
 		StringBuilder p1 = new StringBuilder("+----+");
@@ -271,16 +275,35 @@ abstract class Screen {
 		s.append(sep);
 		s.append(p2.toString() + "\n");
 		s.append(sep);
-		for(int i = startWeek; i <= endWeek; i++){
-			s.append("|" + i + (i < 10 ? "   " : "  ") + "|");
+		Calendar cal = new GregorianCalendar();
+		cal.set(Calendar.WEEK_OF_YEAR, startWeek);
+		cal.set(Calendar.YEAR, startYear);
+		Calendar cal2 = new GregorianCalendar();
+		cal2.set(Calendar.WEEK_OF_YEAR, endWeek);
+		cal2.set(Calendar.YEAR, endYear);
+		cal2.add(Calendar.WEEK_OF_YEAR, 1);
+		while (cal.before(cal2)) {
+			int weekRun = cal.get(Calendar.WEEK_OF_YEAR);
+			s.append("|" + weekRun + (weekRun < 10 ? "   " : "  ") + "|");
 			for(Employee e: employees){
-				WorkWeek w = e.getWorkWeek(i, year);
-				s.append(this.stringRepeat( (w != null && w.getWork().size() > 0 ? "/" : " "), e.getUsername().length()) + "|");
+				WorkWeek w = e.getWorkWeek(weekRun, cal.get(Calendar.YEAR));
+				if (w != null) {
+					int dHours = 0;
+					for (DelegatedWork dw: w.getDelegatedWork()) {
+						dHours += dw.getHalfHoursWorked();
+					}
+					s.append("|" + dHours + (dHours < 10 ? "   " : "  ") + "|");
+				//s.append(this.stringRepeat( (w != null && w.getWork().size() > 0 ? "/" : " "), e.getUsername().length()) + "|");
+				}
 			}
 			s.append("\n" + sep);
 		}
 		s.append("Empty cells are clear, filled cells represent something scheduled.\n");
 		return s.toString();
+	}
+	
+	public String employeeTimeTable(Employee[] employees, int startWeek, int endWeek, int year){
+		return this.employeeTimeTable(employees, startWeek, year, endWeek, year);
 	}
 	
 	/**
