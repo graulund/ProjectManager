@@ -287,18 +287,22 @@ abstract class Screen {
 			s.append("|" + weekRun + (weekRun < 10 ? "   " : "  ") + "|");
 			for(Employee e: employees){
 				WorkWeek w = e.getWorkWeek(weekRun, cal.get(Calendar.YEAR));
+				int dHours = 0;
 				if (w != null) {
-					int dHours = 0;
 					for (DelegatedWork dw: w.getDelegatedWork()) {
 						dHours += dw.getHalfHoursWorked();
 					}
-					s.append("|" + dHours + (dHours < 10 ? "   " : "  ") + "|");
-				//s.append(this.stringRepeat( (w != null && w.getWork().size() > 0 ? "/" : " "), e.getUsername().length()) + "|");
+				} 
+				if (dHours > 0) {
+					s.append(dHours + (dHours < 10 ? "   " : "  ") + "|");
+				} else {
+					s.append("    |");
 				}
 			}
+			cal.add(Calendar.WEEK_OF_YEAR, 1);
 			s.append("\n" + sep);
 		}
-		s.append("Empty cells are clear, filled cells represent something scheduled.\n");
+		s.append("Empty cells are clear, filled cells represent delegated work (half hours)\n");
 		return s.toString();
 	}
 	
@@ -333,5 +337,29 @@ abstract class Screen {
 			s.append(str);
 		}
 		return s.toString();
+	}
+	
+	/**
+	 * Method that returns true or false determited by whether
+	 * the inputs are correct year-inputs
+	 * @param startYear
+	 * @param endYear
+	 * @return
+	 */
+	protected boolean isValidYear(int startYear, int endYear) {
+		return !(startYear < 1900 || startYear > 2100 ||
+				 endYear   < 1900 || endYear   > 2100 ||
+				 endYear > startYear);
+	}
+	
+	/**
+	 * Method that return true or false determited by whether
+	 * the inputs are correct week-inputs
+	 * @param week1
+	 * @param week2
+	 * @return
+	 */
+	protected boolean isValidWorkWeeks(int week1, int week2) {
+		return !(week1 < 0 || week1 > 54 || week2 < 0 || week2 > 54);
 	}
 }
