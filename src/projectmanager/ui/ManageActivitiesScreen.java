@@ -53,7 +53,7 @@ public class ManageActivitiesScreen extends Screen {
 				this.ui.setScreen(new AddEmployeeToActivityScreen(this.project, this.activity));
 				break;
 			case 2:
-				
+				this.ui.setScreen(new AddDelegatedWorkToActivityScreen(this.project, this.activity));
 				break;
 			case 3:
 				
