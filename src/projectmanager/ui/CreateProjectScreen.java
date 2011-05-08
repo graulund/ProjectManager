@@ -11,7 +11,7 @@ public class CreateProjectScreen extends Screen {
 
 	@Override
 	void printMenu(PrintWriter out) {
-		this.println(out, this.formatTitle("Create project"));
+		this.println(out, this.formatTitle("Create project") + "Some text.");
 		
 		String[] in = new String[] {"-1"};
 		try {

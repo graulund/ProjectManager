@@ -17,7 +17,7 @@ public class CreateActivityScreen extends Screen {
 	
 	@Override
 	void printMenu(PrintWriter out) {
-		this.println(out, this.formatTitle("Create activity"));
+		this.println(out, this.formatTitle("Create activity") + "I don't always create an activity.\nBut when I do I give it a good name.");
 		
 		String[] in = new String[] {"-1"};
 		try {
