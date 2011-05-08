@@ -52,7 +52,7 @@ public class AddDelegatedWorkToActivityScreen extends Screen {
 		Employee employee = ProjectManagerApp.getCompany().employeeByUsername(in[0]);
 		//activity.getEmployees().contains(employee);
 		
-		// Parsing work hours
+		// Parsing
 		int hours = -1;
 		int weekFrom = -1;
 		int weekTo = -1;
