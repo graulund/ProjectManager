@@ -23,7 +23,7 @@ public class ManageProjectScreen extends Screen {
 	@Override
 	void printMenu(PrintWriter out) {
 		Project p = this.project;
-		StringBuilder s = new StringBuilder(this.formatTitle("Project: "+p.getName()));
+		StringBuilder s = new StringBuilder(this.formatTitle("Project: "+p.getName())+this.project.getReport()+"\n");
 		String addActivity = "Add activity";
 		String addLeader = "Set project leader";
 		String printReport = "Print report";
