@@ -153,9 +153,13 @@ public class Employee {
 			if (workweek == null) {
 				WorkWeek newWorkWeek = new WorkWeek(weekFrom, yearFrom);
 				this.workWeeks.add(newWorkWeek);
-				newWorkWeek.addDelegatedWork(new DelegatedWork(hours*2, activity));
+				DelegatedWork dw = new DelegatedWork(hours*2, activity);
+				newWorkWeek.addDelegatedWork(dw);
+				activity.addDelegatedWork(dw);
 			} else {
-				workweek.addDelegatedWork(new DelegatedWork(hours*2, activity));
+				DelegatedWork dw = new DelegatedWork(hours*2, activity);
+				workweek.addDelegatedWork(dw);
+				activity.addDelegatedWork(dw);
 			}
 			
 		// det deligerede arbejde str¾kker sig over flere uger
@@ -179,9 +183,13 @@ public class Employee {
 				if (workweek == null) {
 					WorkWeek newWorkWeek = new WorkWeek(week, year);
 					this.workWeeks.add(newWorkWeek);
-					newWorkWeek.addDelegatedWork(new DelegatedWork(halfHoursPerWork, activity));
+					DelegatedWork dw = new DelegatedWork(halfHoursPerWork, activity);
+					newWorkWeek.addDelegatedWork(dw);
+					activity.addDelegatedWork(dw);
 				} else {
-					workweek.addDelegatedWork(new DelegatedWork(halfHoursPerWork, activity));
+					DelegatedWork dw = new DelegatedWork(halfHoursPerWork, activity);
+					workweek.addDelegatedWork(dw);
+					activity.addDelegatedWork(dw);
 				}
 				dateRun.add(Calendar.WEEK_OF_YEAR, 1);
 				i++;
