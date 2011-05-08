@@ -68,6 +68,7 @@ public class ChooseActivityScreen extends Screen {
 		if(this.choices.length > 0){
 			if(selection < (this.choices.length + 1) && selection >= 0){
 				this.ui.setScreen(this.getNextScreen(this.activities[selection-1]));
+				this.ui.setFlow();
 			} else {
 				this.wrongInputMessage(out);
 			}

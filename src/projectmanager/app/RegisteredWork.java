@@ -144,6 +144,14 @@ public class RegisteredWork extends Work {
 		return new RegisteredWork(this.activity, this.getStartTime(), this.getEndTime());
 	}
 	
+	public String toString() {
+		Calendar date     = this.getDate();
+		String dateString = date.get(Calendar.DATE)+"/"+date.get(Calendar.MONTH)+"/"+date.get(Calendar.YEAR);
+		String timeFrom   = this.getStartTime().get(Calendar.HOUR_OF_DAY)+":"+this.getStartTime().get(Calendar.MINUTE);
+		String timeTo     = this.getEndTime().get(Calendar.HOUR_OF_DAY)+":"+this.getEndTime().get(Calendar.MINUTE);
+		return "Activity: "+this.activity+"; Date: "+dateString+"; Time: "+timeFrom+" - "+timeTo;
+	}
+	
 //	public void setStartTime(int newHourStart, int newMinutesStart) {
 //		this.setTime(newHourStart, newMinutesStart, 
 //				     this.endTime.get(Calendar.HOUR_OF_DAY),

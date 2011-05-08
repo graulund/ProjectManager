@@ -52,7 +52,7 @@ public class ChooseWorkWeekScreen extends Screen {
 		} 
 		if (this.isValidWorkWeeks(startWeek, endWeek)) {
 			this.clearScreen(out);
-			this.ui.setScreen(this.getNextScreen());
+			this.ui.setFlow();
 		} else {
 			this.clearScreen(out);
 			this.println(out, this.wrong);
@@ -62,6 +62,10 @@ public class ChooseWorkWeekScreen extends Screen {
 
 	@Override
 	boolean processInput(String input, PrintWriter out) {
+		int selection = this.parseNumberInput(input, out);
+		if (selection == 0) {
+			this.ui.setScreen(this.getNextScreen());
+		}
 		return false;
 	}
 	
