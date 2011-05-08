@@ -312,7 +312,13 @@ abstract class Screen {
 	 * @return Formatted title
 	 */
 	public String formatTitle(String title){
-		return "== " + title.toUpperCase() + "\n";
+		return this.formatTitle(title, "-");
+	}
+	
+	public String formatTitle(String title, String sepchar){
+		String t = title.trim().toUpperCase();
+		if(sepchar.length() > 1){ sepchar.charAt(0); }
+		return sepchar + sepchar + " " + t + " " + this.stringRepeat(sepchar, 65 - 4 - t.length()) + "\n";
 	}
 	
 	/**
