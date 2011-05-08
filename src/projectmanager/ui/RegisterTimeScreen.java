@@ -54,14 +54,17 @@ public class RegisterTimeScreen extends Screen {
 			}
 			RegisteredWork regwork = createRegWork(date, in[1], endTime, out);
 			if (registerWork(regwork, out) == true) {
+				System.out.println("Year: "+regwork.getDate().get(Calendar.YEAR)
+						+" Month: "+regwork.getDate().get(Calendar.MONTH)
+						+" Date: "+regwork.getDate().get(Calendar.DATE));
 				this.println(out, 
-						"You've registered work the "+date
+						"You've registered work the "+date+" (week "+regwork.getDate().get(Calendar.WEEK_OF_YEAR)+")"
 					  + " from "+in[1]+" to "+endTime
 					  + " at the activity \""+regwork.getActivity().getName()+"\".");
 			}
 		}
 		this.clearScreen(out);
-		this.ui.setScreen(new TimeMenuScreen());
+		this.ui.setFlow();
 	}
 
 	@Override
@@ -74,20 +77,6 @@ public class RegisterTimeScreen extends Screen {
 		return false;
 	}
 	
-	private boolean isValidWorkInput(String dateIn, String startTime, String endTime, PrintWriter out) {
-		int[] date  = this.parseDateInput(dateIn, out);
-		int[] start = this.parseTimeInput(startTime, out);
-		int[] end   = this.parseTimeInput(endTime, out);
-		
-		if (date[0] == -1 || start[0] == -1 || end[0] == -1) {
-			this.println(out, this.wrong);
-			return false;
-		} else {
-			return true;
-		}
-			
-	}
-	
 	private RegisteredWork createRegWork(String dateIn, String startTime, String endTime, PrintWriter out) {
 		// splitter inputtet
 		int[] date  = this.parseDateInput(dateIn, out);
@@ -95,8 +84,6 @@ public class RegisterTimeScreen extends Screen {
 		int[] end   = this.parseTimeInput(endTime, out);
 		
 		// registrerer tiden
-		Calendar testCal = new GregorianCalendar();
-		testCal.set(date[0], date[1], date[2], start[0], start[1], 0);
 		Calendar startCal = ProjectManagerApp.createCalendar(
 				date[0], date[1], date[2], start[0], start[1]			                                         
 		);
@@ -117,6 +104,19 @@ public class RegisterTimeScreen extends Screen {
 			);
 		}
 		return false;
+	}
+	
+	private boolean isValidWorkInput(String dateIn, String startTime, String endTime, PrintWriter out) {
+		int[] date  = this.parseDateInput(dateIn, out);
+		int[] start = this.parseTimeInput(startTime, out);
+		int[] end   = this.parseTimeInput(endTime, out);
+		
+		if (date[0] == -1 || start[0] == -1 || end[0] == -1) {
+			this.println(out, this.wrong);
+			return false;
+		} else {
+			return true;
+		}	
 	}
 	
 	

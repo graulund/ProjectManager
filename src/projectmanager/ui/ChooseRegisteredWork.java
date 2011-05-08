@@ -33,19 +33,6 @@ public class ChooseRegisteredWork extends Screen {
 		else
 			s.append("Weeks: "+this.weekStart+"/"+this.yearStart+" - "+this.weekEnd+"/"+this.yearEnd+"\n");
 		Employee you = ProjectManagerApp.getEmployeeLoggedIn();
-		Activity act = new Activity("TestActivity2");
-		Calendar start = new GregorianCalendar();
-		start.set(Calendar.WEEK_OF_YEAR, 27);
-		start.set(Calendar.YEAR, 2011);
-		Calendar end = (Calendar) start.clone();
-		end.add(Calendar.HOUR_OF_DAY, 5);
-		RegisteredWork regworkTest = new RegisteredWork(act, start, end);
-		try {
-			you.addRegisteredWork(regworkTest);
-		} catch (ProjectManagerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		List<RegisteredWork> regworks = you.getRegisteredWork(this.weekStart, this.yearStart, this.weekEnd, this.yearEnd);
 		int size = regworks.size();
 		if (size > 0) {
