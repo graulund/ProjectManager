@@ -135,7 +135,7 @@ abstract class Screen {
 		String[] dateSplit = theDate.split("/");
 		if (dateSplit.length == 3) {
 			int year  = this.parseNumberInput(dateSplit[2], out);
-			int month = this.parseNumberInput(dateSplit[1], out) - 1;
+			int month = this.parseNumberInput(dateSplit[1], out);
 			int day   = this.parseNumberInput(dateSplit[0], out);
 			if (isValidDate(year, month, day))
 				return new int[] { year, month, day };
