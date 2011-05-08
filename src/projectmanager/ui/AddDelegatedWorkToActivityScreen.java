@@ -51,20 +51,6 @@ public class AddDelegatedWorkToActivityScreen extends Screen {
 		// Getting employee
 		Employee employee = ProjectManagerApp.getCompany().employeeByUsername(in[0]);
 		//activity.getEmployees().contains(employee);
-
-		// Checking for defaults
-		if (in[2].equals("")) {
-			in[2] = ""+this.calendar.get(Calendar.WEEK_OF_YEAR);
-		}
-		if (in[3].equals("")) {
-			in[3] = ""+this.calendar.get(Calendar.YEAR);
-		}
-		if (in[4].equals("")) {
-			in[4] = in[2];
-		}
-		if (in[5].equals("")) {
-			in[5] = in[3];
-		}
 		
 		// Parsing work hours
 		int hours = -1;
