@@ -50,21 +50,23 @@ public class ChooseWorkWeekScreen extends Screen {
 				this.ui.setScreen(new TimeMenuScreen());
 			}
 		} 
-		if (this.isValidWorkWeeks(startWeek, endWeek)) {
-			this.clearScreen(out);
-			this.ui.setFlow();
-		} else {
-			this.clearScreen(out);
-			this.println(out, this.wrong);
-			this.ui.setScreen(new TimeMenuScreen());
-		}
+		this.ui.setFlow();
+		
 	}
 
 	@Override
 	boolean processInput(String input, PrintWriter out) {
 		int selection = this.parseNumberInput(input, out);
 		if (selection == 0) {
-			this.ui.setScreen(this.getNextScreen());
+			if (this.isValidWorkWeeks(startWeek, endWeek)) {
+				this.clearScreen(out);
+				this.ui.setScreen(this.getNextScreen());
+			} else {
+				this.clearScreen(out);
+				this.println(out, this.wrong);
+				this.ui.setScreen(new TimeMenuScreen());
+			}
+			
 		}
 		return false;
 	}

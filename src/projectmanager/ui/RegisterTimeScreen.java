@@ -39,7 +39,6 @@ public class RegisterTimeScreen extends Screen {
 				}
 			);
 		} catch (IOException e) {}
-		System.out.println(Arrays.toString(in));
 		if (this.isValidWorkInput(in[0], in[1], in[2], out)) {
 			String endTime = in[2];
 			String date    = in[0];
@@ -104,11 +103,6 @@ public class RegisterTimeScreen extends Screen {
 		Calendar endCal = ProjectManagerApp.createCalendar(
 				date[0], date[1], date[2], end[0], end[1]
 		);
-		System.out.println("Year: "+startCal.get(Calendar.YEAR)
-				+"; Month: "+startCal.get(Calendar.MONTH)
-				+"; Day: "+startCal.get(Calendar.DATE)
-				+"; Time: "+startCal.get(Calendar.HOUR_OF_DAY)
-				+":"+startCal.get(Calendar.MINUTE));
 		return new RegisteredWork(activity, startCal, endCal);
 	}
 
