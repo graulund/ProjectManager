@@ -124,14 +124,19 @@ abstract class Screen {
 	 * @return Integer array with year, month and day
 	 */
 	protected int[] parseDateInput(String date, PrintWriter out) {
-		String[] dateSplit = date.split("/");
+		String theDate = date;
+		if (theDate.toLowerCase().equals("now")) {
+			Calendar now = GregorianCalendar.getInstance();
+			theDate = now.get(Calendar.DATE)+"/"+(now.get(Calendar.MONTH)+1)+"/"+now.get(Calendar.YEAR);
+		}
+		String[] dateSplit = theDate.split("/");
 		if (dateSplit.length == 3) {
 			int year  = this.parseNumberInput(dateSplit[2], out);
 			int month = this.parseNumberInput(dateSplit[1], out) - 1;
 			int day   = this.parseNumberInput(dateSplit[0], out);
 			if (isValidDate(year, month, day))
 				return new int[] { year, month, day };
-		}
+		} 
 		return new int[] { -1, -1, -1 };
 		
 	}
