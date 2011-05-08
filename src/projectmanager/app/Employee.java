@@ -287,9 +287,9 @@ public class Employee {
 		while (cal.before(cal2)) {
 			WorkWeek workweek = this.getWorkWeek(cal.get(Calendar.WEEK_OF_YEAR), cal.get(Calendar.YEAR));
 			if (workweek != null) {
-				List<RegisteredWork> regworks = workweek.getRegisteredWork();
-				for (RegisteredWork rw: regworks) {
-					activities.add(rw.getActivity());
+				List<DelegatedWork> delworks = workweek.getDelegatedWork();
+				for (DelegatedWork dw: delworks) {
+					activities.add(dw.getActivity());
 				}
 			}
 			cal.add(Calendar.WEEK_OF_YEAR, 1);
