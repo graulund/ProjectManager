@@ -3,6 +3,8 @@ package projectmanager.ui;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class ChooseWorkWeekScreen extends Screen {
 	String operation;
@@ -32,24 +34,28 @@ public class ChooseWorkWeekScreen extends Screen {
 					}
 				);
 		} catch (IOException e) {}
-		System.out.println(Arrays.toString(in));
 		String[] startSplit = in[0].split("/");
 		String[] endSplit	= in[1].split("/");
 		if (startSplit.length == 2) {
 			startWeek = this.parseNumberInput(startSplit[0], out);
 			startYear = this.parseNumberInput(startSplit[1], out);
+			
+			
+		} else if (startSplit.length == 1) {
+			Calendar now = GregorianCalendar.getInstance();
+			startWeek = this.parseNumberInput(startSplit[0], out);
+			startYear = now.get(Calendar.YEAR);
 			if (endSplit.length == 2) {
 				endWeek = this.parseNumberInput(endSplit[0], out);
 				endYear = this.parseNumberInput(endSplit[1], out);
 			} else if (endSplit[0].equals("Only 1 week")) {
 				endWeek = startWeek;
 				endYear = startYear;
-			} else {
-				this.println(out, this.wrong);
-				this.clearScreen(out);
-				this.ui.setScreen(new TimeMenuScreen());
+			} else if (endSplit.length == 1) {
+				endWeek = this.parseNumberInput(endSplit[0], out);
+				endYear = startYear;
 			}
-		} 
+		}
 		this.ui.setFlow();
 		
 	}
@@ -58,7 +64,8 @@ public class ChooseWorkWeekScreen extends Screen {
 	boolean processInput(String input, PrintWriter out) {
 		int selection = this.parseNumberInput(input, out);
 		if (selection == 0) {
-			if (this.isValidWorkWeeks(startWeek, endWeek)) {
+			if (this.isValidWorkWeeks(startWeek, endWeek) &&
+				this.isValidYear(startYear, endYear)) {
 				this.clearScreen(out);
 				this.ui.setScreen(this.getNextScreen());
 			} else {
@@ -70,7 +77,7 @@ public class ChooseWorkWeekScreen extends Screen {
 		}
 		return false;
 	}
-	
+
 	private Screen getNextScreen() {
 		if (this.operation.equals("Register")) {
 			return new ChooseActivityScreen("Register", startWeek, startYear, endWeek, endYear);
@@ -80,6 +87,16 @@ public class ChooseWorkWeekScreen extends Screen {
 			return new ChooseRegisteredWork(startWeek, endYear, endWeek, endYear);
 		} else {
 			return new TimeMenuScreen();
+		}
+	}
+	
+	private boolean isValidYear(int startYear, int endYear) {
+		if (startYear < 1900 || startYear > 2100 ||
+			endYear   < 1900 || endYear   > 2100 ||
+			endYear > startYear) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 	

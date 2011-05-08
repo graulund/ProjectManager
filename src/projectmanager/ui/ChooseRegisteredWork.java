@@ -47,7 +47,7 @@ public class ChooseRegisteredWork extends Screen {
 			s.append(this.menuString(this.choices, "Back"));
 		} else {
 			s.append("You haven't registered any work in the given week(s):\n");
-			s.append(this.menuString(new String[] { "-1" }, "Back"));
+			s.append(this.menuString(new String[] {}, "Back"));
 		}
 		this.println(out, s.toString());
 		

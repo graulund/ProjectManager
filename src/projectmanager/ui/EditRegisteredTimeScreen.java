@@ -64,8 +64,9 @@ public class EditRegisteredTimeScreen extends Screen {
 			if (this.editRegisteredWork(regwork, startTime[0], startTime[1], endTime[0], endTime[1], out)) {
 				this.println(out, 
 						"You've edited a work on the "+dateString
+					  + " at the activity \""+regwork.getActivity().getName()+"\""
 					  + " from "+in[0]+" to "+in[1]
-					  + " at the activity \""+regwork.getActivity().getName()+"\".");
+					  + ".");
 			}
 		}
 		this.ui.setFlow();
