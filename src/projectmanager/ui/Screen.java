@@ -347,6 +347,7 @@ abstract class Screen {
 	 * @return
 	 */
 	protected boolean isValidYear(int yearStart, int endYear) {
+		System.out.println("Years: "+yearStart+":"+endYear);
 		return !(yearStart < 1900 || yearStart > 2100 ||
 				 endYear   < 1900 || endYear   > 2100 ||
 				 endYear < yearStart);
@@ -360,11 +361,14 @@ abstract class Screen {
 	 * @return
 	 */
 	protected boolean isValidWorkWeeks(int week1, int week2) {
+		System.out.println("Weeks: "+week1+":"+week2);
 		return !(week1 < 1 || week1 > 53 || week2 < 1 || week2 > 53);
 	}
 	
 	protected boolean isValidWeekInput(int startWeek, int startYear, int endWeek, int endYear) {
-		if (startYear == endYear && endWeek < startWeek) return false;
+		if (startYear == endYear && endWeek < startWeek) {
+			return false;
+		}
 		if (this.isValidWorkWeeks(startWeek, endWeek) &&
 			this.isValidYear(startYear, endYear)) {
 			return true;

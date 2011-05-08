@@ -34,8 +34,6 @@ public class ChooseActivityScreen extends Screen {
 			s.append("Weeks: "+this.weekStart+"/"+this.yearStart+" - "+this.weekEnd+"/"+this.yearEnd+"\n");
 		
 		Employee you = ProjectManagerApp.getEmployeeLoggedIn();
-		Activity act = new Activity("TestActivity");
-		you.addDelegatedWork(27, 2011, act, 10);
 		List<Activity> activities = you.getActivities(this.weekStart, this.yearStart, this.weekEnd, this.yearEnd);
 		int size = activities.size();
 		if (size > 0) {

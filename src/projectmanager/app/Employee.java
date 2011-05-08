@@ -58,8 +58,6 @@ public class Employee {
 	public void addRegisteredWork(RegisteredWork regwork) throws ProjectManagerException {		
 		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
 		
-		// TODO: Der mangler et statement for, hvis det er registreret arbejde uden dato (standard-dato)
-		
 		// Checks if the entered time is valid for registered work
 		if (!isValidRegwork(regwork)) {
 			throw new RegisterWorkException("The starting time is after the ending time.");
@@ -236,8 +234,6 @@ public class Employee {
 
 	public void setRegisteredWork(RegisteredWork regwork, int newHourStart,
 								  int newMinutesStart, int newHourEnd, int newMinutesEnd) throws ProjectManagerException {
-		// TODO: Test hvis den nye tid kollidere med en anden registreret tid.
-		//		 Derved kast exception.
 		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), 
 				 							 regwork.getDate().get(Calendar.YEAR));
 		

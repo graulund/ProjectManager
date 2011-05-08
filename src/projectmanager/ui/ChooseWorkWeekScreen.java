@@ -39,22 +39,20 @@ public class ChooseWorkWeekScreen extends Screen {
 		if (startSplit.length == 2) {
 			startWeek = this.parseNumberInput(startSplit[0], out);
 			startYear = this.parseNumberInput(startSplit[1], out);
-			
-			
 		} else if (startSplit.length == 1) {
 			Calendar now = GregorianCalendar.getInstance();
 			startWeek = this.parseNumberInput(startSplit[0], out);
 			startYear = now.get(Calendar.YEAR);
-			if (endSplit.length == 2) {
-				endWeek = this.parseNumberInput(endSplit[0], out);
-				endYear = this.parseNumberInput(endSplit[1], out);
-			} else if (endSplit[0].equals("Only 1 week")) {
-				endWeek = startWeek;
-				endYear = startYear;
-			} else if (endSplit.length == 1) {
-				endWeek = this.parseNumberInput(endSplit[0], out);
-				endYear = startYear;
-			}
+		}
+		if (endSplit.length == 2) {
+			endWeek = this.parseNumberInput(endSplit[0], out);
+			endYear = this.parseNumberInput(endSplit[1], out);
+		} else if (endSplit[0].equals("Only 1 week")) {
+			endWeek = startWeek;
+			endYear = startYear;
+		} else if (endSplit.length == 1) {
+			endWeek = this.parseNumberInput(endSplit[0], out);
+			endYear = startYear;
 		}
 		this.ui.setFlow();
 		
