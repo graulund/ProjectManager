@@ -59,8 +59,7 @@ public class ManageProjectScreen extends Screen {
 			return false;
 		}
 		if (this.noOfActivities > 0){
-			if(selection < this.noOfActivities && selection >= 0){
-				System.out.println("noOfActivities: "+this.noOfActivities);
+			if(selection <= this.noOfActivities && selection >= 0){
 				this.ui.setScreen(new ManageActivitiesScreen(this.names[selection-1], project));
 			} else {
 				switch(selection-this.noOfActivities){

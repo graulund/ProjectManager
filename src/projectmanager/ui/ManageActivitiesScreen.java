@@ -50,18 +50,20 @@ public class ManageActivitiesScreen extends Screen {
 				this.ui.setScreen(new ManageProjectScreen(project.getSerialNumber()));
 				break;
 			case 1:
-				this.ui.setScreen(new ManageProjectScreen(project.getSerialNumber()));
+				
 				break;
 			case 2:
-				this.ui.setScreen(new ManageProjectScreen(project.getSerialNumber()));
+				
 				break;
 			case 3:
-				this.ui.setScreen(new ManageProjectScreen(project.getSerialNumber()));
+				
 				break;
 			case 4:
-				this.ui.setScreen(new ManageProjectScreen(project.getSerialNumber()));
+				
 				break;
 			case 5:
+				this.project.removeActivity(activity);
+				this.println(out, "Activity removed.\n");
 				this.ui.setScreen(new ManageProjectScreen(project.getSerialNumber()));
 				break;
 			default:
