@@ -360,6 +360,6 @@ abstract class Screen {
 	 * @return
 	 */
 	protected boolean isValidWorkWeeks(int week1, int week2) {
-		return !(week1 < 0 || week1 > 54 || week2 < 0 || week2 > 54);
+		return !(week1 < 1 || week1 > 53 || week2 < 1 || week2 > 53);
 	}
 }

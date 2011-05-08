@@ -54,9 +54,6 @@ public class RegisterTimeScreen extends Screen {
 			}
 			RegisteredWork regwork = createRegWork(date, in[1], endTime, out);
 			if (registerWork(regwork, out) == true) {
-				System.out.println("Year: "+regwork.getDate().get(Calendar.YEAR)
-						+" Month: "+regwork.getDate().get(Calendar.MONTH)
-						+" Date: "+regwork.getDate().get(Calendar.DATE));
 				this.println(out, 
 						"You've registered work the "+date+" (week "+regwork.getDate().get(Calendar.WEEK_OF_YEAR)+")"
 					  + " from "+in[1]+" to "+endTime

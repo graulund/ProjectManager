@@ -70,7 +70,6 @@ public class ChooseWorkWeekScreen extends Screen {
 				this.ui.setScreen(this.getNextScreen());
 			} else {
 				this.clearScreen(out);
-				this.println(out, this.wrong);
 				this.ui.setScreen(new TimeMenuScreen());
 			}
 		}
