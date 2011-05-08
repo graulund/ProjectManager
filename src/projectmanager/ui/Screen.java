@@ -347,7 +347,6 @@ abstract class Screen {
 	 * @return
 	 */
 	protected boolean isValidYear(int yearStart, int endYear) {
-		System.out.println("Years: "+yearStart+":"+endYear);
 		return !(yearStart < 1900 || yearStart > 2100 ||
 				 endYear   < 1900 || endYear   > 2100 ||
 				 endYear < yearStart);
