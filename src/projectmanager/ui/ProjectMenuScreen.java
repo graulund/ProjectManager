@@ -29,7 +29,7 @@ public class ProjectMenuScreen extends Screen {
 			}
 			this.choices[size] = create;
 		} else {
-			s.append("You aren't currently a leader of any projects.");
+			s.append("You aren't currently a leader of any projects.\n");
 			this.choices = new String[] { create };
 		}
 		s.append(this.menuString(this.choices, "Back"));

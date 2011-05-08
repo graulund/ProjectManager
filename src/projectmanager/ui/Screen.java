@@ -197,7 +197,7 @@ abstract class Screen {
 		String def  = null;
 		for(int i = 0; i < inputs.length; i++){
 			def   = (defaults.length > i) ? defaults[i] : null;
-			System.out.print("> " + inputs[i] + (def != null ? " [Default: " + def + "]" : "") + ": ");
+			System.out.print("" + inputs[i] + (def != null ? " [Default: " + def + "]" : "") + ": ");
 			in[i] = this.readInput(this.ui.in);
 			if(in[i].isEmpty() && def != null){ 
 				in[i] = def;
