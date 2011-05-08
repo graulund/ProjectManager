@@ -72,6 +72,7 @@ public class ManageProjectScreen extends Screen {
 					break;
 				case 3:
 					// printReport
+					this.println(out, this.project.getReport() + "\n");
 					break;
 				default:
 					this.wrongInputMessage(out);
@@ -87,6 +88,7 @@ public class ManageProjectScreen extends Screen {
 				break;
 			case 3:
 				// printReport
+				this.println(out, this.project.getReport() + "\n");
 				break;
 			default:
 				this.wrongInputMessage(out);
