@@ -152,8 +152,7 @@ abstract class Screen {
 	 * @return Boolean
 	 */
 	private boolean isValidDate(int year, int month, int day) {
-		Calendar now = GregorianCalendar.getInstance();
-		if (year < 1900 || year > now.get(Calendar.YEAR)) return false;
+		if (year < 1900 || year > 2500) return false;
 		if (month < 0 || month > 11) return false;
 		if (day <= 0 || day > 31) return false;
 		return true;

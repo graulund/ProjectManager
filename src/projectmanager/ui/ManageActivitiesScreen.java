@@ -50,7 +50,7 @@ public class ManageActivitiesScreen extends Screen {
 				this.ui.setScreen(new ManageProjectScreen(project.getSerialNumber()));
 				break;
 			case 1:
-				
+				this.ui.setScreen(new AddEmployeeToActivityScreen(this.project, this.activity));
 				break;
 			case 2:
 				
