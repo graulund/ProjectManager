@@ -40,11 +40,7 @@ public class MainMenuScreen extends Screen {
 				this.ui.setScreen(new CreateEmployeeScreen());
 				break;
 			case 4:
-				// print company report
-				List<Project> projects = ProjectManagerApp.getCompany().getProjects();
-				for (Project p: projects) {
-					this.println(out, p.getReport());
-				}
+				this.println(out, ProjectManagerApp.getCompany().getReport());
 				break;
 			default:
 				this.wrongInputMessage(out);

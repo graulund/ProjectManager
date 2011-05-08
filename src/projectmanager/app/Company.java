@@ -66,4 +66,12 @@ public class Company {
 		
 		// Should return a list of all employees and their (near) future availability
 	}
+
+	public String getReport() {
+		String report = "";
+		for (Project p: projects) {
+			report = report + p.getReport() + "\n";
+		}
+		return report;
+	}
 }
