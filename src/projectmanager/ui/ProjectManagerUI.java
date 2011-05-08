@@ -34,7 +34,7 @@ public class ProjectManagerUI {
 	 * Creates a new UI with the log in screen displayed.
 	 */
 	public ProjectManagerUI(){
-		this.setScreen(new LoginScreen());
+		this(new LoginScreen());
 	}
 	
 	/**
@@ -99,18 +99,32 @@ public class ProjectManagerUI {
 	 * Sets the current screen.
 	 * @param screen Screen object.
 	 */
-	void setScreen(Screen screen) {
+	public void setScreen(Screen screen) {
 		this.screen    = screen;
 		this.screen.ui = this;
-		this.flow      = true;
 	}
 	
 	/**
 	 * Gets the current screen.
 	 * @return Screen object.
 	 */
-	Screen getScreen() {
+	public Screen getScreen() {
 		return this.screen;
+	}
+	
+	/**
+	 * Enables quick flow to the next screen.
+	 */
+	public void setFlow(){
+		this.setFlow(true);
+	}
+	
+	/**
+	 * Enables/disables quick flow to the next screen.
+	 * @param flow Whether to enable or disable.
+	 */
+	public void setFlow(boolean flow){
+		this.flow = flow;
 	}
 	
 	/**
