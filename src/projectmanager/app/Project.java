@@ -83,6 +83,9 @@ public class Project {
 		this.employees.add(employee);
 		activity.addEmployee(employee);
 	}
+	public void addEmployee(Employee employee) {
+		this.employees.add(employee);
+	}
 	public void removeEmployee(Employee employee) {
 		this.employees.remove(employee);
 	}
