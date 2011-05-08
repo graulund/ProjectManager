@@ -25,7 +25,7 @@ public class ManageProjectScreen extends Screen {
 		Project p = this.project;
 		StringBuilder s = new StringBuilder(this.formatTitle("Project: "+p.getName()));
 		String addActivity = "Add activity";
-		String addLeader = "Add project leader";
+		String addLeader = "Set project leader";
 		String printReport = "Print report";
 		List<Activity> activities = project.getActivities();
 		this.noOfActivities = activities.size();
@@ -68,7 +68,7 @@ public class ManageProjectScreen extends Screen {
 					this.ui.setScreen(new CreateActivityScreen(project));
 					break;
 				case 2:
-					this.ui.setScreen(new AddLeaderScreen(project));
+					this.ui.setScreen(new SetLeaderScreen(project));
 					break;
 				case 3:
 					// printReport
@@ -83,7 +83,7 @@ public class ManageProjectScreen extends Screen {
 				this.ui.setScreen(new CreateActivityScreen(project));
 				break;
 			case 2:
-				this.ui.setScreen(new AddLeaderScreen(project));
+				this.ui.setScreen(new SetLeaderScreen(project));
 				break;
 			case 3:
 				// printReport
