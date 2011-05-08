@@ -25,11 +25,11 @@ public class ManageProjectScreen extends Screen {
 		Project p = this.project;
 		StringBuilder s = new StringBuilder(this.formatTitle("Project: "+p.getName()));
 		String addActivity = "Add activity";
-		String addLeader = "Add project leader";
+		String addLeader = "Set project leader";
 		String printReport = "Print report";
 		List<Activity> activities = project.getActivities();
 		this.noOfActivities = activities.size();
-		
+
 		if(noOfActivities > 0){
 			s.append("Following activities are registered under this project:\n");
 			this.choices = new String[noOfActivities + 3];
@@ -59,8 +59,7 @@ public class ManageProjectScreen extends Screen {
 			return false;
 		}
 		if (this.noOfActivities > 0){
-			if(selection < this.noOfActivities && selection >= 0){
-				System.out.println("noOfActivities: "+this.noOfActivities);
+			if(selection <= this.noOfActivities && selection >= 0){
 				this.ui.setScreen(new ManageActivitiesScreen(this.names[selection-1], project));
 			} else {
 				switch(selection-this.noOfActivities){
@@ -68,10 +67,11 @@ public class ManageProjectScreen extends Screen {
 					this.ui.setScreen(new CreateActivityScreen(project));
 					break;
 				case 2:
-					this.ui.setScreen(new AddLeaderScreen(project));
+					this.ui.setScreen(new SetLeaderScreen(project));
 					break;
 				case 3:
 					// printReport
+					this.println(out, this.project.getReport() + "\n");
 					break;
 				default:
 					this.wrongInputMessage(out);
@@ -83,10 +83,11 @@ public class ManageProjectScreen extends Screen {
 				this.ui.setScreen(new CreateActivityScreen(project));
 				break;
 			case 2:
-				this.ui.setScreen(new AddLeaderScreen(project));
+				this.ui.setScreen(new SetLeaderScreen(project));
 				break;
 			case 3:
 				// printReport
+				this.println(out, this.project.getReport() + "\n");
 				break;
 			default:
 				this.wrongInputMessage(out);

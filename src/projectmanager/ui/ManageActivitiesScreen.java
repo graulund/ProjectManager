@@ -22,16 +22,19 @@ public class ManageActivitiesScreen extends Screen {
 
 	@Override
 	void printMenu(PrintWriter out) {
-//		List<Employee> employees = activity.getEmployees();  // For some reason this line gives NullPointerException...
-//		String empNames = "";
-//		for (Employee e: employees) {
-//			empNames = empNames + e.getUsername() + " ";
-//		}
+		List<Employee> employees = activity.getEmployees();
+		String empNames = "";
+		for (Employee e: employees) {
+			empNames = empNames + e.getUsername() + " ";
+		}
+		if (empNames.length() == 0) {
+			empNames = "none";
+		}
 		
 		this.println(out, 
-			this.formatTitle(name) +
-//			"Employees on this activity: " + empNames + "\n" +
-			this.menuString(new String[]{ "Delete this activity", "Set start date", "Set end date", "Add employee" }, "Back")
+			this.formatTitle(project.getName() + " > " + activity.getName()) +
+			"Employees on this activity: " + empNames + "\n" +
+			this.menuString(new String[]{ "Add employee", "Add delegated work", "Set start date", "Set end date", "Delete this activity" }, "Back")
 		);
 		
 		
@@ -46,7 +49,25 @@ public class ManageActivitiesScreen extends Screen {
 			case 0:
 				this.ui.setScreen(new ManageProjectScreen(project.getSerialNumber()));
 				break;
-			
+			case 1:
+				
+				break;
+			case 2:
+				
+				break;
+			case 3:
+				
+				break;
+			case 4:
+				
+				break;
+			case 5:
+				this.project.removeActivity(activity);
+				this.println(out, "Activity removed.\n");
+				this.ui.setScreen(new ManageProjectScreen(project.getSerialNumber()));
+				break;
+			default:
+				this.wrongInputMessage(out);
 		}
 		return false;
 	}
