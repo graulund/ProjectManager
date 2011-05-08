@@ -11,7 +11,7 @@ public class MainMenuScreen extends Screen {
 	void printMenu(PrintWriter out) {
 		Employee you = ProjectManagerApp.getEmployeeLoggedIn();
 		this.println(out, 
-			this.formatTitle("Project Manager") + 
+			this.formatTitle("Project Manager", "=") + 
 			"You are logged in as " + you.getUsername() + ".\n" +
 			this.menuString(
 				new String[]{ "Manage projects", "Manage time", "Add employee to company", "Print company report" }, 
