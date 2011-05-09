@@ -13,7 +13,8 @@ employees og projekter. Dertil kan I bruge flg. brugernavne:
 	bcrx, iwj, mo
 
 Hvis I vil lave et nyt state kan I køre TestSaveObject.java (under 
-tests). Men husk at tjekke de brugernavne, den printer ud blandt alle 
-data, så I kan logge ind.
+tests) og afkommentere linjen "storage.saveState(obj);". Men husk at 
+tjekke de brugernavne, den printer ud blandt alle data, så I kan logge 
+ind.
 
 God fornøjelse!
