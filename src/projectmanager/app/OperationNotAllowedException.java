@@ -1,5 +1,9 @@
 package projectmanager.app;
 
+/**
+ * This exception is thrown when a error related
+ * to a operation which is not allowed by the employee
+ */
 public class OperationNotAllowedException extends Exception {
 	String operation;
 	

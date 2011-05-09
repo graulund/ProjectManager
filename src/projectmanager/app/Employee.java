@@ -6,55 +6,94 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/**
+ * A class that defines an employee.
+ * The key of the employee is his username, but
+ * he can also contain a full name
+ */
 public class Employee {
-	private String username; // 4 letters
+	/**
+	 * The username of the employee
+	 */
+	private String username;
+	
+	/**
+	 * A list of workweeks for the employee.
+	 * There exists a workweek for each week, if the week
+	 * contains any work.
+	 */
 	private List<WorkWeek> workWeeks = new ArrayList<WorkWeek>();
+	
+	/**
+	 * List of projects which this employee is a leader of
+	 */
 	private List<Project> leaderOfProjects = new ArrayList<Project>();
+	
+	/**
+	 * The full name of the employee
+	 */
 	private String fullname;
-
+	
+	/**
+	 * Employee constructor only with username
+	 * @param username
+	 */
 	public Employee(String username){
 		this.username = username;
 	}
 	
+	/**
+	 * Employee constructor with full informations
+	 * @param username
+	 * @param fullname
+	 */
 	public Employee(String username, String fullname) {
 		this.username = username;
 		this.fullname = fullname;
 	}
 	
+	/**
+	 * Sets the employees full name
+	 * @param newName
+	 */
 	public void setFullname(String newName)  {
 		this.fullname = newName;
 	}
 	
+	/**
+	 * Returns the employee's full nameif it exists
+	 * @return full name of employee
+	 */
 	public String getFullname() {
-		return this.fullname;
+		if (this.fullname != null) 
+			return this.fullname;
+		else 
+			return "";
+		
 	}
-
+	
+	/**
+	 * Returns the employee's username
+	 * @return username of employee
+	 */
 	public String getUsername() {
 		return this.username;
 	}
 	
+	/**
+	 * Sets the username of the employee
+	 * @param username
+	 */
 	public void setUsername(String name) {
 		this.username = name;
 	}
 	
-//	public void setProjectLeaderOf(Project project) {
-//		this.leader_of_projects.add(project);
-//	}
-//	public List<Project> getProjectLeader() {
-//		return leader_of_projects;
-//	}
-//	
-//	public List<Activity> getActivities() {
-//		return this.activities;
-//	}
-//	
-//	public void addActivity(Activity activity) {
-//		this.activities.add(activity);
-//	}
-//	public void removeActivity(Activity activity) {
-//		this.activities.remove(activity);
-//	}
-	
+	/**
+	 * Adds a given registered work to this employee.
+	 * Creates a new workweek to add it to, if it doesn't exist
+	 * @param regwork the registered work
+	 * @throws ProjectManagerException
+	 */
 	public void addRegisteredWork(RegisteredWork regwork) throws ProjectManagerException {		
 		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
 		
@@ -86,49 +125,29 @@ public class Employee {
 				
 	}
 	
-	private boolean isValidRegwork(RegisteredWork regwork) {
-		if (regwork.getStartTime().after(regwork.getEndTime())) return false;
-		else return true;
-	}
-
-	private boolean timeOutsideActivity(RegisteredWork regwork, Activity activity) {
-		if (activity.getStart() != null && activity.getEnd() != null) {
-			if (regwork.getDate().before(activity.getStart()) ||
-					regwork.getDate().after(activity.getEnd())) {
-					return true;
-				}	
-		} 
-		return false;
-	}
-
-	private boolean timeAlreadyRegistered(RegisteredWork regwork, WorkWeek workweek) {
-		// if no date has been entered
-		if (regwork.getDate().get(Calendar.YEAR) == 2000 && 
-			regwork.getDate().get(Calendar.MONTH) == 0   &&
-			regwork.getDate().get(Calendar.DATE) == 1) {
-			return false;
-		}
-		
-		for (RegisteredWork regworkCompare: workweek.getRegisteredWork(regwork.getStartTime())) {
-			if (regwork != regworkCompare) {
-				if (regwork.getStartTime().before(regworkCompare.getEndTime()) &&
-						regwork.getEndTime().after(regworkCompare.getStartTime())) {
-						return true;
-					} 
-			}
-		}
-		return false;
-	}
-
+	/**
+	 * Removes registered work from this employee
+	 * @param regwork the registered work
+	 */
 	public void removeRegisteredWork(RegisteredWork regwork) {
 		WorkWeek workweek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), regwork.getDate().get(Calendar.YEAR));
 		workweek.getRegisteredWork(regwork);
 	}
 	
+	/**
+	 * Returns a list of all the workweeks for this employee
+	 * @return list of WorkWeeks
+	 */
 	public List<WorkWeek> getWorkWeeks() {
 		return this.workWeeks;
 	}
-
+	
+	/**
+	 * Returns a WorkWeek determined by a given weeknumber and year.
+	 * @param weekNumber
+	 * @param year
+	 * @return a WorkWeek
+	 */
 	public WorkWeek getWorkWeek(int weekNumber, int year) {
 		for (WorkWeek workweek: this.workWeeks) {
 			if (workweek.getWeekNumber() == weekNumber &&
@@ -139,10 +158,24 @@ public class Employee {
 		return null;
 	}
 	
+	/**
+	 * Adds a WorkWeek to this employee
+	 * @param workweek
+	 */
 	public void addWorkWeek(WorkWeek workweek){
 		this.workWeeks.add(workweek);
 	}
 
+	/**
+	 * Adds delegated work that stretches from the given weekFrom (and yearFrom)
+	 * to the given weekTo (yearTo).
+	 * @param weekFrom
+	 * @param weekTo
+	 * @param yearFrom
+	 * @param yearTo
+	 * @param activity
+	 * @param hours
+	 */
 	public void addDelegatedWork(int weekFrom, int weekTo, int yearFrom, int yearTo, Activity activity, int hours) {
 		// det deligerede arbejde str¾kker sig kun over 1 uge
 		if (weekTo - weekFrom == 0 && yearFrom == yearTo) {
@@ -194,19 +227,22 @@ public class Employee {
 		}
 	}
 	
+	/**
+	 * Adds delegated work that only stretches over 1 week
+	 * @param week
+	 * @param year
+	 * @param activity
+	 * @param hours
+	 */
 	public void addDelegatedWork(int week, int year, Activity activity, int hours) {
 		this.addDelegatedWork(week, week, year, year, activity, hours);
 	}
-
-//	public Activity getActivity(Activity activityChosen) {
-//		for (Activity activity: this.activities) {
-//			if (activityChosen == activity) {
-//				return activity;
-//			}
-//		}
-//		return null;
-//	}
 	
+	/**
+	 * Returns a list of all the delegated work and all the registered work
+	 * for this employee
+	 * @return list of delegated- and registered work
+	 */
 	public List<Work> getWork(){
 		List<Work> works = new ArrayList<Work>();
 		for(WorkWeek week: this.workWeeks){
@@ -220,15 +256,31 @@ public class Employee {
 		return works;
 	}
 
+	/**
+	 * Sets this employee to project leader on a given project
+	 * @param project
+	 */
 	public void setProjectLeaderOf(Project project) {
 		this.leaderOfProjects.add(project);		
 	}
 
+	/**
+	 * Returns the list of projects which this employee is a leader of
+	 * @return list of projects
+	 */
 	public List<Project> getProjectLeader() {
 		return this.leaderOfProjects;
 	}
 	
-
+	/**
+	 * Sets a new timeFrom and timeTo for a given registered work
+	 * @param regwork
+	 * @param newHourStart
+	 * @param newMinutesStart
+	 * @param newHourEnd
+	 * @param newMinutesEnd
+	 * @throws ProjectManagerException
+	 */
 	public void setRegisteredWork(RegisteredWork regwork, int newHourStart,
 								  int newMinutesStart, int newHourEnd, int newMinutesEnd) throws ProjectManagerException {
 		WorkWeek workWeek = this.getWorkWeek(regwork.getDate().get(Calendar.WEEK_OF_YEAR), 
@@ -258,6 +310,13 @@ public class Employee {
 		}
 	}
 	
+	/**
+	 * Sets only the start-time of a given registered work
+	 * @param regwork
+	 * @param newHourStart
+	 * @param newMinutesStart
+	 * @throws ProjectManagerException
+	 */
 	public void setRegisteredWorkStart(RegisteredWork regwork, int newHourStart, int newMinutesStart) throws ProjectManagerException {
 		Calendar endTime = regwork.getEndTime();
 		this.setRegisteredWork(regwork, 
@@ -267,6 +326,13 @@ public class Employee {
 							   endTime.get(Calendar.MINUTE));
 	}
 	
+	/**
+	 * Sets only the end-time of a given registered work
+	 * @param regwork
+	 * @param newHourEnd
+	 * @param newMinutesEnd
+	 * @throws ProjectManagerException
+	 */
 	public void setRegisteredWorkEnd(RegisteredWork regwork, int newHourEnd, int newMinutesEnd) throws ProjectManagerException {
 		Calendar startTime = regwork.getStartTime();
 		this.setRegisteredWork(regwork, 
@@ -275,7 +341,15 @@ public class Employee {
 							   newHourEnd, 
 							   newMinutesEnd);
 	}
-
+	
+	/**
+	 * Returns a list of activities in which this employee has delegated work
+	 * @param weekStart
+	 * @param yearStart
+	 * @param weekEnd
+	 * @param yearEnd
+	 * @return
+	 */
 	public List<Activity> getActivities(int weekStart, int yearStart, int weekEnd, int yearEnd) {
 		Calendar cal = new GregorianCalendar();
 		cal.set(Calendar.WEEK_OF_YEAR, weekStart);
@@ -305,6 +379,14 @@ public class Employee {
 		return activities;
 	}
 
+	/**
+	 * Returns a list of registered work from a given week to another given week
+	 * @param weekStart
+	 * @param yearStart
+	 * @param weekEnd
+	 * @param yearEnd
+	 * @return
+	 */
 	public List<RegisteredWork> getRegisteredWork(int weekStart, int yearStart,int weekEnd, int yearEnd) {
 		Calendar cal = new GregorianCalendar();
 		cal.set(Calendar.WEEK_OF_YEAR, weekStart);
@@ -326,8 +408,46 @@ public class Employee {
 		return regworks;
 	}
 
+	/**
+	 * Removes the title as projectleader for a given project
+	 * @param project
+	 */
 	public void removeProjectLeaderOf(Project project) {
 		this.leaderOfProjects.remove(project);
 		
+	}
+	
+	private boolean isValidRegwork(RegisteredWork regwork) {
+		if (regwork.getStartTime().after(regwork.getEndTime())) return false;
+		else return true;
+	}
+
+	private boolean timeOutsideActivity(RegisteredWork regwork, Activity activity) {
+		if (activity.getStart() != null && activity.getEnd() != null) {
+			if (regwork.getDate().before(activity.getStart()) ||
+					regwork.getDate().after(activity.getEnd())) {
+					return true;
+				}	
+		} 
+		return false;
+	}
+
+	private boolean timeAlreadyRegistered(RegisteredWork regwork, WorkWeek workweek) {
+		// if no date has been entered
+		if (regwork.getDate().get(Calendar.YEAR) == 2000 && 
+			regwork.getDate().get(Calendar.MONTH) == 0   &&
+			regwork.getDate().get(Calendar.DATE) == 1) {
+			return false;
+		}
+		
+		for (RegisteredWork regworkCompare: workweek.getRegisteredWork(regwork.getStartTime())) {
+			if (regwork != regworkCompare) {
+				if (regwork.getStartTime().before(regworkCompare.getEndTime()) &&
+						regwork.getEndTime().after(regworkCompare.getStartTime())) {
+						return true;
+					} 
+			}
+		}
+		return false;
 	}
 }

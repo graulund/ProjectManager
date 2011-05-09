@@ -3,12 +3,38 @@ package projectmanager.app;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * Registered Work is created when a employee has
+ * registered that he has worked on an activity.
+ */
 public class RegisteredWork extends Work {
-	private Calendar date = new GregorianCalendar(); // default date = today!
+	/**
+	 * The date of this registered work
+	 */
+	private Calendar date = new GregorianCalendar();
+	
+	/**
+	 * The start-time of this registered work
+	 */
 	private Calendar startTime;
+	
+	/**
+	 * The end-time of this registered work
+	 */
 	private Calendar endTime;
+	
+	/**
+	 * The number of half hours on this registered work
+	 */
 	private int halfHoursWorked;
-		
+	
+	/**
+	 * Constructor of Registered Work from a given startTime and endTime		
+	 * @param activity
+	 * @param startCalendar
+	 * @param endCalendar
+	 * @param serialNumber
+	 */
 	public RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar, int serialNumber){
 		this.serialNumber = serialNumber;
 		this.activity = activity;
@@ -19,10 +45,22 @@ public class RegisteredWork extends Work {
 		this.activity.addRegisteredWork(this);
 	}
 	
+	/**
+	 * Constructor of registered work where the serialnumber is automaticly given
+	 * @param activity
+	 * @param startCalendar
+	 * @param endCalendar
+	 */
 	public RegisteredWork(Activity activity, Calendar startCalendar, Calendar endCalendar) {
 		this(activity, startCalendar, endCalendar, ProjectManagerApp.newSerialNumber());
 	}
 	
+	/**
+	 * Constructor of Registered work where the date is a standard-date (1. january 200)
+	 * @param activity
+	 * @param halfHoursWorked
+	 * @param serialNumber
+	 */
 	public RegisteredWork(Activity activity, int halfHoursWorked, int serialNumber){
 		this.serialNumber = serialNumber;
 		this.activity = activity;
@@ -39,39 +77,13 @@ public class RegisteredWork extends Work {
 		this.activity.addRegisteredWork(this);
 	}
 	
+	/**
+	 * Constructor of Registered work where the date is a standard-date (1. january 200)
+	 * @param activity
+	 * @param halfHoursWorked
+	 */
 	public RegisteredWork(Activity activity, int halfHoursWorked) {
 		this(activity, halfHoursWorked, ProjectManagerApp.newSerialNumber());
-	}
-	
-	/*
-	public RegisteredWork(Employee employee, Activity activity, int halfHoursWorked, GregorianCalendar date) {
-		this(employee, activity, halfHoursWorked);
-		this.date = date;
-	}
-	
-	public RegisteredWork(Activity activity, String date, String startTime, String endTime) {
-		this.activity = activity;
-		this.halfHoursWorked = countHalfHoursWorked(date, startTime, endTime);
-		this.date = dateFromInput(date);
-	}*/
-	
-	private Calendar setDate(Calendar date) {
-		Calendar calendar = new GregorianCalendar();
-		calendar.set(date.get(Calendar.YEAR), 
-				     date.get(Calendar.MONTH), 
-				     date.get(Calendar.DATE));
-		return calendar;
-	}
-	
-	private int countHalfHoursWorked(Calendar startTime, Calendar endTime) {
-		// Calculate difference in milliseconds
-        long diff = endTime.getTimeInMillis() - startTime.getTimeInMillis();
-        
-        // Calculate difference in Halfhours
-        long diffHalfHours = (diff / (60 * 60 * 1000))*2;
-        
-        //return (int)diffHalfHours;
-        return getFairHours(diffHalfHours, startTime.get(Calendar.MINUTE), endTime.get(Calendar.MINUTE));
 	}
 	
 	public void updateHalfHoursWorked() {
@@ -94,56 +106,86 @@ public class RegisteredWork extends Work {
 		}
 		return halfHours;
 	}
-
-	public int getMostHours(int minuteInput) {
-		if (minuteInput == 30) {
-			return 31;
-		} else {
-			return minuteInput;
-		}
-	}
 	
+	/**
+	 * Sets the start time 
+	 * @param hour
+	 * @param minutes
+	 */
 	public void setStartTime(int hour, int minutes) {
 		this.startTime.set(Calendar.HOUR_OF_DAY, hour);
 		this.startTime.set(Calendar.MINUTE, minutes);
 	}
 	
+	/**
+	 * Sets the end time 
+	 * @param hour
+	 * @param minutes
+	 */
 	public void setEndTime(int hour, int minutes) {
 		this.endTime.set(Calendar.HOUR_OF_DAY, hour);
 		this.endTime.set(Calendar.MINUTE, minutes);
 	}
 	
+	/**
+	 * Returns the date 
+	 * @return the date
+	 */
 	public Calendar getDate() {
 		return this.date;
 	}
 
+	/**
+	 * Returns the activity
+	 * @return activity
+	 */
 	public Activity getActivity() {
 		return this.activity;
 	}
 
+	/**
+	 * Returns half hours worked registered
+	 * @return half hours worked
+	 */
 	public int getHalfHoursWorked() {
 		return this.halfHoursWorked;
 	}
-
+	
+	/**
+	 * Returns the start time 
+	 * @return start time
+	 */
 	public Calendar getStartTime() {
 		return this.startTime;
 	}
-
+	
+	/**
+	 * Returns the end time
+	 * @return end time
+	 */
 	public Calendar getEndTime() {
 		return this.endTime;
 	}
 	
+	/**
+	 * Sets the serialnumber
+	 * @param serialnumber
+	 */
 	public void setSerialNumber(int serialKey) {
 		this.serialNumber = serialKey;
 	}
+	
+	/**
+	 * Returns the serialnumber
+	 * @return
+	 */
 	public int getSerialNumber() {
 		return this.serialNumber;
 	}
 	
-	public RegisteredWork clone() {
-		return new RegisteredWork(this.activity, this.getStartTime(), this.getEndTime());
-	}
-	
+	/**
+	 * Returns this registered work in a string-form	
+	 */
 	public String toString() {
 		Calendar date     = this.getDate();
 		String dateString = date.get(Calendar.DATE)+"/"+(date.get(Calendar.MONTH)+1)+"/"+date.get(Calendar.YEAR);
@@ -152,15 +194,22 @@ public class RegisteredWork extends Work {
 		return "Activity: "+this.activity.getName()+"; Date: "+dateString+"; Time: "+timeFrom+" - "+timeTo;
 	}
 	
-//	public void setStartTime(int newHourStart, int newMinutesStart) {
-//		this.setTime(newHourStart, newMinutesStart, 
-//				     this.endTime.get(Calendar.HOUR_OF_DAY),
-//				     this.endTime.get(Calendar.MINUTE));
-//	}
-//	
-//	public void setEndTime(int newHourEnd, int newMinutesEnd) {
-//		this.setTime(this.startTime.get(Calendar.HOUR_OF_DAY), 
-//					 this.startTime.get(Calendar.MINUTE), 
-//					 newHourEnd, newMinutesEnd);
-//	}
+	private Calendar setDate(Calendar date) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.set(date.get(Calendar.YEAR), 
+				     date.get(Calendar.MONTH), 
+				     date.get(Calendar.DATE));
+		return calendar;
+	}
+	
+	private int countHalfHoursWorked(Calendar startTime, Calendar endTime) {
+		// Calculate difference in milliseconds
+        long diff = endTime.getTimeInMillis() - startTime.getTimeInMillis();
+        
+        // Calculate difference in Halfhours
+        long diffHalfHours = (diff / (60 * 60 * 1000))*2;
+        
+        //return (int)diffHalfHours;
+        return getFairHours(diffHalfHours, startTime.get(Calendar.MINUTE), endTime.get(Calendar.MINUTE));
+	}
 }
