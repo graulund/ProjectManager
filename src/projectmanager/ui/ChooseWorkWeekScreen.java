@@ -6,13 +6,21 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import projectmanager.app.Project;
+
 public class ChooseWorkWeekScreen extends Screen {
+	Project project = null;
 	String operation;
 	int startWeek, endWeek;
 	int startYear, endYear;
 	
 	public ChooseWorkWeekScreen(String operation) {
 		this.operation = operation;
+	}
+	
+	public ChooseWorkWeekScreen(String operation, Project project) {
+		this.operation = operation;
+		this.project   = project;
 	}
 	
 	@Override
@@ -89,6 +97,8 @@ public class ChooseWorkWeekScreen extends Screen {
 			return new ChooseActivityScreen("Register", startWeek, startYear, endWeek, endYear);
 		} else if (this.operation.equals("SeeTime")) {
 			return new SeeYourTimeScreen(startWeek, startYear, endWeek, endYear);
+		} else if (this.operation.equals("SeePeopleTime")) {
+			return new SeePeopleTimeScreen(project, startWeek, startYear, endWeek, endYear);
 		} else if (this.operation.equals("Edit")) {
 			return new ChooseRegisteredWork(startWeek, endYear, endWeek, endYear);
 		} else {

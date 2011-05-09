@@ -268,6 +268,10 @@ abstract class Screen {
 		StringBuilder p2 = new StringBuilder("|Week|");
 		String sep;
 		
+		// No duplicate employees
+		ArrayList<Object> ue = this.uniqueArrayList(employees);
+		employees = ue.toArray(new Employee[ue.size()]);
+		
 		// Separation and header strings
 		for(Employee e: employees){
 			p1.append(this.stringRepeat("-", e.getUsername().length()) + "+");
@@ -344,6 +348,21 @@ abstract class Screen {
 			s.append(str);
 		}
 		return s.toString();
+	}
+	
+	/**
+	 * Utility method that helps get only the unique elements in an array.
+	 * @param array Array of objects.
+	 * @return An ArrayList, that has to be converted back to an array.
+	 */
+	private ArrayList<Object> uniqueArrayList(Object[] array){
+		ArrayList<Object> u = new ArrayList<Object>();
+		for(Object o: array){
+			if(!u.contains(o)){
+				u.add(o);
+			}
+		}
+		return u;
 	}
 	
 	/**
