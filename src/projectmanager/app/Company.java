@@ -24,9 +24,7 @@ public class Company {
 	}
 
 	public void addProject(Project project) {
-		// TODO: What if it already exists in the list?
 		this.projects.add(project);
-		//project.setSerialNumber(currentSerialNumber++);
 	}
 	
 	public void addEmployee(Employee employee) {
