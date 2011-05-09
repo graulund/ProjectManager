@@ -17,7 +17,7 @@ public class TestSaveObject extends SampleDataSetup {
 		storage.printState(obj);
 		//storage.restoreState(obj);
 		
-		storage.saveState(obj);
+		//storage.saveState(obj);
 		/*ProjectManagerApp.employeeLogin("ridp");
 		assertTrue(ProjectManagerApp.isEmployeeLoggedIn());
 		Employee employee = ProjectManagerApp.getEmployeeLoggedIn();
