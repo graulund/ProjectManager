@@ -267,6 +267,8 @@ abstract class Screen {
 		StringBuilder p1 = new StringBuilder("+----+");
 		StringBuilder p2 = new StringBuilder("|Week|");
 		String sep;
+		
+		// Separation and header strings
 		for(Employee e: employees){
 			p1.append(this.stringRepeat("-", e.getUsername().length()) + "+");
 			p2.append(e.getUsername() + "|");
@@ -275,6 +277,8 @@ abstract class Screen {
 		s.append(sep);
 		s.append(p2.toString() + "\n");
 		s.append(sep);
+		
+		// Calculating the numbers
 		Calendar cal = new GregorianCalendar();
 		cal.set(Calendar.WEEK_OF_YEAR, startWeek);
 		cal.set(Calendar.YEAR, yearStart);
@@ -282,6 +286,8 @@ abstract class Screen {
 		cal2.set(Calendar.WEEK_OF_YEAR, endWeek);
 		cal2.set(Calendar.YEAR, endYear);
 		cal2.add(Calendar.WEEK_OF_YEAR, 1);
+		
+		// Generating the table
 		while (cal.before(cal2)) {
 			int weekRun = cal.get(Calendar.WEEK_OF_YEAR);
 			s.append("|" + weekRun + (weekRun < 10 ? "   " : "  ") + "|");
@@ -292,11 +298,12 @@ abstract class Screen {
 					for (DelegatedWork dw: w.getDelegatedWork()) {
 						dHours += dw.getHalfHoursWorked();
 					}
-				} 
+				}
+				String dS = Integer.toString(dHours);
 				if (dHours > 0) {
-					s.append(dHours + (dHours < 10 ? "   " : "  ") + "|");
+					s.append(dHours + this.stringRepeat(" ", e.getUsername().length() - dS.length()) + "|");
 				} else {
-					s.append("    |");
+					s.append(this.stringRepeat(" ", e.getUsername().length()) + "|");
 				}
 			}
 			cal.add(Calendar.WEEK_OF_YEAR, 1);
