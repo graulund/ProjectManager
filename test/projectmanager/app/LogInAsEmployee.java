@@ -15,6 +15,7 @@ public class LogInAsEmployee {
 	 */
 	@Test
 	public void testLogin() {
+		ProjectManagerApp.reset();
 		Employee employee = new Employee("hlb");
 		Company company = ProjectManagerApp.getCompany();
 		company.addEmployee(employee);

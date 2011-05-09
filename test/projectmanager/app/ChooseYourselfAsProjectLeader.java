@@ -45,17 +45,10 @@ public class ChooseYourselfAsProjectLeader {
 		// medarbejder indtaster l¿benummer for projekt
 		int serialNumber = 1;
 		
-		// projektinformation returneres
-		Project projectTest = company.projectBySerialNumber(serialNumber);
-		
-		// checker at den rette information returneres
-		assertEquals(name, projectTest.getName());
-		assertEquals(client, projectTest.getClient());
-		
 		// medarbejder tilf¿jer sig selv som projektleder
-		projectTest.addLeader(ProjectManagerApp.getEmployeeLoggedIn());
+		project1.addLeader(ProjectManagerApp.getEmployeeLoggedIn());
 		
 		// checker at medarbejderen er angivet som projektleder
-		assertEquals(ProjectManagerApp.getEmployeeLoggedIn(), projectTest.getLeader());
+		assertEquals(ProjectManagerApp.getEmployeeLoggedIn(), project1.getLeader());
 	}		
 }

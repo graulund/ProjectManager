@@ -253,7 +253,7 @@ public class TimeRegistration {
 		chosenActivity = activity2;
 		
 		// medarbejder indtaster f¿lgende tid 
-		String date1 = "01.01.2011";
+		String date1 = "05.01.2011";
 		String startTime1 = "10:30";
 		String endTime1 = "17:00";
 		
