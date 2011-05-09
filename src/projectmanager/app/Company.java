@@ -24,11 +24,20 @@ public class Company {
 	}
 
 	public void addProject(Project project) {
+		for(Project p: this.projects){
+			if(p == project){ // This project already present
+				return;
+			}
+		}
 		this.projects.add(project);
 	}
 	
 	public void addEmployee(Employee employee) {
-		// TODO: What if it already exists in the list?
+		for(Employee e: this.employees){
+			if(e == employee){ // This employee already present
+				return;
+			}
+		}
 		this.employees.add(employee);
 	}
 	
